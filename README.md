@@ -28,7 +28,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `mateodragao.components.DataProvider`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Obter os dados inseridos pelo usuário e fornecê-los à classe Tabuleiro.`
 Interface | `IDataProvider`
@@ -86,7 +86,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `mateodragao.components.Tabuleiro`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Inserir e organizar os personagens no jogo e promover as modificações necessárias na sua distribuição no passar dos tempos do jogo.`
 Interface | `ITabuleiro`
@@ -129,7 +129,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `mateodragao.components.Soldados`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Os soldados são colocados em campo pelo jogador e se movimentam pelo campo e lançam ataques em direção ao dragão.`
 Interface | `IPersonagem`
@@ -175,7 +175,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `mateodragao.components.Dragao`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `O dragão é o personagem que o jogador deve matar para vencer o jogo. Ele se movimenta pelo campo e lança ataques aleatórios e em direção aos outros personagens.`
 Interface | `IPersonagem`
@@ -218,7 +218,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `mateodragao.components.Ataque`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Os ataques são lançados pelos soldados e pelo dragão e são os responsáveis por diminuir a vida e resistência dos personagens.`
 Interface | `IAtaque`
