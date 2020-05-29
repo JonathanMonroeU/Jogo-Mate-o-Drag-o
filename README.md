@@ -92,6 +92,7 @@ Objetivo | `Inserir e organizar os personagens no jogo e promover as modificaç�
 Interface | `ITabuleiro`
 ~~~
 public interface ITabuleiro {
+  public void play();
   public void modificaTabuleiro();
   public IPeca get Peca(int x, int y);
   public void putPeca(int x, int y, String tipo, Tabuleiro T);
@@ -107,6 +108,7 @@ public interface ITabuleiro {
 
 Método | Objetivo
 -------| --------
+`play` | `Realiza a chamada do método modificaTabuleiro até o dragão ou todos os soldados morrerem.`
 `modificaTabuleiro` | `Passa duas vezes por todas as posições da matriz de peças e faz elas se movimentarem e disparar ataques.`
 `getPeca` | `Retorna uma peça de uma posição da matriz.`
 `putPeca` | `Insere uma peça em uma posição da matriz.`
