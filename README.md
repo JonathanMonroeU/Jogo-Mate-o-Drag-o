@@ -94,7 +94,7 @@ Interface | `ITabuleiro`
 public interface ITabuleiro {
   public void play();
   public void modificaTabuleiro();
-  public IPeca get Peca(int x, int y);
+  public IPeca getPeca(int x, int y);
   public void putPeca(int x, int y, String tipo, Tabuleiro T);
   public void removePeca (int x, int y);
   public void receiveData(IdataProvider dataProvider;)
@@ -119,13 +119,13 @@ Método | Objetivo
 
 # Componente `Soldados`
 
-![Componente](.png)
+![Componente](SoldadosComponent.png)
 
 ## Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](Soldados.png)
 
 Campo | Valor
 ----- | -----
@@ -163,15 +163,15 @@ Método | Objetivo
 
 
 
-# Componente `Dragão`
+# Componente `Dragao`
 
-![Componente](.png)
+![Componente](DragaoComponent.png)
 
 ## Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](Dragao.png)
 
 Campo | Valor
 ----- | -----
@@ -210,13 +210,13 @@ Método | Objetivo
 
 # Componente `Ataque`
 
-![Componente](.png)
+![Componente](AtaqueComponent.png)
 
 ## Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](.png)
+![Diagrama Interfaces](Ataque.png)
 
 Campo | Valor
 ----- | -----
