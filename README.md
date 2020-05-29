@@ -14,7 +14,7 @@ Este é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador esc
 
 # Diagrama Geral de Componentes
 
-![Diagrama componentes](components1.png)
+![Diagrama componentes](componentes1.png)
 
 # Componente `DataProvider`
 
