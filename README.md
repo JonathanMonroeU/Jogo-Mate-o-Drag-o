@@ -82,7 +82,7 @@ Método | Objetivo
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](Tabuleiro.png)
+<img src="Tabuleiro.png" alt="drawing" width="600"/>
 
 Campo | Valor
 ----- | -----
@@ -125,7 +125,7 @@ Método | Objetivo
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](Soldados.png)
+<img src="Soldados.png" alt="drawing" width="600"/>
 
 Campo | Valor
 ----- | -----
@@ -171,7 +171,7 @@ Método | Objetivo
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](Dragao.png)
+<img src="Dragao.png" alt="drawing" width="600"/>
 
 Campo | Valor
 ----- | -----
@@ -204,9 +204,7 @@ Método | Objetivo
 Método | Objetivo
 -------| --------
 `perdeVida` | `Ao fazer-se uma varrredura pelo tabuleiro e verificar-se que o personagem está no mesmo espaço que um ataque num mesmo tempo, esse método é acionado para diminuir a vida do personagem.`
-`disparaAtaque` | `Ao fazer-se uma varredura pelo tabuleiro e verificar-se que a  frequência do personagem indica que deve lançar um ataque, esse método é acionado. Gera um ataque em direção à posição do dragão, caso seja um dos soldados, e em direção de um soldado num raio de 4 casas ou aleatória, caso seja o dragão.
-`
-
+`disparaAtaque` | `Ao fazer-se uma varredura pelo tabuleiro e verificar-se que a  frequência do personagem indica que deve lançar um ataque, esse método é acionado. Gera um ataque em direção à posição do dragão, caso seja um dos soldados, e em direção de um soldado num raio de 4 casas ou aleatória, caso seja o dragão.`
 
 # Componente `Ataque`
 
@@ -216,7 +214,7 @@ Método | Objetivo
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](Ataque.png)
+<img src="Ataque.png" alt="drawing" width="600"/>
 
 Campo | Valor
 ----- | -----
