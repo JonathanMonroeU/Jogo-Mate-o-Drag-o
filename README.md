@@ -238,7 +238,7 @@ public interface IAtaque extends IPeca {
 
 Método | Objetivo
 -------| --------
-`move` | `retorna a posição (x,y) para qual a peça deverá se movimentar.`
+`move` | `Retorna a posição (x,y) para qual a peça deverá se movimentar.`
 
 ### Interface `IAtaque`
 `Reúne todos os tipos e direções de ataque sob a mesma interface.`
