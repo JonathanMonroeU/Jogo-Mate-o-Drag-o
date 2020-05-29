@@ -18,13 +18,13 @@ Este é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador esc
 
 # Componente `DataProvider`
 
-![Componente](.png)
+![Componente](DataProviderComponent.png)
 
 ## Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](.png)
+![Diagrama Interfaces](DataProvider.png)
 
 Campo | Valor
 ----- | -----
