@@ -76,13 +76,13 @@ Método | Objetivo
 
 # Componente `Tabuleiro`
 
-![Componente](.png)
+![Componente](TabuleiroComponent.png)
 
 ## Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](.png)
+![Diagrama Interfaces](Tabuleiro.png)
 
 Campo | Valor
 ----- | -----
