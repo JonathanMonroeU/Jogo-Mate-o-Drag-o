@@ -7,7 +7,7 @@
 * Lindon Jonathan Sanley dos Santos Pereira Monroe - 220407
 
 # Descrição Resumida do Projeto
-Esse é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador escolhe os soldados para colocar no campo de batalha, com o único objetivo de matar o dragão.
+Este é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador escolhe soldados para colocar no campo de batalha, com o único objetivo de matar o dragão.
 
 # Vídeo do Projeto
 [Link para o vídeo](https://drive.google.com/file/d/1WTYxDMbC_eBaEOWbAoLYA-gZTC5DdQ9w/view?usp=sharing)
