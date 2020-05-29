@@ -108,7 +108,7 @@ public interface ITabuleiro {
 
 Método | Objetivo
 -------| --------
-`play` | `Realiza a chamada do método modificaTabuleiro até o dragão ou todos os soldados morrerem.`
+`play` | `Inicia o jogo, ou seja, realiza a chamada do método modificaTabuleiro até o dragão ou todos os soldados morrerem.`
 `modificaTabuleiro` | `Passa duas vezes por todas as posições da matriz de peças e faz elas se movimentarem e disparar ataques.`
 `getPeca` | `Retorna uma peça de uma posição da matriz.`
 `putPeca` | `Insere uma peça em uma posição da matriz.`
