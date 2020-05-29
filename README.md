@@ -97,7 +97,7 @@ public interface ITabuleiro {
   public IPeca getPeca(int x, int y);
   public void putPeca(int x, int y, String tipo, Tabuleiro T);
   public void removePeca (int x, int y);
-  public void receiveData(IdataProvider dataProvider;)
+  public void receiveData(IDataProvider dataProvider;)
 }
 ~~~
 
