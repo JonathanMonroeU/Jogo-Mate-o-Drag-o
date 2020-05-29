@@ -57,7 +57,7 @@ public interface IDataProvider extends IGetData, IPontos {
 Método | Objetivo
 -------| --------
 `inserePersonagem` | `Coloca os dados para inserção do personagem no vetor pecaPosition.`
-`removePersonagem` | `Retira os dados de inserção do personagem no vetor pecaPosition`
+`removePersonagem` | `Retira os dados de inserção do personagem no vetor pecaPosition.`
 `setX` | `Recebe e define a posição no eixo x do tabuleiro em que se posicionará a peça.`
 `setY` | `Recebe e define a posição no eixo y do tabuleiro em que se posicionará a peça.`
 `setTipo` | `Recebe e define o tipo do personagem que será inserido no tabuleiro.`
