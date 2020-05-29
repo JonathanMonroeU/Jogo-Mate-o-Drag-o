@@ -129,7 +129,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `mateodragao.components.Soldados`
+Classe | `mateodragao.components.soldados.Soldados`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Os soldados são colocados em campo pelo jogador e se movimentam pelo campo e lançam ataques em direção ao dragão.`
 Interface | `IPersonagem`
@@ -218,7 +218,7 @@ Interfaces associadas a esse componente:
 
 Campo | Valor
 ----- | -----
-Classe | `mateodragao.components.Ataque`
+Classe | `mateodragao.components.ataques.Ataque`
 Autores | `Áureo e Lindon Jonathan`
 Objetivo | `Os ataques são lançados pelos soldados e pelo dragão e são os responsáveis por diminuir a vida e resistência dos personagens.`
 Interface | `IAtaque`
