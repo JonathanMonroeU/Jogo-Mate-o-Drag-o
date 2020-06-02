@@ -12,6 +12,9 @@ Este é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador esc
 # Vídeo do Projeto
 [Link para o vídeo](https://drive.google.com/file/d/1WTYxDMbC_eBaEOWbAoLYA-gZTC5DdQ9w/view?usp=sharing)
 
+# Slides do projeto
+[Link para os slides](https://docs.google.com/presentation/d/1AsV5UUcxe-LLS95gD0u0uFggMae4aAfRPWseXTlmxlo/edit?usp=sharing)
+
 # Diagrama Geral de Componentes
 
 ![Diagrama componentes](componentes.png)
