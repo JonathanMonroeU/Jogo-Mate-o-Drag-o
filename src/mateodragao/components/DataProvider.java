@@ -102,7 +102,7 @@ public class DataProvider implements IDataProvider{
 	}
 	
 	public String[] getData() {
-		return pecaPosition;
+		return atual;
 	}
 	
 	public void inserePontos(int valor) {
