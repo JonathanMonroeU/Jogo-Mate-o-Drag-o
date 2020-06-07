@@ -1,5 +1,5 @@
 package mateodragao.interfaces;
 
 public interface IMovimento {
-	public int[] move();
+	public int[] move(ITabuleiro tab);
 }

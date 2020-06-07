@@ -1,12 +1,12 @@
-package mateodragao.components.ataque;
+package mateodragao.components.personagem;
 
-import mateodragao.interfaces.IAtaque;
+import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
-public class Ataque implements IAtaque{
-	protected int x, y, dano, velocidade;
+public class Personagem implements IPersonagem {
+	protected int x, y, vida, frequencia, movimento;
 	
-	public Ataque(int x, int y) {
+	public Personagem(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
