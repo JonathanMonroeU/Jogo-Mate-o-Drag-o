@@ -4,6 +4,7 @@ import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Personagem implements IPersonagem {
+	public static int custo;
 	protected int x, y, vida, frequencia, movimento;
 	
 	public Personagem(int x, int y) {
