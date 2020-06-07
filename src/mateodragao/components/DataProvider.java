@@ -4,14 +4,15 @@ import mateodragao.interfaces.IDataProvider;
 
 public class DataProvider implements IDataProvider{
 	private int pontos;
-	private String[] pecaPosition; //pensar sobre o tamanho do vetor
-	// IDEIA: ter uma variavel q guarda a informaçao atual
-	private String[] atual;
+	private int[] pecaPosition; //pensar sobre o tamanho do vetor
+	private int[] pecaPositionAtual;// IDEIA: ter uma variavel q guarda a informaçao atual
+	private int atual; //posiçao atual de pecaPosition
 	
 	public DataProvider(int pontos) {
 		this.pontos = pontos;
-		pecaPosition = new String[100];
-		atual = new String[3];
+		pecaPosition = new int[100];
+		pecaPositionAtual = new int[3];
+		atual = 0;
 	}
 	
 	public boolean insertData() {
@@ -62,15 +63,15 @@ public class DataProvider implements IDataProvider{
 		//texto pedindo para inserir x e y
 		
 		//entra com as posiçoes x e y
-		String x = "a";
-		String y = "0";
+		int x = 0;
+		int y = 0;
 		
 		//passar por pecaPosition e ver se tem peca nessa posicao
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
 				setX(x);
 				setY(y);
-				setTipo("R"); //R de remocao
+				setTipo(0); //R de remocao
 				switch(pecaPosition[i-1]) {
 					case 1:
 			
@@ -89,20 +90,20 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
-	public void setX(String x) {
-		atual[1] = x;
+	public void setX(int x) {
+		pecaPositionAtual[1] = x;
 	}
 	
-	public void setY(String y) {
-		atual[2] = y;
+	public void setY(int y) {
+		pecaPositionAtual[2] = y;
 	}
 	
-	public void setTipo(String tipo) {
-		atual[0] = tipo;
+	public void setTipo(int tipo) {
+		pecaPositionAtual[0] = tipo;
 	}
 	
-	public String[] getData() {
-		return atual;
+	public int[] getData() {
+		return pecaPositionAtual;
 	}
 	
 	public void inserePontos(int valor) {
