@@ -13,7 +13,7 @@ public class Personagem implements IPersonagem {
 	}
 	
 	public int[] move(ITabuleiro tab) {
-		int[] newPosition = new int[2];
+		int newPosition[] = new int[2];
 		//parte do codigo q vai dar a nova posição
 		
 		
