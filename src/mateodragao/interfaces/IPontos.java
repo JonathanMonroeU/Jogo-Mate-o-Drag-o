@@ -1,6 +1,6 @@
 package mateodragao.interfaces;
 
 public interface IPontos {
-	public void removePontos(String tipo);
-	public void inserePontos(String tipo);
+	public void removePontos(int valor);
+	public void inserePontos(int valor);
 }
