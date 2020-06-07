@@ -1,5 +1,7 @@
 package mateodragao.components.ataque;
 
-public class Ataque {
+import mateodragao.interfaces.IAtaque;
+
+public class Ataque implements IAtaque{
 
 }

@@ -1,5 +1,7 @@
 package mateodragao.components.soldado;
 
-public class Soldado {
+import mateodragao.interfaces.IPersonagem;
+
+public class Soldado implements IPersonagem {
 
 }

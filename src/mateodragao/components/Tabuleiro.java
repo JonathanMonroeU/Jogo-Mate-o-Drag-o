@@ -1,5 +1,7 @@
 package mateodragao.components;
 
-public class Tabuleiro {
+import mateodragao.interfaces.ITabuleiro;
+
+public class Tabuleiro implements ITabuleiro{
 
 }

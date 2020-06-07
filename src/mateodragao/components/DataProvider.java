@@ -1,5 +1,7 @@
 package mateodragao.components;
 
-public class DataProvider {
+import mateodragao.interfaces.IDataProvider;
 
+public class DataProvider implements IDataProvider{
+	
 }
