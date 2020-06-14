@@ -9,10 +9,12 @@ import mateodragao.interfaces.ITabuleiro;
 public class Tabuleiro implements ITabuleiro{
 	private IMovimento vPecas[][][];
 	private int DragonPosition[];
+	private int numeroSoldados;
 	
 	public Tabuleiro() {
 		vPecas = new IMovimento[16][16][2];
 		DragonPosition = new int[2];
+		numeroSoldados = 0;
 		
 		vPecas[0][7][0] = new Dragao();
 		DragonPosition[0] = 0;
@@ -21,8 +23,9 @@ public class Tabuleiro implements ITabuleiro{
 	
 	@Override
 	public void play() {
-		// TODO Auto-generated method stub
-		
+		while (numeroSoldados != 0 && DragonPosition[0] != -1) {
+			modificaTabuleiro();
+		}
 	}
 
 	@Override
@@ -87,17 +90,19 @@ public class Tabuleiro implements ITabuleiro{
 				vPecas[x][y][0] = new Catapulta();
 				break;
 		}
+		numeroSoldados += 1;
 	}
 
 	@Override
 	public void removePeca(int x, int y) {
 		vPecas[x][y][0] = null;
+		numeroSoldados -= 1;
 	}
 
 	@Override
 	public void receiveData(IDataProvider dataProvider) {
 		int position[] = dataProvider.getData();
-		if (position[0] == 0) //zero é remocao
+		if (position[0] == 0)  //zero é remocao
 			removePeca(position[1],position[2]);
 		else
 			putPeca(position[1],position[2],position[0]);
