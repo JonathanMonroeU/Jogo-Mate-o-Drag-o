@@ -1,10 +1,6 @@
 package mateodragao.components;
 
-import mateodragao.components.personagem.Arqueiro;
-import mateodragao.components.personagem.Catapulta;
-import mateodragao.components.personagem.Lanceiro;
-import mateodragao.components.personagem.Mago;
-import mateodragao.components.personagem.Personagem;
+import mateodragao.components.personagem.*;
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.interfaces.IMovimento;
 import mateodragao.interfaces.IPersonagem;
@@ -17,6 +13,10 @@ public class Tabuleiro implements ITabuleiro{
 	public Tabuleiro() {
 		vPecas = new IMovimento[16][16][2];
 		DragonPosition = new int[2];
+		
+		vPecas[0][7][0] = new Dragao();
+		DragonPosition[0] = 0;
+		DragonPosition[1] = 7;
 	}
 	
 	@Override

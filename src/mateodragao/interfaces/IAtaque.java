@@ -1,5 +1,5 @@
 package mateodragao.interfaces;
 
-public interface IAtaque {
+public interface IAtaque extends IMovimento{
 
 }

@@ -19,6 +19,7 @@ public class DataProvider implements IDataProvider{
 		atual = 0;
 	}
 	
+	@Override
 	public boolean insertData() {
 		//texto mostrando os comandos, pontos
 		
@@ -42,6 +43,7 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
+	@Override
 	public void inserePersonagem() {
 		//texto com opçoes de personagem
 		
@@ -109,6 +111,7 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
+	@Override
 	public void removePersonagem() {
 		//texto pedindo para inserir x e y
 		
@@ -146,29 +149,35 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
+	@Override
 	public void setX(int x) {
 		pecaPositionAtual[1] = x;
 		pecaPosition[atual+1] = x;
 	}
 	
+	@Override
 	public void setY(int y) {
 		pecaPositionAtual[2] = y;
 		pecaPosition[atual+2] = y;
 	}
 	
+	@Override
 	public void setTipo(int tipo) {
 		pecaPositionAtual[0] = tipo;
 		pecaPosition[atual] = tipo;
 	}
 	
+	@Override
 	public int[] getData() {
 		return pecaPositionAtual;
 	}
 	
+	@Override
 	public void inserePontos(int valor) {
 		pontos += valor;
 	}
 	
+	@Override
 	public void removePontos(int valor) {
 		pontos -= valor;
 	}

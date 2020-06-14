@@ -1,5 +1,6 @@
 package mateodragao.components.personagem;
 
+import mateodragao.interfaces.IMovimento;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
@@ -12,6 +13,7 @@ public class Personagem implements IPersonagem {
 		this.y = y;
 	}
 	
+	@Override
 	public int[] move(ITabuleiro tab) {
 		int newPosition[] = new int[2];
 		//parte do codigo q vai dar a nova posição
@@ -21,14 +23,16 @@ public class Personagem implements IPersonagem {
 	}
 
 	@Override
-	public void perdeVida() {
+	public void perdeVida(IMovimento ataque) {
 		// TODO Auto-generated method stub
 		
 	}
 
 	@Override
-	public void disparaAtaque() {
+	public void disparaAtaque(ITabuleiro tab) {
 		// TODO Auto-generated method stub
 		
 	}
+
+	
 }

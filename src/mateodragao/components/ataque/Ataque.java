@@ -11,6 +11,7 @@ public class Ataque implements IAtaque{
 		this.y = y;
 	}
 	
+	@Override
 	public int[] move(ITabuleiro tab) {
 		int[] newPosition = new int[2];
 		//parte do codigo q vai dar a nova posição
