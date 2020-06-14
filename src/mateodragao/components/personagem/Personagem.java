@@ -19,4 +19,16 @@ public class Personagem implements IPersonagem {
 		
 		return newPosition;
 	}
+
+	@Override
+	public void perdeVida() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void disparaAtaque() {
+		// TODO Auto-generated method stub
+		
+	}
 }

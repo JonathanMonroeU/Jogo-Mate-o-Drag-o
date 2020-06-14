@@ -1,6 +1,6 @@
 package mateodragao.interfaces;
 
-public interface IPersonagem {
-	public void perdeVida();
-	public void disparaAtaque();
+public interface IPersonagem extends IMovimento{
+	public void perdeVida(IMovimento ataque);
+	public void disparaAtaque(ITabuleiro tab);
 }
