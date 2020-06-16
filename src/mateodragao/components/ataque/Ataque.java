@@ -15,6 +15,7 @@ public class Ataque implements IAtaque{
 	public int[] move(ITabuleiro tab) {
 		int[] newPosition = new int[2];
 		//parte do codigo q vai dar a nova posição
+		//pensar sobre o enum de direção
 		
 		
 		return newPosition;
