@@ -12,12 +12,16 @@ public class Ataque implements IAtaque{
 	}
 	
 	@Override
-	public int[] move(ITabuleiro tab) {
-		int[] newPosition = new int[2];
+	public void move(ITabuleiro tab) {
 		//parte do codigo q vai dar a nova posição
 		//pensar sobre o enum de direção
 		
 		
-		return newPosition;
+		return;
+	}
+	
+	@Override
+	public int getDano() {
+		return dano;
 	}
 }

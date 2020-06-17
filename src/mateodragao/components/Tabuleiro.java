@@ -1,19 +1,23 @@
 package mateodragao.components;
 
-import mateodragao.components.personagem.*;
+import mateodragao.components.personagem.Arqueiro;
+import mateodragao.components.personagem.Catapulta;
+import mateodragao.components.personagem.Dragao;
+import mateodragao.components.personagem.Lanceiro;
+import mateodragao.components.personagem.Mago;
+import mateodragao.interfaces.IAtaque;
 import mateodragao.interfaces.IDataProvider;
-import mateodragao.interfaces.IMovimento;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro implements ITabuleiro{
-	private IMovimento vAtaque[][][];
+	private IAtaque vAtaque[][][];
 	private IPersonagem vPersonagem[][];
 	private int DragonPosition[];
 	private int numeroSoldados;
 	
 	public Tabuleiro() {
-		vAtaque = new IMovimento[16][16][2];
+		vAtaque = new IAtaque[16][16][2];
 		vPersonagem = new IPersonagem[16][16];
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
@@ -38,7 +42,7 @@ public class Tabuleiro implements ITabuleiro{
 				if (vPersonagem[i][j] != null) {
 					vPersonagem[i][j].disparaAtaque(this);
 					vPersonagem[i][j].move(this);
-					//decidir entre tabuleiro fazer movimento ou peca
+					//decidir entre tabuleiro fazer movimento ou peca(decidido)
 				}
 				
 				if (vAtaque[i][j][0] != null) {
@@ -69,7 +73,7 @@ public class Tabuleiro implements ITabuleiro{
 	}
 
 	@Override
-	public IMovimento getPeca(int x, int y) {
+	public IPersonagem getPeca(int x, int y) {
 		return vPersonagem[x][y];
 	}
 	
@@ -83,7 +87,7 @@ public class Tabuleiro implements ITabuleiro{
 	public void putPeca(int x, int y, int tipo) {
 		switch(tipo) {
 			case 1:
-				vPersonagem[x][y] = new Arqueiro();
+				vPersonagem[x][y] = new Arqueiro(x,y);
 				break;
 			case 2:
 				vPersonagem[x][y] = new Lanceiro();
@@ -97,7 +101,12 @@ public class Tabuleiro implements ITabuleiro{
 		}
 		numeroSoldados += 1;
 	}
-
+	
+	@Override
+	public void putAtaque(int x, int y, IAtaque ataque) {
+		vAtaque[x][y][0] = ataque;
+	}
+	
 	@Override
 	public void removePeca(int x, int y) {
 		vPersonagem[x][y] = null;
