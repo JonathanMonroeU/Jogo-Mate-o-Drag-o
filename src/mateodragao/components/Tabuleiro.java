@@ -7,16 +7,18 @@ import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro implements ITabuleiro{
-	private IMovimento vPecas[][][];
+	private IMovimento vAtaque[][][];
+	private IPersonagem vPersonagem[][];
 	private int DragonPosition[];
 	private int numeroSoldados;
 	
 	public Tabuleiro() {
-		vPecas = new IMovimento[16][16][2];
+		vAtaque = new IMovimento[16][16][2];
+		vPersonagem = new IPersonagem[16][16];
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
 		
-		vPecas[0][7][0] = new Dragao();
+		vPersonagem[0][7] = new Dragao();
 		DragonPosition[0] = 0;
 		DragonPosition[1] = 7;
 	}
@@ -33,17 +35,17 @@ public class Tabuleiro implements ITabuleiro{
 		//primeira passagem para mover e disparar ataques
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
-				if (vPecas[i][j][0] != null) {
-					if (vPecas[i][j][0] instanceof Personagem) {
-						IPersonagem p = (IPersonagem) vPecas[i][j][0];
-						p.disparaAtaque(this);
-					}
-					vPecas[i][j][0].move(this); 
+				if (vPersonagem[i][j] != null) {
+					vPersonagem[i][j].disparaAtaque(this);
+					vPersonagem[i][j].move(this);
 					//decidir entre tabuleiro fazer movimento ou peca
 				}
 				
-				if (vPecas[i][j][1] != null) {
-					vPecas[i][j][1].move(this);
+				if (vAtaque[i][j][0] != null) {
+					vAtaque[i][j][0].move(this); 	
+				}
+				if (vAtaque[i][j][1] != null) {
+					vAtaque[i][j][1].move(this);
 				}	
 			}
 		}
@@ -51,12 +53,9 @@ public class Tabuleiro implements ITabuleiro{
 		//segunda passagem para analisar conflitos
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
-				if (vPecas[i][j][0] != null) {
-					if (vPecas[i][j][0] instanceof Personagem) {
-						IPersonagem p = (IPersonagem) vPecas[i][j][0];
-						p.perdeVida(vPecas[i][j][1]);
-						//analisar como vai ser a hora da morte
-					}
+				if (vPersonagem[i][j] != null) {
+					vPersonagem[i][j].perdeVida(vAtaque[i][j][0]);
+					//analisar como vai ser a hora da morte
 				}	
 			}
 		}
@@ -71,23 +70,29 @@ public class Tabuleiro implements ITabuleiro{
 
 	@Override
 	public IMovimento getPeca(int x, int y) {
-		return vPecas[x][y][0];
+		return vPersonagem[x][y];
+	}
+	
+	@Override
+	public void setPeca(int x, int y, IPersonagem peca) {
+		vPersonagem[x][y] = peca;
+		
 	}
 
 	@Override
 	public void putPeca(int x, int y, int tipo) {
 		switch(tipo) {
 			case 1:
-				vPecas[x][y][0] = new Arqueiro();
+				vPersonagem[x][y] = new Arqueiro();
 				break;
 			case 2:
-				vPecas[x][y][0] = new Lanceiro();
+				vPersonagem[x][y] = new Lanceiro();
 				break;
 			case 3:
-				vPecas[x][y][0] = new Mago();
+				vPersonagem[x][y] = new Mago();
 				break;
 			case 4:
-				vPecas[x][y][0] = new Catapulta();
+				vPersonagem[x][y] = new Catapulta();
 				break;
 		}
 		numeroSoldados += 1;
@@ -95,7 +100,7 @@ public class Tabuleiro implements ITabuleiro{
 
 	@Override
 	public void removePeca(int x, int y) {
-		vPecas[x][y][0] = null;
+		vPersonagem[x][y] = null;
 		numeroSoldados -= 1;
 	}
 
