@@ -1,5 +1,5 @@
 package mateodragao.interfaces;
 
-public interface IAtaque extends IMovimento{
+public interface IProjetil extends IMovimento{
 	public int getDano();
 }

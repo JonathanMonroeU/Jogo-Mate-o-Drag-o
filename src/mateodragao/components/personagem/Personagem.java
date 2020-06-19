@@ -2,7 +2,7 @@ package mateodragao.components.personagem;
 
 import java.util.Random;
 
-import mateodragao.interfaces.IAtaque;
+import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
@@ -45,13 +45,13 @@ public abstract class Personagem implements IPersonagem {
 	}
 
 	@Override
-	public void perdeVida(IAtaque ataque) {
-		//pegar dano do ataque e subtrair de vida
-		vida -= ataque.getDano();
+	public void perdeVida(IProjetil Projetil) {
+		//pegar dano do Projetil e subtrair de vida
+		vida -= Projetil.getDano();
 	}
 
 	@Override
-	public abstract void disparaAtaque(ITabuleiro tab);
+	public abstract void disparaProjetil(ITabuleiro tab);
 		//esse daqui talvez seja mais complicado de fazer
 
 	

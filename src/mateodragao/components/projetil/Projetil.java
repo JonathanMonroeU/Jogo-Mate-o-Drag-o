@@ -1,12 +1,12 @@
-package mateodragao.components.ataque;
+package mateodragao.components.projetil;
 
-import mateodragao.interfaces.IAtaque;
+import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 
-public class Ataque implements IAtaque{
+public class Projetil implements IProjetil{
 	protected int x, y, dano, velocidade;
 	
-	public Ataque(int x, int y) {
+	public Projetil(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}

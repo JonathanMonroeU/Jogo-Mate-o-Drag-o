@@ -5,19 +5,19 @@ import mateodragao.components.personagem.Catapulta;
 import mateodragao.components.personagem.Dragao;
 import mateodragao.components.personagem.Lanceiro;
 import mateodragao.components.personagem.Mago;
-import mateodragao.interfaces.IAtaque;
+import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro implements ITabuleiro{
-	private IAtaque vAtaque[][][];
+	private IProjetil vProjetil[][][];
 	private IPersonagem vPersonagem[][];
 	private int DragonPosition[];
 	private int numeroSoldados;
 	
 	public Tabuleiro() {
-		vAtaque = new IAtaque[16][16][2];
+		vProjetil = new IProjetil[16][16][2];
 		vPersonagem = new IPersonagem[16][16];
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
@@ -36,20 +36,20 @@ public class Tabuleiro implements ITabuleiro{
 
 	@Override
 	public void modificaTabuleiro() {
-		//primeira passagem para mover e disparar ataques
+		//primeira passagem para mover e disparar Projetils
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
-					vPersonagem[i][j].disparaAtaque(this);
+					vPersonagem[i][j].disparaProjetil(this);
 					vPersonagem[i][j].move(this);
 					//decidir entre tabuleiro fazer movimento ou peca(decidido)
 				}
 				
-				if (vAtaque[i][j][0] != null) {
-					vAtaque[i][j][0].move(this); 	
+				if (vProjetil[i][j][0] != null) {
+					vProjetil[i][j][0].move(this); 	
 				}
-				if (vAtaque[i][j][1] != null) {
-					vAtaque[i][j][1].move(this);
+				if (vProjetil[i][j][1] != null) {
+					vProjetil[i][j][1].move(this);
 				}	
 			}
 		}
@@ -58,7 +58,7 @@ public class Tabuleiro implements ITabuleiro{
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
-					vPersonagem[i][j].perdeVida(vAtaque[i][j][0]);
+					vPersonagem[i][j].perdeVida(vProjetil[i][j][0]);
 					//analisar como vai ser a hora da morte
 				}	
 			}
@@ -103,8 +103,8 @@ public class Tabuleiro implements ITabuleiro{
 	}
 	
 	@Override
-	public void putAtaque(int x, int y, IAtaque ataque) {
-		vAtaque[x][y][0] = ataque;
+	public void putProjetil(int x, int y, IProjetil Projetil) {
+		vProjetil[x][y][0] = Projetil;
 	}
 	
 	@Override

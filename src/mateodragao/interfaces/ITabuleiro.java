@@ -8,7 +8,7 @@ public interface ITabuleiro {
 	public void setPeca(int x, int y, IPersonagem peca);
 	public int[] getDragonPosition();
 	public void putPeca(int x, int y, int tipo);
-	public void putAtaque(int x, int y, IAtaque ataque);
+	public void putProjetil(int x, int y, IProjetil Projetil);
 	public void removePeca (int x, int y);
 	public void receiveData(IDataProvider dataProvider);
 }
