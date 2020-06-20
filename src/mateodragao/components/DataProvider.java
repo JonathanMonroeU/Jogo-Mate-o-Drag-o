@@ -5,14 +5,14 @@ import mateodragao.components.personagem.*;
 
 public class DataProvider implements IDataProvider{
 	private int pontos;
-	private int pecaPosition[]; //pensar sobre o tamanho do vetor
-	private int pecaPositionAtual[];// IDEIA: ter uma variavel q guarda a informaçao atual
+	private int pecaPosition[]; 
+	private int pecaPositionAtual[];
 	private int atual; //posiçao atual de pecaPosition
 	
 	public DataProvider(int pontos) {
 		this.pontos = pontos;
-		pecaPosition = new int[100];
-		for (int i=0; i<100; i++) {
+		pecaPosition = new int[66];
+		for (int i=0; i<66; i++) {
 			pecaPosition[i] = 0;
 		}
 		pecaPositionAtual = new int[3];
@@ -54,8 +54,8 @@ public class DataProvider implements IDataProvider{
 		
 		switch(comando) {
 			case 1:
-				if (Arqueiro.custo <= pontos) {
-					removePontos(Arqueiro.custo);
+				if (Arqueiro.getCusto() <= pontos) {
+					removePontos(Arqueiro.getCusto());
 					setX(x);
 					setY(y);
 					setTipo(1);
@@ -67,8 +67,8 @@ public class DataProvider implements IDataProvider{
 					System.out.println("Pontos Insuficientes!");
 				break;
 			case 2:
-				if (Lanceiro.custo <= pontos) {
-					removePontos(Lanceiro.custo);
+				if (Lanceiro.getCusto() <= pontos) {
+					removePontos(Lanceiro.getCusto());
 					setX(x);
 					setY(y);
 					setTipo(2);
@@ -80,8 +80,8 @@ public class DataProvider implements IDataProvider{
 					System.out.println("Pontos Insuficientes!");
 				break;
 			case 3:
-				if (Mago.custo <= pontos) {
-					removePontos(Mago.custo);
+				if (Mago.getCusto() <= pontos) {
+					removePontos(Mago.getCusto());
 					setX(x);
 					setY(y);
 					setTipo(3);
@@ -93,8 +93,8 @@ public class DataProvider implements IDataProvider{
 					System.out.println("Pontos Insuficientes!");
 				break;
 			case 4:
-				if (Catapulta.custo <= pontos) {
-					removePontos(Catapulta.custo);
+				if (Catapulta.getCusto() <= pontos) {
+					removePontos(Catapulta.getCusto());
 					setX(x);
 					setY(y);
 					setTipo(4);
@@ -128,16 +128,16 @@ public class DataProvider implements IDataProvider{
 				
 				switch(pecaPosition[i-1]) {
 					case 1:
-						inserePontos(Arqueiro.custo);
+						inserePontos(Arqueiro.getCusto());
 						break;
 					case 2:
-						inserePontos(Lanceiro.custo);
+						inserePontos(Lanceiro.getCusto());
 						break;
 					case 3:
-						inserePontos(Mago.custo);
+						inserePontos(Mago.getCusto());
 						break;
 					case 4:
-						inserePontos(Catapulta.custo);
+						inserePontos(Catapulta.getCusto());
 						break;
 				}
 				pecaPosition[i-1] = 0;

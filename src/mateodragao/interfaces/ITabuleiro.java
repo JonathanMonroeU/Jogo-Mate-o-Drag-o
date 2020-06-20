@@ -11,4 +11,7 @@ public interface ITabuleiro {
 	public void putProjetil(int x, int y, IProjetil Projetil);
 	public void removePeca (int x, int y);
 	public void receiveData(IDataProvider dataProvider);
+	public void setProjetil(int x, int y, IProjetil Projetil);
+	public IProjetil getProjetil(int x, int y);
+	public void adicionaConflito(int x, int y);
 }
