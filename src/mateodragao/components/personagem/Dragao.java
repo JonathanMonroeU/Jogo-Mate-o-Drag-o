@@ -21,6 +21,19 @@ public class Dragao extends Personagem{
 		//ver sobre enum
 		//provavelmente vai ser um switch case abaixo
 		//tem q ver tbm a questao do Dragon Position
+		if
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
+		
 		hor=(tab.getDragonPosition()[0])-x;
 		ver=(tab.getDragonPosition()[1])-y;
 		

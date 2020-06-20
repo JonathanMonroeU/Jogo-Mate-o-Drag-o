@@ -45,7 +45,7 @@ public abstract class Personagem implements IPersonagem {
 					newX = x;
 					newY = y;
 					continue;
-				}if (Math.abs(tab.getDragonPosition()[0]-x)<3 || || || ||)
+				}if (Math.abs(tab.getDragonPosition()[0]-x)<=3 || || || ||)
 			}
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
@@ -62,7 +62,10 @@ public abstract class Personagem implements IPersonagem {
 	@Override
 	public void perdeVida(IProjetil Projetil, ITabuleiro tab) {
 		//pegar dano do Projetil e subtrair de vida
-		vida -= Projetil.getDano();
+		if (vida>4 && Projetil.getDano()>3)
+			vida -= Projetil.getDano();
+		else if (vida<4 && Projetil.getDano()<3)
+			vida -= Projetil.getDano();
 	}
 
 	@Override

@@ -70,17 +70,16 @@ public class Tabuleiro implements ITabuleiro{
 			}
 		}
 		
-		
-		
-		
 		//segunda passagem para analisar conflitos
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
-				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) {
+				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) 
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][0],this);
-					if (vPersonagem[i][j].getVida()<=0) 
-						removePeca(i,j); 	//morte
-				}	
+				if (vPersonagem[i][j] != null && vProjetil[i][j][1]!=null) 
+					vPersonagem[i][j].perdeVida(vProjetil[i][j][1],this);
+	
+				if (vPersonagem[i][j].getVida()<=0) 
+					removePeca(i,j); 	//morte
 			}
 		}
 		
