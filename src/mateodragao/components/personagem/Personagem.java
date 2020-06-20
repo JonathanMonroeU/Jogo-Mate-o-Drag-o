@@ -45,7 +45,7 @@ public abstract class Personagem implements IPersonagem {
 					newX = x;
 					newY = y;
 					continue;
-				}if (Math.abs(tab.dragonPosition[0] || || || ||)
+				}if (Math.abs(tab.getDragonPosition()[0]-x)<3 || || || ||)
 			}
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
