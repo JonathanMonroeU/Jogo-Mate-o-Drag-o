@@ -1,9 +1,5 @@
 package mateodragao.components.projetil;
 
-import mateodragao.components.personagem.Arqueiro;
-import mateodragao.components.personagem.Catapulta;
-import mateodragao.components.personagem.Lanceiro;
-import mateodragao.components.personagem.Mago;
 import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 

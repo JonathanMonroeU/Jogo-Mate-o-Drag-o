@@ -1,7 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.BolaDeEnergia;
-import mateodragao.components.projetil.BolaDeEnergia;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Mago extends Personagem{

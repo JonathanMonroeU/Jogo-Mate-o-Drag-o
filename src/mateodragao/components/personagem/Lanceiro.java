@@ -1,7 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.Lanca;
-import mateodragao.components.projetil.Lanca;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Lanceiro extends Personagem{

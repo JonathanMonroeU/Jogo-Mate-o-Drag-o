@@ -1,7 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.BolaDeFogo;
-import mateodragao.components.projetil.BolaDeFogo;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Dragao extends Personagem{
