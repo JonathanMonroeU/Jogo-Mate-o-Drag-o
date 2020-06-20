@@ -1,19 +1,15 @@
 package mateodragao.components.projetil;
 
-import mateodragao.components.personagem.Arqueiro;
-import mateodragao.components.personagem.Catapulta;
-import mateodragao.components.personagem.Lanceiro;
-import mateodragao.components.personagem.Mago;
 import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
-
 public class Projetil implements IProjetil{
-	protected int x, y, dano, velocidade; 
+	protected int x, y, z, dano, velocidade, emConflito; 
 	protected String direcao;
 	
-	public Projetil(int x, int y) {
+	public Projetil(int x, int y, int z) {
 		this.x = x;
 		this.y = y;
+		this.z = z;
 	}
 	
 	@Override
@@ -53,19 +49,30 @@ public class Projetil implements IProjetil{
 			newY+=velocidade;
 			break;	
 		}if (newX<0 || newX>15 || newY<0 || newY>15) 
-			tab.setProjetil(x, y, null);
-		else if (tab.getProjetil(newX, newY) == null) {	
-			tab.setProjetil(x, y, null);
-			tab.setProjetil(newX, newY, this);
+			tab.setProjetil(x, y, z, null);
+		else if (tab.getProjetil(newX, newY, z) == null) {	
+			tab.setProjetil(x, y, z, null);
+			tab.setProjetil(newX, newY, z, this);
 			x = newX;
 			y = newY;
 		}else{
-			tab.adicionaConflito(x,y);
+			if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0)
+				tab.adicionaConflito(x,y,newX,newY);
 		}
 	}
 	
 	@Override
 	public int getDano() {
 		return dano;
+	}
+	
+	@Override
+	public int getEmConflito() {
+		return emConflito;
+	}
+	
+	@Override
+	public void setEmConflito(int e) {
+		emConflito=e;
 	}
 }

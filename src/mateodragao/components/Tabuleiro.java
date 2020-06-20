@@ -12,7 +12,7 @@ import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro implements ITabuleiro{
 	private IProjetil vProjetil[][][];
-	private int vConflitos [][];
+	private int vConflito[][];
 	private IPersonagem vPersonagem[][];
 	private int DragonPosition[];
 	private int numeroSoldados;
@@ -20,10 +20,10 @@ public class Tabuleiro implements ITabuleiro{
 	
 	public Tabuleiro() {
 		vProjetil = new IProjetil[16][16][2];
-		vConflitos=new int [20][2];
+		vConflito=new int [20][4];
 		for (int i=0; i<20; i++) {
 			for (int j=0; j<2; j++) {
-				vConflitos[i][j]= -1;
+				vConflito[i][j]= -1;
 			}
 		}
 		
@@ -56,15 +56,17 @@ public class Tabuleiro implements ITabuleiro{
 				}
 				
 				if (vProjetil[i][j][0] != null) 
-					vProjetil[i][j][0].move(this); 	
+					vProjetil[i][j][0].move(this); 
+				if (vProjetil[i][j][1] != null) 
+					vProjetil[i][j][1].move(this); 
+				
 			}
 		}
 		
 		//OBS:passagem pelo vetor de conflitos
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
-				
-			
+				resolveConflito(vConflito[atual][0],vConflito[atual][1],vConflito[atual][2],vConflito[atual][3]);
 			}
 		}
 		
@@ -120,19 +122,19 @@ public class Tabuleiro implements ITabuleiro{
 	}
 	
 	@Override
-	public IProjetil getProjetil(int x, int y) {
-		return vProjetil[x][y][0];
+	public IProjetil getProjetil(int x, int y, int z) {
+		return vProjetil[x][y][z];
 	}
 	
 	@Override //olhar bem
-	public void setProjetil(int x, int y, IProjetil Projetil) {
-		vProjetil[x][y][0] = Projetil;
+	public void setProjetil(int x, int y,int z, IProjetil Projetil) {
+		vProjetil[x][y][z] = Projetil;
 		
 	}
 	
 	@Override
-	public void putProjetil(int x, int y, IProjetil Projetil) {
-		vProjetil[x][y][0] = Projetil;
+	public void putProjetil(int x, int y, int z, IProjetil Projetil) {
+		vProjetil[x][y][z] = Projetil;
 	}
 	
 	@Override
@@ -156,12 +158,26 @@ public class Tabuleiro implements ITabuleiro{
 	}
 	
 	@Override
-	public void adicionaConflito(int x, int y) {
+	public void adicionaConflito(int x, int y,int newX, int newY) {
 		atual+=1;
-		vConflitos[atual][0]=x;
-		vConflitos[atual][1]=y;
-		
+		vConflito[atual][0]=x;
+		vConflito[atual][1]=y;
+		vConflito[atual][2]=newX;
+		vConflito[atual][3]=newY;
+		vProjetil[x][y][0].setEmConflito(1);
 	}
 	
+	public void resolveConflito (int x, int y, int newX, int newY) {
+		if (vProjetil[x][y][0].getDano()>vProjetil[newX][newY][0].getDano()) {
+			vProjetil[x][y][0].setEmConflito(0);
+			setProjetil(newX, newY, 0, vProjetil[x][y][0]);
+			setProjetil(x, y, 0, null);
+		}
+		else
+			setProjetil(x, y, 0, null);
+		
+		
+	}
+
 	
 }

@@ -1,17 +1,19 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.BolaDeEnergia;
-import mateodragao.components.projetil.BolaDeEnergia;
 import mateodragao.interfaces.ITabuleiro;
 
+import java.lang.Math;
+
 public class Mago extends Personagem{
+	{custo=15;
+	frequencia = 2;
+	movimento = 1;
+	passo = 1;}
+	
 	public Mago(int x, int y) {
 		super(x,y);
-		custo=15;
 		vida = 2;
-		frequencia = 2;
-		movimento = 1;
-		passo = 1;
 	}
 
 	@Override
@@ -26,21 +28,21 @@ public class Mago extends Personagem{
 		if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 			if (ver<0) {	//atira para cima
 				if(Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
-					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"ci"));
+					tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"ci"));
 				else {
 					if(hor<0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cies"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"cies"));
 					if(hor>0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cidi"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"cidi"));
 				}
 			}if (ver>0) {	//atira para baixo
 				if(Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
-					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bx"));
+					tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"bx"));
 				else {
 					if(hor<0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxes"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"bxes"));
 					if(hor>0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxdi"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"bxdi"));
 				}
 			}
 		}
@@ -48,21 +50,21 @@ public class Mago extends Personagem{
 		else {		//atira na horizontal
 			if (hor<0) {	//atira para esquerda
 				if(Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
-					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"es"));
+					tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"es"));
 				else {
 					if(ver<0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cies"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"cies"));
 					if(ver>0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxes"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"bxes"));
 				}
 			}if (hor>0) {	//atira para direita
 				if(Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
-					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"di"));
+					tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"di"));
 				else {
 					if(ver<0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cidi"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"cidi"));
 					if(ver>0)
-						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxdi"));
+						tab.putProjetil(x, y, 0, new BolaDeEnergia(newX,newY, 0,"bxdi"));
 				}
 			}
 		}

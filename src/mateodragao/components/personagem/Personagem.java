@@ -27,10 +27,14 @@ public abstract class Personagem implements IPersonagem {
 		//OBS: testar se não tá grudado no dragao
 		//OBS: se estiver total encurralado, melhor ver se ele já testou 
 			//...posições demais, e se sim, deixar parado
+		int tentativas=0;
 		if (freqM == 0) {
 			newX = x;
 			newY = y;
-			while (tab.getPeca(newX, newY) != null) {
+			
+			while (tab.getPeca(newX, newY) != null && tentativas<=30) {
+				tentativas+=1;
+				
 				int addX = alea.nextInt(upperbound)-1;
 				newX += passo*addX;
 				
@@ -41,17 +45,18 @@ public abstract class Personagem implements IPersonagem {
 					newX = x;
 					newY = y;
 					continue;
-				}
+				}if (Math.abs(tab.dragonPosition[0] || || || ||)
 			}
-			tab.setPeca(x, y, null);
-			tab.setPeca(newX, newY, this);
-			x = newX;
-			y = newY;
-			/*newPosition[0] = x;
-			newPosition[1] = y;*/ //nao sera mais necessario
-		}
-		freqM = (freqM + 1)%movimento;
-		return;
+			if (tentativas<=30) {
+				tab.setPeca(x, y, null);
+				tab.setPeca(newX, newY, this);
+				x = newX;
+				y = newY;
+				/*newPosition[0] = x;
+				newPosition[1] = y;*/ //nao sera mais necessario
+			}
+		}if (tentativas<=30) 
+			freqM = (freqM + 1)%movimento;
 	}
 
 	@Override
