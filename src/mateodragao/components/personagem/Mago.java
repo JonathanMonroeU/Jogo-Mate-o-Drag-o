@@ -1,6 +1,7 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.BolaDeEnergia;
+import mateodragao.components.projetil.BolaDeEnergia;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Mago extends Personagem{
@@ -15,21 +16,55 @@ public class Mago extends Personagem{
 
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
+		int hor,ver; //distância horizontal e vertical ao dragao
 		//ver sobre enum
 		//provavelmente vai ser um switch case abaixo
 		//tem q ver tbm a questao do Dragon Position
-		//int newPosition[] = new int[2];
-		//int newPosition[] = new int[2];
-		//parte do codigo q vai dar a nova posição
-		//sobre essa parte falta analisar algumas condicoes especificas de movimento
-		if (freqA == 0) {
-			
+		hor=(tab.getDragonPosition()[0])-x;
+		ver=(tab.getDragonPosition()[1])-y;
+		
+		if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
+			if (ver<0) {	//atira para cima
+				if(Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
+					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"ci"));
+				else {
+					if(hor<0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cies"));
+					if(hor>0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cidi"));
+				}
+			}if (ver>0) {	//atira para baixo
+				if(Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
+					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bx"));
+				else {
+					if(hor<0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxes"));
+					if(hor>0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxdi"));
+				}
+			}
 		}
-		freqA = (freqA + 1)%frequencia;
-		//metodo para inserção no tabuleiro
-		tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,direcaoA));
 		
-		
-		
+		else {		//atira na horizontal
+			if (hor<0) {	//atira para esquerda
+				if(Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
+					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"es"));
+				else {
+					if(ver<0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cies"));
+					if(ver>0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxes"));
+				}
+			}if (hor>0) {	//atira para direita
+				if(Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
+					tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"di"));
+				else {
+					if(ver<0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"cidi"));
+					if(ver>0)
+						tab.putProjetil(x, y, new BolaDeEnergia(newX,newY,"bxdi"));
+				}
+			}
+		}
 	}
 }
