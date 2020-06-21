@@ -14,4 +14,5 @@ public interface ITabuleiro {
 	public void setProjetil(int x, int y, int z, IProjetil Projetil);
 	public IProjetil getProjetil(int x, int y, int z);
 	public void adicionaConflito(int x, int y, int newX, int newY);
+	public void setDragonPosition(int x, int y);
 }

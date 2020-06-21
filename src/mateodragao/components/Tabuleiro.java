@@ -32,8 +32,12 @@ public class Tabuleiro implements ITabuleiro{
 		numeroSoldados = 0;
 		
 		vPersonagem[0][7] = new Dragao(0,7);
-		DragonPosition[0] = 0;
-		DragonPosition[1] = 7;
+		vPersonagem[0][8]=vPersonagem[0][7];
+		vPersonagem[1][7]=vPersonagem[0][7];
+		vPersonagem[1][8]=vPersonagem[0][7];
+		
+		DragonPosition[0] = 1;
+		DragonPosition[1] = 8;
 		atual=-1;
 	}
 	
@@ -63,20 +67,22 @@ public class Tabuleiro implements ITabuleiro{
 			}
 		}
 		
-		//OBS:passagem pelo vetor de conflitos
+		//OBS:passagem pelo vetor de conflitos de projeteis
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
 				resolveConflito(vConflito[atual][0],vConflito[atual][1],vConflito[atual][2],vConflito[atual][3]);
 			}
 		}
 		
-		//segunda passagem para analisar conflitos
+		//segunda passagem para analisar projeteis que acertaram
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) 
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][0],this);
+					setProjetil(i, j, 0, null);
 				if (vPersonagem[i][j] != null && vProjetil[i][j][1]!=null) 
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][1],this);
+					setProjetil(i, j, 1, null);
 	
 				if (vPersonagem[i][j].getVida()<=0) 
 					removePeca(i,j); 	//morte
@@ -155,6 +161,13 @@ public class Tabuleiro implements ITabuleiro{
 	public int[] getDragonPosition() {
 		return DragonPosition;
 	}
+	
+	@Override
+	public void setDragonPosition(int x, int y) {
+		DragonPosition[0]=x;
+		DragonPosition[1]=y;
+	}
+	
 	
 	@Override
 	public void adicionaConflito(int x, int y,int newX, int newY) {

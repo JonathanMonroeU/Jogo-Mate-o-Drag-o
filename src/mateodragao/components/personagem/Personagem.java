@@ -10,7 +10,7 @@ public abstract class Personagem implements IPersonagem {
 	protected static int custo, frequencia, movimento, passo;
 	protected int x, y, vida, freqM, freqA,newX,newY;
 	protected Random alea=new Random();
-	protected int upperbound=3 ,upperbound2=8;
+	protected int upperbound=3 ,upperbound2=12;
 	
 	public Personagem(int x, int y) {
 		this.x = x;
@@ -24,9 +24,6 @@ public abstract class Personagem implements IPersonagem {
 		//int newPosition[] = new int[2];
 		//parte do codigo q vai dar a nova posição
 		
-		//OBS: testar se não tá grudado no dragao
-		//OBS: se estiver total encurralado, melhor ver se ele já testou 
-			//...posições demais, e se sim, deixar parado
 		int tentativas=0;
 		if (freqM == 0) {
 			newX = x;
@@ -41,12 +38,35 @@ public abstract class Personagem implements IPersonagem {
 				int addY = alea.nextInt(upperbound)-1;
 				newY += passo*addY;
 				
-				if(newX<0 || newX>15 || newY<0 || newY>15) {
-					newX = x;
-					newY = y;
-					continue;
-				}if (Math.abs(tab.getDragonPosition()[0]-x)<=3 || || || ||)
+				
+				if (vida<4) { //se não for o dragão
+					if(newX<0 || newX>15 || newY<0 || newY>15) {
+						newX = x;
+						newY = y;
+						continue;
+					}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
+					||newY-tab.getDragonPosition()[1]<=-5||newX-tab.getDragonPosition()[1]>=4) {	
+						break;
+					}else 
+						newX = x;
+						newY = y;
+						continue;
+				}	
+				if (vida>4) { //se for o dragão
+					if(newX<1 || newX>15 || newY<1 || newY>15) {
+						newX = x;
+						newY = y;
+						continue;
+					}if (tab.getPeca(newX-1, newY)!=null && tab.getPeca(newX-1, newY)!=this ||
+					 tab.getPeca(newX, newY-1)!=null && tab.getPeca(newX, newY-1)!=this ||
+					 tab.getPeca(newX-1, newY-1)!=null && tab.getPeca(newX-1, newY-1)!=this) {
+						newX = x;
+						newY = y;
+						continue;
+					}
+				}
 			}
+			
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
 				tab.setPeca(newX, newY, this);
@@ -54,6 +74,14 @@ public abstract class Personagem implements IPersonagem {
 				y = newY;
 				/*newPosition[0] = x;
 				newPosition[1] = y;*/ //nao sera mais necessario
+				if (vida>4) //se for o dragão
+					tab.setDragonPosition(x,y);
+					tab.setPeca(x-1, y, null);
+					tab.setPeca(newX-1, newY, this);
+					tab.setPeca(x, y-1, null);
+					tab.setPeca(newX, newY-1, this);
+					tab.setPeca(x-1, y-1, null);
+					tab.setPeca(newX-1, newY-1, this);		
 			}
 		}if (tentativas<=30) 
 			freqM = (freqM + 1)%movimento;
