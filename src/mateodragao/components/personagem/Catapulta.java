@@ -1,20 +1,19 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.Pedra;
-import mateodragao.components.projetil.Pedra;
-
 import mateodragao.interfaces.ITabuleiro;
 
-import java.lang.Math;
-
 public class Catapulta extends Personagem{
+	private static final long serialVersionUID = 4060029049567589732L;
+	public static String DIRETORIO =
+		      Catapulta.class.getResource(".").getPath();
 	{custo=30;
 	frequencia = 3;
 	movimento = 0;
 	passo = 0;}
 	
 	public Catapulta(int x, int y) {
-		super(x,y);
+		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1;
 	}
 

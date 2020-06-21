@@ -3,15 +3,17 @@ package mateodragao.components.personagem;
 import mateodragao.components.projetil.Flecha;
 import mateodragao.interfaces.ITabuleiro;
 
-import java.lang.Math;
-
 public class Arqueiro extends Personagem{
+	private static final long serialVersionUID = -7136572584786964361L;
+	public static String DIRETORIO =
+		      Arqueiro.class.getResource(".").getPath();
 	{custo=5;
 	frequencia = 1;
 	movimento = 1;
-	passo = 2;}
+	passo = 2;
+	}
 	public Arqueiro(int x, int y) {
-		super(x,y);
+		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1;
 	}
 

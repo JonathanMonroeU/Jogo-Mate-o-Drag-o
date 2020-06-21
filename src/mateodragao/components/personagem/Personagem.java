@@ -2,17 +2,21 @@ package mateodragao.components.personagem;
 
 import java.util.Random;
 
-import mateodragao.interfaces.IProjetil;
+import mateodragao.PainelTabuleiro;
+import mateodragao.PecaIcon;
 import mateodragao.interfaces.IPersonagem;
+import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 
-public abstract class Personagem implements IPersonagem {
+public abstract class Personagem extends PecaIcon implements IPersonagem {
+	private static final long serialVersionUID = 5890715371330885791L;
 	protected static int custo, frequencia, movimento, passo;
 	protected int x, y, vida, freqM, freqA,newX,newY;
 	protected Random alea=new Random();
 	protected int upperbound=3 ,upperbound2=12;
 	
-	public Personagem(int x, int y) {
+	public Personagem(String caminho, int x, int y) {
+		super(caminho,x,y);
 		this.x = x;
 		this.y = y;
 		freqM = 0;
@@ -70,6 +74,7 @@ public abstract class Personagem implements IPersonagem {
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
 				tab.setPeca(newX, newY, this);
+				((PainelTabuleiro) tab).setElemento(x,y,(PecaIcon) this);
 				x = newX;
 				y = newY;
 				/*newPosition[0] = x;

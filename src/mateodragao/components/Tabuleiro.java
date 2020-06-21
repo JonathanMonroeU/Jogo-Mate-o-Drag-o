@@ -1,16 +1,19 @@
 package mateodragao.components;
 
+import mateodragao.PainelTabuleiro;
+import mateodragao.PecaIcon;
 import mateodragao.components.personagem.Arqueiro;
 import mateodragao.components.personagem.Catapulta;
 import mateodragao.components.personagem.Dragao;
 import mateodragao.components.personagem.Lanceiro;
 import mateodragao.components.personagem.Mago;
-import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.interfaces.IPersonagem;
+import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 
-public class Tabuleiro implements ITabuleiro{
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro{
+	private static final long serialVersionUID = -4923736996545875913L;
 	private IProjetil vProjetil[][][];
 	private int vConflito[][];
 	private IPersonagem vPersonagem[][];
@@ -19,6 +22,7 @@ public class Tabuleiro implements ITabuleiro{
 	private int atual;
 	
 	public Tabuleiro() {
+		super();
 		vProjetil = new IProjetil[16][16][2];
 		vConflito=new int [20][4];
 		for (int i=0; i<20; i++) {
@@ -32,6 +36,7 @@ public class Tabuleiro implements ITabuleiro{
 		numeroSoldados = 0;
 		
 		vPersonagem[0][7] = new Dragao(0,7);
+		setElemento(0,7,(PecaIcon) vPersonagem[0][7]);
 		vPersonagem[0][8]=vPersonagem[0][7];
 		vPersonagem[1][7]=vPersonagem[0][7];
 		vPersonagem[1][8]=vPersonagem[0][7];
@@ -140,6 +145,7 @@ public class Tabuleiro implements ITabuleiro{
 	@Override
 	public void putProjetil(int x, int y, int z, IProjetil Projetil) {
 		vProjetil[x][y][z] = Projetil;
+		setElemento(x,y,(PecaIcon) Projetil);
 	}
 	
 	@Override

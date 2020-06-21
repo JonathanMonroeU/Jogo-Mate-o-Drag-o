@@ -1,12 +1,15 @@
 package mateodragao.components.projetil;
 
+import mateodragao.PecaIcon;
 import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
-public class Projetil implements IProjetil{
+public class Projetil extends PecaIcon implements IProjetil{
+	private static final long serialVersionUID = -459082752300783478L;
 	protected int x, y, z, dano, velocidade, emConflito; 
 	protected String direcao;
 	
-	public Projetil(int x, int y, int z) {
+	public Projetil(String caminho, int x, int y, int z) {
+		super(caminho,x,y);
 		this.x = x;
 		this.y = y;
 		this.z = z;

@@ -6,12 +6,15 @@ import mateodragao.interfaces.ITabuleiro;
 import java.lang.Math;
 
 public class Dragao extends Personagem{
+	private static final long serialVersionUID = 1529623392218092957L;
+	public static String DIRETORIO =
+		      Dragao.class.getResource(".").getPath();
 	{frequencia = 1;
 	movimento = 1;
 	passo = 1;}
 	
 	public Dragao(int x, int y) {
-		super(x,y);
+		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1000;
 	}
 
