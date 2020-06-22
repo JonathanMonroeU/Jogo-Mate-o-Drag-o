@@ -29,23 +29,32 @@ public class Dragao extends Personagem{
 		//tem q ver tbm a questao do Dragon Position
 		for (int i=-4;i<=5;i++) {
 			if (i!=0 && i!=1) {
-				if (tab.getPeca(i,-4)!=null){
-					pX=i;
-					pY=-4;
-					break;
-				}if (tab.getPeca(i,4)!=null) {
-					pX=i;
-					pY=4;
-					break;
-				}if (tab.getPeca(-4,i)!=null) {
-					pX=-4;
-					pY=i;
-					break;
-				}if (tab.getPeca(4,i)!=null) {
-					pX=4;
-					pY=i;
-					break;
+				if (tab.getDragonPosition()[0]+i>=0 && tab.getDragonPosition()[0]+i<=15 && tab.getDragonPosition()[1]-4>=0){
+					if (tab.getPeca(tab.getDragonPosition()[0]+i,tab.getDragonPosition()[1]-4)!=null){
+						pX=tab.getDragonPosition()[0]+i;
+						pY=-tab.getDragonPosition()[1]-4;
+						break;
+					}
+				}
+				if (tab.getDragonPosition()[0]+i>=0 && tab.getDragonPosition()[0]+i<=15 && tab.getDragonPosition()[1]+4<=15){
+					if (tab.getPeca(tab.getDragonPosition()[0]+i,tab.getDragonPosition()[1]+4)!=null) {
+						pX=tab.getDragonPosition()[0]+i;
+						pY=tab.getDragonPosition()[1]+4;
+						break;
+					}
 				}	
+				if (tab.getDragonPosition()[0]-4>=0 && tab.getDragonPosition()[1]+i>=0 && tab.getDragonPosition()[1]+i<=15){
+					if (tab.getPeca(tab.getDragonPosition()[0]-4,tab.getDragonPosition()[1]+i)!=null) {
+						pX=tab.getDragonPosition()[0]-4;
+						pY=tab.getDragonPosition()[1]+i;
+						break;
+					}
+				}if (tab.getDragonPosition()[0]+4<=15 && tab.getDragonPosition()[1]+i>=0 && tab.getDragonPosition()[1]+i<=15){
+					if (tab.getPeca(tab.getDragonPosition()[0]+4,tab.getDragonPosition()[1]+i)!=null) {
+						pX=tab.getDragonPosition()[0]+4;
+						pY=tab.getDragonPosition()[1]+i;
+						break;
+					}	
 			}
 		}
 		if (pX!=-1) {
