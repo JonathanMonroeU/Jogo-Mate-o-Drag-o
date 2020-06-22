@@ -2,9 +2,7 @@ package mateodragao;
 
 import mateodragao.components.DataProvider;
 import mateodragao.components.Tabuleiro;
-import mateodragao.components.personagem.Arqueiro;
 import mateodragao.interfaces.IDataProvider;
-import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Application {
@@ -18,20 +16,14 @@ public class Application {
 		
 		JanelaJogo janela = new JanelaJogo(DIRETORIO+"grama.png", (PainelTabuleiro) tabuleiro);
 		
-		IPersonagem p1 = new Arqueiro(10,10);
-		janela.adicionaElemento((PecaIcon) p1);
-		p1.disparaProjetil(tabuleiro);
-		p1.move(tabuleiro);
-		p1.move(tabuleiro);
-		p1.move(tabuleiro);
-		p1.move(tabuleiro);
+		tabuleiro.putPeca(10, 10, 1);
 		
-		/*while(status) {
+		while(status) {
 			tabuleiro.mostraTabuleiro();
 			status = data.insertData();
-			tabuleiro.receiveData(data);
+			//tabuleiro.receiveData(data);
 		}	
-		tabuleiro.play();*/
+		tabuleiro.play();
 	}
 
 }

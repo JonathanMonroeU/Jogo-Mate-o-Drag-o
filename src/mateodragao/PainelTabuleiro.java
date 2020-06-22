@@ -5,6 +5,7 @@ import java.awt.GridLayout;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
@@ -26,6 +27,7 @@ public class PainelTabuleiro extends JPanel{
 	
 	public void setElemento(int x, int y, PecaIcon p) {
 		celulas[x][y].add(p);
+		SwingUtilities.updateComponentTreeUI(this);
 	}
 	/*private class NewContentPane extends JPanel{
 		private static final long serialVersionUID = -4416680110711209505L;

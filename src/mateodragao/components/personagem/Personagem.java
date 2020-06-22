@@ -74,19 +74,19 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
 				tab.setPeca(newX, newY, this);
-				((PainelTabuleiro) tab).setElemento(x,y,(PecaIcon) this);
+				//((PainelTabuleiro) tab).setElemento(newX,newY,(PecaIcon) this);
 				x = newX;
 				y = newY;
 				/*newPosition[0] = x;
 				newPosition[1] = y;*/ //nao sera mais necessario
 				if (vida>4) //se for o dragão
 					tab.setDragonPosition(x,y);
-					tab.setPeca(x-1, y, null);
+					/*tab.setPeca(x-1, y, null);
 					tab.setPeca(newX-1, newY, this);
 					tab.setPeca(x, y-1, null);
 					tab.setPeca(newX, newY-1, this);
 					tab.setPeca(x-1, y-1, null);
-					tab.setPeca(newX-1, newY-1, this);		
+					tab.setPeca(newX-1, newY-1, this);	*/	
 			}
 		}if (tentativas<=30) 
 			freqM = (freqM + 1)%movimento;

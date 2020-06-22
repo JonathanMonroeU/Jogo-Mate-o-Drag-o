@@ -24,7 +24,7 @@ public class DataProvider implements IDataProvider{
 		//texto mostrando os comandos, pontos
 		
 		//usuario insere o comando
-		int comando = 0; //está zero, mas depois vai colocar a classe de entrada de dados
+		int comando = 3; //está tres, mas depois vai colocar a classe de entrada de dados
 		
 		/*dependendo do comando realiza um dos metodos abaixo
 		 *retorna false caso deseja parar a inserção de dados*/
