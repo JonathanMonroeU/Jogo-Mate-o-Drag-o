@@ -19,7 +19,7 @@ public class Lanceiro extends Personagem{
 
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
-		if (freqA==0) {
+		if (freqA==0 || freqA==1) {
 			int hor,ver; //distância horizontal e vertical ao dragao
 			//ver sobre enum
 			//provavelmente vai ser um switch case abaixo
@@ -70,6 +70,6 @@ public class Lanceiro extends Personagem{
 					}
 				}
 			}
-		}freqA = (freqA + 1)%movimento;
+		}freqA = (freqA + 1)%frequencia;
 	}
 }

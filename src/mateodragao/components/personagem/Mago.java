@@ -70,6 +70,6 @@ public class Mago extends Personagem{
 					}
 				}
 			}
-		}freqA = (freqA + 1)%movimento;
+		}freqA = (freqA + 1)%frequencia;
 	}
 }
