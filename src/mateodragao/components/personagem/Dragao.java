@@ -22,42 +22,42 @@ public class Dragao extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			int hor,ver, //distância horizontal e vertical do dragão ao personagem
-				pX=-1,pY=-1;
+				pX=10,pY=10;
 			
 			//ver sobre enum
 			//provavelmente vai ser um switch case abaixo
 			//tem q ver tbm a questao do Dragon Position
 			for (int i=-4;i<=5;i++) {
 				if (i!=0 && i!=1) {
-					if (tab.getDragonPosition()[0]+i>=0 && tab.getDragonPosition()[0]+i<=15 && tab.getDragonPosition()[1]-4>=0){
-						if (tab.getPeca(tab.getDragonPosition()[0]+i,tab.getDragonPosition()[1]-4)!=null){
-							pX=tab.getDragonPosition()[0]+i;
-							pY=-tab.getDragonPosition()[1]-4;
+					if (x+i>=0 && x+i<=15 && y-4>=0){
+						if (tab.getPeca(x+i,y-4)!=null){
+							pX=x+i;
+							pY=-y-4;
 							break;
 						}
 					}
-					if (tab.getDragonPosition()[0]+i>=0 && tab.getDragonPosition()[0]+i<=15 && tab.getDragonPosition()[1]+4<=15){
-						if (tab.getPeca(tab.getDragonPosition()[0]+i,tab.getDragonPosition()[1]+4)!=null) {
-							pX=tab.getDragonPosition()[0]+i;
-							pY=tab.getDragonPosition()[1]+4;
+					if (x+i>=0 && x+i<=15 && y+4<=15){
+						if (tab.getPeca(x+i,y+4)!=null) {
+							pX=x+i;
+							pY=y+4;
 							break;
 						}
 					}	
-					if (tab.getDragonPosition()[0]-4>=0 && tab.getDragonPosition()[1]+i>=0 && tab.getDragonPosition()[1]+i<=15){
-						if (tab.getPeca(tab.getDragonPosition()[0]-4,tab.getDragonPosition()[1]+i)!=null) {
-							pX=tab.getDragonPosition()[0]-4;
-							pY=tab.getDragonPosition()[1]+i;
+					if (x-4>=0 && y+i>=0 && y+i<=15){
+						if (tab.getPeca(x-4,y+i)!=null) {
+							pX=x-4;
+							pY=y+i;
 							break;
 						}
-					}if (tab.getDragonPosition()[0]+4<=15 && tab.getDragonPosition()[1]+i>=0 && tab.getDragonPosition()[1]+i<=15){
-						if (tab.getPeca(tab.getDragonPosition()[0]+4,tab.getDragonPosition()[1]+i)!=null) {
-							pX=tab.getDragonPosition()[0]+4;
-							pY=tab.getDragonPosition()[1]+i;
+					}if (x+4<=15 && y+i>=0 && y+i<=15){
+						if (tab.getPeca(x+4,y+i)!=null) {
+							pX=x+4;
+							pY=y+i;
 							break;
 						}	
 				}
 			}
-			if (pX!=-1) {
+			if (pX!=10) {
 				hor=pX-x;
 				ver=pY-y;
 				
