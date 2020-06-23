@@ -157,7 +157,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		return vProjetil[x][y][z];
 	}
 	
-	@Override //olhar bem
+	@Override 
 	public void setProjetil(int x, int y,int z, IProjetil Projetil) {
 		vProjetil[x][y][z] = Projetil;
 		
