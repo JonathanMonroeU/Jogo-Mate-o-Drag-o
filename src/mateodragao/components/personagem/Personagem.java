@@ -2,7 +2,6 @@ package mateodragao.components.personagem;
 
 import java.util.Random;
 
-import mateodragao.PainelTabuleiro;
 import mateodragao.PecaIcon;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.IProjetil;

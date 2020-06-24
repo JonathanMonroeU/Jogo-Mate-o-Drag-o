@@ -2,16 +2,14 @@ package mateodragao;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
-import java.awt.FlowLayout;
 
 import javax.swing.JFrame;
-import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
 public class JanelaJogo extends JFrame{
 	private static final long serialVersionUID = -617666447542987164L;
-	private JPanel painelControle;
+	private PainelMenu painelMenu;
 	private PainelTabuleiro painelGrid;
 	
 	public JanelaJogo(String caminho, PainelTabuleiro tab) {
@@ -29,9 +27,8 @@ public class JanelaJogo extends JFrame{
 		
 		contentPane.add(painelGrid, BorderLayout.CENTER);
 		
-		painelControle = new JPanel();
-	    painelControle.setLayout(new FlowLayout());
-	    contentPane.add(painelControle, BorderLayout.SOUTH);
+		painelMenu = new PainelMenu();
+	    contentPane.add(painelMenu, BorderLayout.EAST);
 	    
 	    setVisible(true);
 	}
@@ -40,6 +37,8 @@ public class JanelaJogo extends JFrame{
 		painelGrid.setElemento(obj.getX(),obj.getY(),obj);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
+	
+	
 	/*private class NewContentPane extends JPanel{
 		private static final long serialVersionUID = -4416680110711209505L;
 
