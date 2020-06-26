@@ -109,71 +109,85 @@ public class Dragao extends Personagem{
 				int disparado=0;
 				while (disparado==0) {
 					int direcaoAlea = alea.nextInt(12);
+					System.out.println(disparado);
 					switch (direcaoAlea) {
 						case 0:
 							if (x-2>0 && y-2>0){
 								tab.putProjetil(x-2, y-2, 0, new BolaDeFogo(x-2, y-2, 0,"cies"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 1:
 							if (x-1>0 && y-2>0){
 								tab.putProjetil(x-1, y-2, 0, new BolaDeFogo(x-1, y-2, 0,"ci"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 2:
 							if (y-2>0){
 								tab.putProjetil(x, y-2, 0, new BolaDeFogo(x, y-2, 0,"ci"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 3:
 							if (x+1<15 && y-2>0){
 								tab.putProjetil(x+1, y-2, 0, new BolaDeFogo(x+1, y-2, 0,"cidi"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 4:
 							if (x+1<15 && y-1>0){
 								tab.putProjetil(x+1, y-1, 0, new BolaDeFogo(x+1, y-1, 0,"di"));
+								System.out.println("vida"+vida+direcaoAlea);
 								break;
 							}
 						case 5:
 							if (x+1<15){
 								tab.putProjetil(x+1, y, 0, new BolaDeFogo(x+1, y, 0,"di"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 6:
 							if (x+1<15 && y+1<15){
 								tab.putProjetil(x+1, y+1, 0, new BolaDeFogo(x+1, y+1, 0,"bxdi"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 7:
 							if (y+1<15){
 								tab.putProjetil(x, y+1, 0, new BolaDeFogo(x, y+1, 0,"bx"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 8:
 							if (x-1>0 && y+1<15){
 								tab.putProjetil(x-1, y+1, 0, new BolaDeFogo(x-1, y+1, 0,"bx"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 9:
 							if (x-2>0 && y+1<15){
 								tab.putProjetil(x-2, y+1, 0, new BolaDeFogo(x-2, y+1, 0,"bxes"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 10:
 							if (x-2>0){
 								tab.putProjetil(x-2, y, 0, new BolaDeFogo(x-2, y, 0,"es"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						case 11:
 							if (x-2>0 && y-1>0){
 								tab.putProjetil(x-2, y-1, 0, new BolaDeFogo(x-2, y-1, 0,"es"));
+								System.out.println("vida"+vida+direcaoAlea);
 								disparado=1;
 							}break;
 						}
+					System.out.println("fim: "+disparado);
 					}	
 				}	
 			}
-		}freqA = (freqA + 1)%frequencia;
+		}freqA = (freqA + 1)%frequencia;	System.out.println("fiiim");
 	}
 }

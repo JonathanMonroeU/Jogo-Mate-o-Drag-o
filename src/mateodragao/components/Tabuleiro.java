@@ -24,7 +24,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];
 	private int numeroSoldados;
 	private int atual;
-	private Metronomo metro = new Metronomo(2000,10);
+	private Metronomo metro = new Metronomo(2000,1);
 		
 	public Tabuleiro() {
 		super();
@@ -73,6 +73,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
 					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {
+						System.out.println("vida"+vPersonagem[i][j].getVida());
 						vPersonagem[i][j].setJaAgiu(1);
 						vPersonagem[i][j].disparaProjetil(this);
 						vPersonagem[i][j].move(this);
@@ -214,7 +215,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
 			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
 				projetil.setEmConflito(0);
-				projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
+				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
@@ -225,7 +226,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
 		}else {
 			projetil.setEmConflito(0);
-			projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
+			projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 			
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 			setProjetil(projetil.getX(), projetil.getY(), 0, null);

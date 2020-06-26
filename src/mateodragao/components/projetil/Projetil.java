@@ -54,7 +54,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 		}if (newX<0 || newX>15 || newY<0 || newY>15) 
 			tab.setProjetil(x, y, z, null);
 		else if (tab.getProjetil(newX, newY, z) == null) {	
-			jaAgiu=1;  System.out.println("dano:"+dano+" newX:"+newX+" newY:"+y);
+			jaAgiu=1;  System.out.println("movepro dano:"+dano+" newX:"+newX+" newY:"+y);
 			tab.setProjetil(x, y, z, null);
 			tab.setProjetil(newX, newY, z, this);
 			x = newX;
@@ -65,7 +65,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 				this.yConflito=newY;
 				tab.adicionaConflito(this);
 			}else {
-				jaAgiu=1;	System.out.println("dano:"+dano+" newX:"+newX+" newY:"+y);
+				jaAgiu=1;	System.out.println("move pro dano:"+dano+" newX:"+newX+" newY:"+y);
 				tab.setProjetil(x, y, z, null);
 				tab.setProjetil(newX, newY, z, this);
 				x = newX;
