@@ -89,6 +89,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				}
 				x = newX;
 				y = newY;
+				
+				//PARA VER AS POSIÇÕES 
+				System.out.println("vida:"+vida+" x:"+x+" y"+y);
 			}
 		}if (tentativas<=30) 
 			freqM = (freqM + 1)%movimento;
