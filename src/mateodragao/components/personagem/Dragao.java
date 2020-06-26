@@ -22,12 +22,12 @@ public class Dragao extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			int hor,ver, //distância horizontal e vertical do dragão ao personagem
-				pX=10,pY=10;
+				pX=10,pY=10; //posição
 			
 			//ver sobre enum
 			//provavelmente vai ser um switch case abaixo
 			//tem q ver tbm a questao do Dragon Position
-			for (int i=-4;i<=5;i++) {
+			for (int i=-5;i<=4;i++) {
 				if (i!=0 && i!=1) {
 					if (x+i>=0 && x+i<=15 && y-4>=0){
 						if (tab.getPeca(x+i,y-4)!=null){
@@ -63,7 +63,7 @@ public class Dragao extends Personagem{
 				
 				if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 					if (ver<0) {	//atira para cima
-						if (Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
+						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
 							tab.putProjetil(x, y-2, 0, new BolaDeFogo(x, y-2, 0,"ci"));
 						else {
 							if (hor<0)
@@ -72,7 +72,7 @@ public class Dragao extends Personagem{
 								tab.putProjetil(x+1, y-1, 0, new BolaDeFogo(x+1, y-1, 0,"cidi"));
 						}
 					}if (ver>0) {	//atira para baixo
-						if (Math.abs(hor/2)<=(Math.abs(ver)-Math.abs(hor))) 
+						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
 							tab.putProjetil(x, y+1, 0, new BolaDeFogo(x, y+1, 0,"bx"));
 						else {
 							if (hor<0)
@@ -85,7 +85,7 @@ public class Dragao extends Personagem{
 				
 				else {		//atira na horizontal
 					if (hor<0) {	//atira para esquerda
-						if (Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
+						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
 							tab.putProjetil(x-2, y, 0, new BolaDeFogo(x-2, y, 0,"es"));
 						else {
 							if (ver<0)
@@ -94,7 +94,7 @@ public class Dragao extends Personagem{
 								tab.putProjetil(x-1, y+1, 0, new BolaDeFogo(x-1, y+1, 0,"bxes"));
 						}
 					}if (hor>0) {	//atira para direita
-						if (Math.abs(ver/2)<=(Math.abs(hor)-Math.abs(ver))) 
+						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
 							tab.putProjetil(x+1, y, 0, new BolaDeFogo(x+1, y, 0,"di"));
 						else {
 							if (ver<0)
@@ -108,7 +108,7 @@ public class Dragao extends Personagem{
 			else {
 				int disparado=0;
 				while (disparado==0) {
-					int direcaoAlea = alea.nextInt(upperbound);
+					int direcaoAlea = alea.nextInt(12);
 					switch (direcaoAlea) {
 						case 0:
 							if (x-2>0 && y-2>0){

@@ -16,7 +16,7 @@ public class PainelTabuleiro extends JPanel{
 		setLayout(new GridLayout(16,16));
 		for (int i=0; i<16; i++) {
 	    	for (int j=0; j<16; j++) {
-	    		celulas[i][j] = new JPanel();
+	    		celulas[i][j] = new JPanel(); //new JPanel()
 	    		add(celulas[i][j]);
 	    		celulas[i][j].setLayout(null);
 	    		celulas[i][j].setBackground(Color.green);

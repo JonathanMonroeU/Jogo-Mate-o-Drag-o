@@ -5,7 +5,7 @@ import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 public class Projetil extends PecaIcon implements IProjetil{
 	private static final long serialVersionUID = -459082752300783478L;
-	protected int x, y, z, dano, velocidade, emConflito; 
+	protected int x, y, z, dano, velocidade, emConflito, xConflito, yConflito; 
 	protected String direcao;
 	
 	public Projetil(String caminho, int x, int y, int z) {
@@ -18,7 +18,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 	@Override
 	public void move(ITabuleiro tab) {
 		//parte do codigo q vai dar a nova posição
-		//pensar sobre o enum de direção
+
 		int newX=x;
 		int newY=y;
 		
@@ -59,10 +59,21 @@ public class Projetil extends PecaIcon implements IProjetil{
 			x = newX;
 			y = newY;
 		}else{
-			if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0)
-				tab.adicionaConflito(x,y,newX,newY);
+			if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0) {
+				this.xConflito=newX;
+				this.yConflito=newY;
+				tab.adicionaConflito(this);
+			}else {
+				tab.setProjetil(x, y, z, null);
+				tab.setProjetil(newX, newY, z, this);
+				x = newX;
+				y = newY;
+			}
 		}
 	}
+	
+	
+	//abaixo tem-se vários métodos para retornar e modificar os atributos privados do Projetil
 	
 	@Override
 	public int getDano() {
@@ -77,5 +88,26 @@ public class Projetil extends PecaIcon implements IProjetil{
 	@Override
 	public void setEmConflito(int e) {
 		emConflito=e;
+	}
+	
+	@Override
+	public int getX() {
+		return x;
+	}
+	
+	@Override
+	public int getY() {
+		return y;
+	}
+	
+	
+	@Override
+	public int getxConflito() {
+		return xConflito;
+	}
+	
+	@Override
+	public int getyConflito() {
+		return yConflito;
 	}
 }

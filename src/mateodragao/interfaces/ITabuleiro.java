@@ -13,6 +13,7 @@ public interface ITabuleiro {
 	public void receiveData(IDataProvider dataProvider);
 	public void setProjetil(int x, int y, int z, IProjetil Projetil);
 	public IProjetil getProjetil(int x, int y, int z);
-	public void adicionaConflito(int x, int y, int newX, int newY);
+	public void adicionaConflito(IProjetil projetil);
+	public void resolveConflito(IProjetil projetil);
 	public void setDragonPosition(int x, int y);
 }

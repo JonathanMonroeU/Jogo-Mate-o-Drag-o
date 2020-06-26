@@ -12,50 +12,53 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	protected static int custo, frequencia, movimento, passo;
 	protected int x, y, vida, freqM, freqA,newX,newY;
 	protected Random alea=new Random();
-	protected int upperbound=3 ,upperbound2=12;
 	
 	public Personagem(String caminho, int x, int y) {
 		super(caminho,x,y);
 		this.x = x;
 		this.y = y;
-		freqM = 0;
+		freqM = 0;	
 		freqA = 0;
 	}
 	
 	@Override
-	public void move(ITabuleiro tab) {
-		//int newPosition[] = new int[2];
-		//parte do codigo q vai dar a nova posição
+	public void move(ITabuleiro tab) {	//encontra a nova posição para o personagem e o move para ela
 		
-		int tentativas=0;
-		if (freqM == 0) {
+		int tentativas=0;	//número de tentativas de se mover começa zerado, se passar de 30 provavelmente é porque está encurralado, e então deixa para tentar novamente na próxima rodada
+		if (freqM == 0) {	//quando está zero, é a vez do personagem se mover
 			newX = x;
 			newY = y;
 			
-			while (tab.getPeca(newX, newY) != null && tentativas<=30) {
+			while (tab.getPeca(newX, newY) != null && tentativas<=30) {	//fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas
 				tentativas+=1;
+				newX = x;
+				newY = y;
 				
-				int addX = alea.nextInt(upperbound)-1;
-				newX += passo*addX;
+				int addX = alea.nextInt(3)-1;	//valor entre -1,0 e 1 a ser adicionado e/ou subtrai aleatoriamente em x e y
+				int addY = alea.nextInt(3)-1;
 				
-				int addY = alea.nextInt(upperbound)-1;
-				newY += passo*addY;
-				
-				
-				if (vida<4) { //se não for o dragão
+				if (vida<4) { //se não for o dragão, testa se a nova posição é coerente para o guerreiro 
+					newX += passo*addX;
+					newY += passo*addY;
 					if(newX<0 || newX>15 || newY<0 || newY>15) {
 						newX = x;
 						newY = y;
 						continue;
 					}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
-					||newY-tab.getDragonPosition()[1]<=-5||newX-tab.getDragonPosition()[1]>=4) {	
-						break;
-					}else 
+					||newY-tab.getDragonPosition()[1]<=-5||newY-tab.getDragonPosition()[1]>=4) {	
+						continue;
+					}else {
 						newX = x;
 						newY = y;
 						continue;
+					}
 				}	
-				if (vida>4) { //se for o dragão
+				if (vida>4) { //se for o dragão, testa se a nova posição é coerente para o dragão
+					int a=alea.nextInt(2);
+					if (a==0)
+						newX += passo*addX;
+					else	
+						newY += passo*addY;
 					if(newX<1 || newX>15 || newY<1 || newY>15) {
 						newX = x;
 						newY = y;
@@ -74,44 +77,41 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				tab.setPeca(x, y, null);
 				tab.setPeca(newX, newY, this);
 				//((PainelTabuleiro) tab).setElemento(newX,newY,(PecaIcon) this);
-				x = newX;
-				y = newY;
-				/*newPosition[0] = x;
-				newPosition[1] = y;*/ //nao sera mais necessario
-				if (vida>4) //se for o dragão
-					tab.setDragonPosition(x,y);
-					/*tab.setPeca(x-1, y, null);
+				
+				if (vida>4) {//se for o dragão
+					tab.setDragonPosition(newX,newY);
+					tab.setPeca(x-1, y, null);
 					tab.setPeca(newX-1, newY, this);
 					tab.setPeca(x, y-1, null);
 					tab.setPeca(newX, newY-1, this);
 					tab.setPeca(x-1, y-1, null);
-					tab.setPeca(newX-1, newY-1, this);	*/	
+					tab.setPeca(newX-1, newY-1, this);
+				}
+				x = newX;
+				y = newY;
 			}
 		}if (tentativas<=30) 
 			freqM = (freqM + 1)%movimento;
 	}
 
 	@Override
-	public void perdeVida(IProjetil Projetil, ITabuleiro tab) {
-		//pegar dano do Projetil e subtrair de vida
-		if (vida>4 && Projetil.getDano()>3)
-			vida -= Projetil.getDano();
-		else if (vida<4 && Projetil.getDano()<3)
-			vida -= Projetil.getDano();
+	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
+		//pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo
+		if (vida>4 && projetil.getDano()>3)
+			vida -= projetil.getDano();
+		else if (vida<4 && projetil.getDano()<3)
+			vida -= projetil.getDano();
 	}
 
 	@Override
 	public abstract void disparaProjetil(ITabuleiro tab);
-		//esse daqui talvez seja mais complicado de fazer
 	
-
-	public static int getCusto(){
-		return custo;
-	}
 	@Override
 	public int getVida() {
 		return vida;
 	}
 
-	
+	public static int getCusto(){
+		return custo;
+	}
 }

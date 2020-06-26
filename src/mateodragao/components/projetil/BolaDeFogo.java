@@ -8,7 +8,7 @@ public class BolaDeFogo extends Projetil{
 		super(DIRETORIO+"yoshi.png", x, y, z);
 		direcao=direcaoA;
 		dano=1;
-		velocidade= 1;
+		velocidade= 2;
 		emConflito=0;
 		
 	}

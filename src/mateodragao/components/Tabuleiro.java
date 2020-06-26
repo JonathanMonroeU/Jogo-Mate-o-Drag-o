@@ -19,7 +19,7 @@ import mateodragao.interfaces.ITabuleiro;
 public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
 	private static final long serialVersionUID = -4923736996545875913L;
 	private IProjetil vProjetil[][][];
-	private int vConflito[][];
+	private IProjetil vConflito[];
 	private IPersonagem vPersonagem[][];
 	private int DragonPosition[];
 	private int numeroSoldados;
@@ -29,26 +29,20 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public Tabuleiro() {
 		super();
 		vProjetil = new IProjetil[16][16][2];
-		vConflito=new int [20][4];
-		for (int i=0; i<20; i++) {
-			for (int j=0; j<2; j++) {
-				vConflito[i][j]= -1;
-			}
-		}
+		vConflito = new IProjetil [20];
 		
 		vPersonagem = new IPersonagem[16][16];
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
 		
-		//vPersonagem[0][7] = new Dragao(0,7);
-		vPersonagem[1][8] = new Dragao(1,8);
-		//vPersonagem[0][8]=vPersonagem[0][7];
-		//vPersonagem[1][7]=vPersonagem[0][7];
-		//vPersonagem[1][8]=vPersonagem[0][7];
-		setElemento(1,8,(PecaIcon) vPersonagem[1][8]);
+		vPersonagem[8][1] = new Dragao(8,1);
+		vPersonagem[7][1]=vPersonagem[7][1];
+		vPersonagem[8][0]=vPersonagem[8][0];
+		vPersonagem[7][0]=vPersonagem[7][0];
+		setElemento(8,1,(PecaIcon) vPersonagem[8][1]);
 		
-		DragonPosition[0] = 1;
-		DragonPosition[1] = 8;
+		DragonPosition[0] = 8;
+		DragonPosition[1] = 1;
 		atual=-1;
 		
 		metro.addActionListener(this);
@@ -90,8 +84,9 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		//OBS:passagem pelo vetor de conflitos de projeteis
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
-				resolveConflito(vConflito[atual][0],vConflito[atual][1],vConflito[atual][2],vConflito[atual][3]);
+				resolveConflito(vConflito[atual]);
 			}
+			atual=-1;
 		}
 		
 		//segunda passagem para analisar projeteis que acertaram
@@ -197,23 +192,21 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	
 	
 	@Override
-	public void adicionaConflito(int x, int y,int newX, int newY) {
+	public void adicionaConflito(IProjetil projetil) {
 		atual+=1;
-		vConflito[atual][0]=x;
-		vConflito[atual][1]=y;
-		vConflito[atual][2]=newX;
-		vConflito[atual][3]=newY;
-		vProjetil[x][y][0].setEmConflito(1);
+		vConflito[atual]=projetil;
+		projetil.setEmConflito(1);
 	}
 	
-	public void resolveConflito (int x, int y, int newX, int newY) {
-		if (vProjetil[x][y][0].getDano()>vProjetil[newX][newY][0].getDano()) {
-			vProjetil[x][y][0].setEmConflito(0);
-			setProjetil(newX, newY, 0, vProjetil[x][y][0]);
-			setProjetil(x, y, 0, null);
+	public void resolveConflito (IProjetil projetil) {
+		
+		if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+			projetil.setEmConflito(0);
+			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+			setProjetil(projetil.getY(), projetil.getY(), 0, null);
 		}
 		else
-			setProjetil(x, y, 0, null);
+			setProjetil(projetil.getX(), projetil.getY(), 0, null);
 		
 		
 	}
