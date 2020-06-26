@@ -5,4 +5,6 @@ public interface IPersonagem extends IMovimento{
 	public void disparaProjetil(ITabuleiro tab);
 	//static int getCusto();
 	public int getVida();
+	public int getJaAgiu();
+	public void setJaAgiu(int j);
 }

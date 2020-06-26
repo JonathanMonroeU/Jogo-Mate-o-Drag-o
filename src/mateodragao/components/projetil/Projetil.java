@@ -5,7 +5,7 @@ import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
 public class Projetil extends PecaIcon implements IProjetil{
 	private static final long serialVersionUID = -459082752300783478L;
-	protected int x, y, z, dano, velocidade, emConflito, xConflito, yConflito; 
+	protected int x, y, z, dano, velocidade, xConflito, yConflito, emConflito, jaAgiu; //jaAgiu indica se o projetil já fez sua ação naquele tempo do jogo; 
 	protected String direcao;
 	
 	public Projetil(String caminho, int x, int y, int z) {
@@ -54,6 +54,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 		}if (newX<0 || newX>15 || newY<0 || newY>15) 
 			tab.setProjetil(x, y, z, null);
 		else if (tab.getProjetil(newX, newY, z) == null) {	
+			jaAgiu=1;  System.out.println("dano:"+dano+" newX:"+newX+" ynewY"+y);
 			tab.setProjetil(x, y, z, null);
 			tab.setProjetil(newX, newY, z, this);
 			x = newX;
@@ -64,6 +65,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 				this.yConflito=newY;
 				tab.adicionaConflito(this);
 			}else {
+				jaAgiu=1;	System.out.println("dano:"+dano+" newX:"+newX+" ynewY"+y);
 				tab.setProjetil(x, y, z, null);
 				tab.setProjetil(newX, newY, z, this);
 				x = newX;
@@ -81,13 +83,23 @@ public class Projetil extends PecaIcon implements IProjetil{
 	}
 	
 	@Override
-	public int getEmConflito() {
-		return emConflito;
+	public int getJaAgiu() {
+		return jaAgiu;
 	}
 	
 	@Override
-	public void setEmConflito(int e) {
-		emConflito=e;
+	public void setJaAgiu(int j) {
+		jaAgiu=j;
+	}
+	
+	@Override
+	public void setX(int x) {
+		this.x=x;
+	}
+	
+	@Override
+	public void setY(int y) {
+		this.y=y;
 	}
 	
 	@Override
@@ -100,6 +112,15 @@ public class Projetil extends PecaIcon implements IProjetil{
 		return y;
 	}
 	
+	@Override
+	public int getEmConflito() {
+		return emConflito;
+	}
+	
+	@Override
+	public void setEmConflito(int e) {
+		emConflito=e;
+	}
 	
 	@Override
 	public int getxConflito() {
@@ -110,4 +131,6 @@ public class Projetil extends PecaIcon implements IProjetil{
 	public int getyConflito() {
 		return yConflito;
 	}
+	
+	
 }

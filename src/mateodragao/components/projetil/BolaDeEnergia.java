@@ -9,7 +9,7 @@ public class BolaDeEnergia extends Projetil{
 		direcao=direcaoA;
 		dano= 50;
 		velocidade= 2;
-		emConflito=0;
+		jaAgiu=0;
 	}
 	
 }

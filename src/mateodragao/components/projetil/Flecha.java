@@ -9,7 +9,7 @@ public class Flecha extends Projetil{
 		direcao=direcaoA;
 		dano= 15;
 		velocidade= 3;
-		emConflito=0;
+		jaAgiu=0;
 	}
 	
 }

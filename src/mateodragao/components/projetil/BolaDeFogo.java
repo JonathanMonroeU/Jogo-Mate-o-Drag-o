@@ -9,7 +9,7 @@ public class BolaDeFogo extends Projetil{
 		direcao=direcaoA;
 		dano=1;
 		velocidade= 2;
-		emConflito=0;
+		jaAgiu=0;
 		
 	}
 	

@@ -64,20 +64,30 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 
 	@Override
 	public void modificaTabuleiro() {
+		//primeiro faz as modificações necessárias no dragão
+				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
+				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
+		
 		//primeira passagem para mover e disparar projeteis
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
-					//vPersonagem[i][j].disparaProjetil(this);
-					vPersonagem[i][j].move(this);
-			
+					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {
+						vPersonagem[i][j].setJaAgiu(1);
+						vPersonagem[i][j].disparaProjetil(this);
+						vPersonagem[i][j].move(this);
+						
+					}
 				}
 				
-				if (vProjetil[i][j][0] != null) 
-					vProjetil[i][j][0].move(this); 
-				if (vProjetil[i][j][1] != null) 
-					vProjetil[i][j][1].move(this); 
-				
+				if (vProjetil[i][j][0] != null) {
+					if (vProjetil[i][j][0].getJaAgiu()==0)
+						vProjetil[i][j][0].move(this);
+					
+				}if (vProjetil[i][j][1] != null) {
+					if (vProjetil[i][j][1].getJaAgiu()==0)
+						vProjetil[i][j][1].move(this); 
+				}
 			}
 		}
 		
@@ -101,8 +111,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 					setProjetil(i, j, 1, null);
 				}
 				if (vPersonagem[i][j] != null) {
+					vPersonagem[i][j].setJaAgiu(0);
 					if (vPersonagem[i][j].getVida()<=0) 
 						removePeca(i,j); 	//morte
+					
 				}
 			}
 		}
@@ -199,16 +211,27 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	}
 	
 	public void resolveConflito (IProjetil projetil) {
-		
-		if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
+			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+				projetil.setEmConflito(0);
+				projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" ynewY"+projetil.getyConflito());
+				
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+				projetil.setX(projetil.getxConflito());
+				projetil.setY(projetil.getyConflito());
+			}
+			else
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+		}else {
 			projetil.setEmConflito(0);
+			projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" ynewY"+projetil.getyConflito());
+			
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
-			setProjetil(projetil.getY(), projetil.getY(), 0, null);
-		}
-		else
 			setProjetil(projetil.getX(), projetil.getY(), 0, null);
-		
-		
+			projetil.setX(projetil.getxConflito());
+			projetil.setY(projetil.getyConflito());
+			}
 	}
 
 	

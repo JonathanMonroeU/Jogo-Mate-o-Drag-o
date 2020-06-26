@@ -10,7 +10,7 @@ import mateodragao.interfaces.ITabuleiro;
 public abstract class Personagem extends PecaIcon implements IPersonagem {
 	private static final long serialVersionUID = 5890715371330885791L;
 	protected static int custo, frequencia, movimento, passo;
-	protected int x, y, vida, freqM, freqA,newX,newY;
+	protected int x, y, vida, freqM, freqA,newX,newY, jaAgiu; //jaAgiu indica se o personagem já fez seu movimento naquele tempo do jogo
 	protected Random alea=new Random();
 	
 	public Personagem(String caminho, int x, int y) {
@@ -19,6 +19,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 		this.y = y;
 		freqM = 0;	
 		freqA = 0;
+		jaAgiu=0;
 	}
 	
 	@Override
@@ -76,6 +77,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			if (tentativas<=30) {
 				tab.setPeca(x, y, null);
 				tab.setPeca(newX, newY, this);
+				this.jaAgiu=1;
 				//((PainelTabuleiro) tab).setElemento(newX,newY,(PecaIcon) this);
 				
 				if (vida>4) {//se for o dragão
@@ -106,6 +108,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			vida -= projetil.getDano();
 	}
 
+	//abaixo tem-se vários métodos para retornar e modificar os atributos privados do Projetil
 	@Override
 	public abstract void disparaProjetil(ITabuleiro tab);
 	
@@ -116,5 +119,15 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 
 	public static int getCusto(){
 		return custo;
+	}
+	
+	@Override
+	public int getJaAgiu(){
+		return jaAgiu;
+	}
+	
+	@Override
+	public void setJaAgiu(int j) {
+		jaAgiu=j;
 	}
 }

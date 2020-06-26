@@ -9,7 +9,7 @@ public class Lanca extends Projetil{
 		direcao=direcaoA;
 		dano= 25;
 		velocidade= 2;
-		emConflito=0;
+		jaAgiu=0;
 	}
 	
 }
