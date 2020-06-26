@@ -54,7 +54,8 @@ public class Dragao extends Personagem{
 							pX=x+4;
 							pY=y+i;
 							break;
-						}	
+						}
+					}
 				}
 			}
 			if (pX!=10) {
@@ -63,44 +64,60 @@ public class Dragao extends Personagem{
 				
 				if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 					if (ver<0) {	//atira para cima
-						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
-							tab.putProjetil(x, y-2, 0, new BolaDeFogo(x, y-2, 0,"ci"));
-						else {
-							if (hor<0)
-								tab.putProjetil(x-2, y-2, 0, new BolaDeFogo(x-2, y-2, 0,"cies"));
-							if (hor>0)
-								tab.putProjetil(x+1, y-1, 0, new BolaDeFogo(x+1, y-1, 0,"cidi"));
+						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+							tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"ci"));
+							tab.getProjetil(x,y-1,0).move(tab);
+						}else {
+							if (hor<0) {
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
+							}if (hor>0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi"));
+								tab.getProjetil(x,y,0).move(tab);
+							}
 						}
 					}if (ver>0) {	//atira para baixo
-						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
-							tab.putProjetil(x, y+1, 0, new BolaDeFogo(x, y+1, 0,"bx"));
-						else {
-							if (hor<0)
-								tab.putProjetil(x-1, y+1, 0, new BolaDeFogo(x-1, y+1, 0,"bxes"));
-							if (hor>0)
-								tab.putProjetil(x+1, y+1, 0, new BolaDeFogo(x+1, y+1, 0,"bxdi"));
+						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) { 
+							tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx"));
+							tab.getProjetil(x,y,0).move(tab);
+						}else {
+							if (hor<0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxes"));
+								tab.getProjetil(x,y,0).move(tab);
+							}if (hor>0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi"));
+								tab.getProjetil(x,y,0).move(tab);
+							}
 						}
 					}
 				}
 				
 				else {		//atira na horizontal
 					if (hor<0) {	//atira para esquerda
-						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-							tab.putProjetil(x-2, y, 0, new BolaDeFogo(x-2, y, 0,"es"));
-						else {
-							if (ver<0)
-								tab.putProjetil(x-2, y-2, 0, new BolaDeFogo(x-2, y-2, 0,"cies"));
-							if (ver>0)
-								tab.putProjetil(x-1, y+1, 0, new BolaDeFogo(x-1, y+1, 0,"bxes"));
+						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
+							tab.putProjetil(x-1,y, 0, new BolaDeFogo(x-1, y, 0,"es"));
+							tab.getProjetil(x-1,y,0).move(tab);
+						}else {
+							if (ver<0) {
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
+							}if (ver>0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxes"));
+								tab.getProjetil(x,y,0).move(tab);
+							}
 						}
 					}if (hor>0) {	//atira para direita
-						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-							tab.putProjetil(x+1, y, 0, new BolaDeFogo(x+1, y, 0,"di"));
-						else {
-							if (ver<0)
-								tab.putProjetil(x+1, y-1, 0, new BolaDeFogo(x+1, y-1, 0,"cidi"));
-							if (ver>0)
-								tab.putProjetil(x+1, y+1, 0, new BolaDeFogo(x+1, y+1, 0,"bxdi"));
+						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
+							tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di"));
+							tab.getProjetil(x,y,0).move(tab);
+						}else {
+							if (ver<0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi"));
+								tab.getProjetil(x,y,0).move(tab);
+							}if (ver>0) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi"));
+								tab.getProjetil(x,y,0).move(tab);
+							}
 						}
 					}
 				}
@@ -109,85 +126,82 @@ public class Dragao extends Personagem{
 				int disparado=0;
 				while (disparado==0) {
 					int direcaoAlea = alea.nextInt(12);
-					System.out.println(disparado);
 					switch (direcaoAlea) {
 						case 0:
 							if (x-2>0 && y-2>0){
-								tab.putProjetil(x-2, y-2, 0, new BolaDeFogo(x-2, y-2, 0,"cies"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
 								disparado=1;
 							}break;
 						case 1:
 							if (x-1>0 && y-2>0){
-								tab.putProjetil(x-1, y-2, 0, new BolaDeFogo(x-1, y-2, 0,"ci"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"ci"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
 								disparado=1;
 							}break;
 						case 2:
 							if (y-2>0){
-								tab.putProjetil(x, y-2, 0, new BolaDeFogo(x, y-2, 0,"ci"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"ci"));
+								tab.getProjetil(x,y-1,0).move(tab);
 								disparado=1;
 							}break;
 						case 3:
 							if (x+1<15 && y-2>0){
-								tab.putProjetil(x+1, y-2, 0, new BolaDeFogo(x+1, y-2, 0,"cidi"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"cidi"));
+								tab.getProjetil(x,y-1,0).move(tab);
 								disparado=1;
 							}break;
 						case 4:
 							if (x+1<15 && y-1>0){
-								tab.putProjetil(x+1, y-1, 0, new BolaDeFogo(x+1, y-1, 0,"di"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"di"));
+								tab.getProjetil(x,y-1,0).move(tab);
 								break;
 							}
 						case 5:
 							if (x+1<15){
-								tab.putProjetil(x+1, y, 0, new BolaDeFogo(x+1, y, 0,"di"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di"));
+								tab.getProjetil(x,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 6:
 							if (x+1<15 && y+1<15){
-								tab.putProjetil(x+1, y+1, 0, new BolaDeFogo(x+1, y+1, 0,"bxdi"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi"));
+								tab.getProjetil(x,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 7:
 							if (y+1<15){
-								tab.putProjetil(x, y+1, 0, new BolaDeFogo(x, y+1, 0,"bx"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx"));
+								tab.getProjetil(x,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 8:
 							if (x-1>0 && y+1<15){
-								tab.putProjetil(x-1, y+1, 0, new BolaDeFogo(x-1, y+1, 0,"bx"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"bx"));
+								tab.getProjetil(x-1,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 9:
 							if (x-2>0 && y+1<15){
-								tab.putProjetil(x-2, y+1, 0, new BolaDeFogo(x-2, y+1, 0,"bxes"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"bxes"));
+								tab.getProjetil(x-1,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 10:
 							if (x-2>0){
-								tab.putProjetil(x-2, y, 0, new BolaDeFogo(x-2, y, 0,"es"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"es"));
+								tab.getProjetil(x-1,y,0).move(tab);
 								disparado=1;
 							}break;
 						case 11:
 							if (x-2>0 && y-1>0){
-								tab.putProjetil(x-2, y-1, 0, new BolaDeFogo(x-2, y-1, 0,"es"));
-								System.out.println("vida"+vida+direcaoAlea);
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"es"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
 								disparado=1;
 							}break;
-						}
-					System.out.println("fim: "+disparado);
-					}	
+					}
 				}	
-			}
-		}freqA = (freqA + 1)%frequencia;	System.out.println("fiiim");
+			}	
+		}freqA = (freqA + 1)%frequencia;	
 	}
 }

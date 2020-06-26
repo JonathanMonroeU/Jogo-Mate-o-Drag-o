@@ -24,7 +24,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];
 	private int numeroSoldados;
 	private int atual;
-	private Metronomo metro = new Metronomo(2000,1);
+	private Metronomo metro = new Metronomo(2000,2);
 		
 	public Tabuleiro() {
 		super();
@@ -64,6 +64,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 
 	@Override
 	public void modificaTabuleiro() {
+		System.out.println("----------------------------");
+		
 		//primeiro faz as modificações necessárias no dragão
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
@@ -73,7 +75,6 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
 					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {
-						System.out.println("vida"+vPersonagem[i][j].getVida());
 						vPersonagem[i][j].setJaAgiu(1);
 						vPersonagem[i][j].disparaProjetil(this);
 						vPersonagem[i][j].move(this);
@@ -115,8 +116,14 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 					vPersonagem[i][j].setJaAgiu(0);
 					if (vPersonagem[i][j].getVida()<=0) 
 						removePeca(i,j); 	//morte
+				}	
+				if (vProjetil[i][j][0] != null) 
+					vProjetil[i][j][0].setJaAgiu(0);
+						
 					
-				}
+				if (vProjetil[i][j][1] != null) 
+					vProjetil[i][j][1].setJaAgiu(0);
+				
 			}
 		}
 		
