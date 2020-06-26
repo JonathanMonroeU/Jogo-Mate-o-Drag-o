@@ -214,7 +214,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
 			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
 				projetil.setEmConflito(0);
-				projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" ynewY"+projetil.getyConflito());
+				projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
@@ -225,7 +225,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
 		}else {
 			projetil.setEmConflito(0);
-			projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" ynewY"+projetil.getyConflito());
+			projetil.setJaAgiu(1);		System.out.println("dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 			
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 			setProjetil(projetil.getX(), projetil.getY(), 0, null);
