@@ -22,11 +22,8 @@ public class Dragao extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			int hor,ver, //distância horizontal e vertical do dragão ao personagem
-				pX=10,pY=10; //posição
+				pX=100,pY=100; //posição
 			
-			//ver sobre enum
-			//provavelmente vai ser um switch case abaixo
-			//tem q ver tbm a questao do Dragon Position
 			for (int i=-5;i<=4;i++) {
 				if (i!=0 && i!=1) {
 					if (x+i>=0 && x+i<=15 && y-4>=0){
@@ -58,7 +55,7 @@ public class Dragao extends Personagem{
 					}
 				}
 			}
-			if (pX!=10) {
+			if (pX!=100) {
 				hor=pX-x;
 				ver=pY-y;
 				

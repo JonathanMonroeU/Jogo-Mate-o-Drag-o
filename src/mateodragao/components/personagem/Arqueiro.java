@@ -21,9 +21,7 @@ public class Arqueiro extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			int hor,ver; //distância horizontal e vertical ao dragao
-			//ver sobre enum
-			//provavelmente vai ser um switch case abaixo
-			//tem q ver tbm a questao do Dragon Position
+			
 			hor=(tab.getDragonPosition()[0])-x;
 			ver=(tab.getDragonPosition()[1])-y;
 			

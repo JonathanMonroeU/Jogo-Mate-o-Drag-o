@@ -21,9 +21,8 @@ public class Projetil extends PecaIcon implements IProjetil{
 
 		int newX=x;
 		int newY=y;
-		
 		switch(direcao) {
-		case "cm":
+		case "ci":
 			newY-=velocidade;
 			break;
 		case "bx":
@@ -35,11 +34,11 @@ public class Projetil extends PecaIcon implements IProjetil{
 		case "di":
 			newX+=velocidade;
 			break;
-		case "cmes":
+		case "cies":
 			newX-=velocidade;
 			newY-=velocidade;
 			break;
-		case "cmdi":
+		case "cidi":
 			newX+=velocidade;
 			newY-=velocidade;
 			break;
@@ -51,21 +50,24 @@ public class Projetil extends PecaIcon implements IProjetil{
 			newX+=velocidade;
 			newY+=velocidade;
 			break;	
-		}if (newX<0 || newX>15 || newY<0 || newY>15) 
-			tab.setProjetil(x, y, z, null);
-		else if (tab.getProjetil(newX, newY, z) == null) {	
-			jaAgiu=1;  System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+y);
+		}	
+		
+		if (newX<0 || newX>15 || newY<0 || newY>15) {
+			tab.setProjetil(x, y, z, null);	System.out.println("saiu");
+		}else if (tab.getProjetil(newX, newY, z) == null) {	
+			jaAgiu=1;  System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+newY);
 			tab.setProjetil(x, y, z, null);
 			tab.setProjetil(newX, newY, z, this);
 			x = newX;
 			y = newY;
 		}else{
 			if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0) {
+				System.out.println("entrou em conflito");
 				this.xConflito=newX;
 				this.yConflito=newY;
 				tab.adicionaConflito(this);
 			}else {
-				jaAgiu=1;	System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+y);
+				jaAgiu=1;	System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+newY);
 				tab.setProjetil(x, y, z, null);
 				tab.setProjetil(newX, newY, z, this);
 				x = newX;

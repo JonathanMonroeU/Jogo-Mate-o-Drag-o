@@ -24,7 +24,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];
 	private int numeroSoldados;
 	private int atual;
-	private Metronomo metro = new Metronomo(2000,2);
+	private Metronomo metro = new Metronomo(2000,4);
 		
 	public Tabuleiro() {
 		super();
@@ -66,15 +66,15 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void modificaTabuleiro() {
 		System.out.println("----------------------------");
 		
-		//primeiro faz as modificações necessárias no dragão
+		//primeiro faz as modificações necessárias no dragão, dispara a bola de fogo e move
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
 		
-		//primeira passagem para mover e disparar projeteis
+		//primeira passagem por todas as posições do tabuleiro para mover personagens e projeteis e disparar projeteis
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
-					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {
+					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {	//se o personagem não for o dragão e não tiver agido ainda nesse tempo do jogo
 						vPersonagem[i][j].setJaAgiu(1);
 						vPersonagem[i][j].disparaProjetil(this);
 						vPersonagem[i][j].move(this);
@@ -93,7 +93,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			}
 		}
 		
-		//OBS:passagem pelo vetor de conflitos de projeteis
+		//passagem pelo vetor de conflitos de projeteis
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
 				resolveConflito(vConflito[atual]);
@@ -101,7 +101,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			atual=-1;
 		}
 		
-		//segunda passagem para analisar projeteis que acertaram
+		//segunda passagem por todo o tabuleiro para analisar projeteis que acertaram personagens
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) { 
