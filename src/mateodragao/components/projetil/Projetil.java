@@ -21,6 +21,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 
 		int newX=x;
 		int newY=y;
+	
 		switch(direcao) {
 		case "ci":
 			newY-=velocidade;

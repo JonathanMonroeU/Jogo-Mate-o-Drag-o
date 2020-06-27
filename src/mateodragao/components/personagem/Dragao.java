@@ -21,6 +21,7 @@ public class Dragao extends Personagem{
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
+			System.out.println("dispara");
 			int hor,ver, //distância horizontal e vertical do dragão ao personagem
 				pX=100,pY=100; //posição
 			

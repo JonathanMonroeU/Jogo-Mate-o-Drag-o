@@ -24,7 +24,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];
 	private int numeroSoldados;
 	private int atual;
-	private Metronomo metro = new Metronomo(2000,4);
+	private Metronomo metro = new Metronomo(500,10);
 		
 	public Tabuleiro() {
 		super();

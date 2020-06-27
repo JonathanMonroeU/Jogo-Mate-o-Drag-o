@@ -20,6 +20,7 @@ public class Arqueiro extends Personagem{
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
+			System.out.println("dispara");
 			int hor,ver; //distância horizontal e vertical ao dragao
 			
 			hor=(tab.getDragonPosition()[0])-x;
