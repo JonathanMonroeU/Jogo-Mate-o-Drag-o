@@ -1,5 +1,6 @@
 package mateodragao.components.projetil;
 
+import mateodragao.PainelTabuleiro;
 import mateodragao.PecaIcon;
 import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
@@ -66,6 +67,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 				System.out.println("entrou em conflito");
 				this.xConflito=newX;
 				this.yConflito=newY;
+				((PainelTabuleiro) tab).removeElemento(x,y,(PecaIcon)this);
 				tab.adicionaConflito(this);
 			}else {
 				jaAgiu=1;	System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+newY);

@@ -9,8 +9,7 @@ import mateodragao.interfaces.ITabuleiro;
 
 public abstract class Personagem extends PecaIcon implements IPersonagem {
 	private static final long serialVersionUID = 5890715371330885791L;
-	protected static int custo, frequencia, movimento, passo;
-	protected int x, y, vida, freqM, freqA,newX,newY, jaAgiu; //jaAgiu indica se o personagem já fez seu movimento naquele tempo do jogo
+	protected int x, y, vida, freqM, freqA,newX,newY, frequencia, movimento, passo, jaAgiu; //jaAgiu indica se o personagem já fez seu movimento naquele tempo do jogo
 	protected Random alea=new Random();
 	
 	public Personagem(String caminho, int x, int y) {
@@ -117,9 +116,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 		return vida;
 	}
 
-	public static int getCusto(){
+	/*public static int getCusto(){
 		return custo;
-	}
+	}*/
 	
 	@Override
 	public int getJaAgiu(){

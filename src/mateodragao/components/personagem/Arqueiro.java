@@ -7,14 +7,18 @@ public class Arqueiro extends Personagem{
 	private static final long serialVersionUID = -7136572584786964361L;
 	public static String DIRETORIO =
 		      Arqueiro.class.getResource(".").getPath();
-	{custo=5;
+	public static int custo = 5;
+	/*{custo=5;
 	frequencia = 1;
 	movimento = 1;
 	passo = 2;
-	}
+	}*/
 	public Arqueiro(int x, int y) {
-		super(DIRETORIO+"yoshi.png",x,y);
+		super(DIRETORIO+"archer.png",x,y);
 		vida = 1;
+		frequencia = 1;
+		movimento = 1;
+		passo = 2;
 	}
 
 	@Override

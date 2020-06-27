@@ -5,7 +5,7 @@ public class BolaDeFogo extends Projetil{
 	public static String DIRETORIO =
 		      BolaDeFogo.class.getResource(".").getPath();
 	public BolaDeFogo(int x, int y, int z,String direcaoA) {
-		super(DIRETORIO+"yoshi.png", x, y, z);
+		super(DIRETORIO+"fogo.jpg", x, y, z);
 		direcao=direcaoA;
 		dano=1;
 		velocidade= 2;

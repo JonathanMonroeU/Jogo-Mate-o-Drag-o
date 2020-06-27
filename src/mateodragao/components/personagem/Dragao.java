@@ -9,13 +9,16 @@ public class Dragao extends Personagem{
 	private static final long serialVersionUID = 1529623392218092957L;
 	public static String DIRETORIO =
 		      Dragao.class.getResource(".").getPath();
-	{frequencia = 1;
+	/*{frequencia = 1;
 	movimento = 1;
-	passo = 1;}
+	passo = 1;}*/
 	
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1000;
+		frequencia = 1;
+		movimento = 1;
+		passo = 1;
 	}
 
 	@Override

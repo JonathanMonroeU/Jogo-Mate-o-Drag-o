@@ -1,5 +1,6 @@
 package mateodragao;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -7,22 +8,34 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.text.ParseException;
 
+import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.text.MaskFormatter;
+
+import mateodragao.interfaces.IDataProvider;
+import mateodragao.interfaces.ITabuleiro;
 
 public class PainelMenu extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 6299309752925290728L;
-	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado;
+	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos;
 	private JButton addPersonagem, remPersonagem, iniciar, adicionar, remover;
 	private JButton arqueiro, lanceiro, mago, catapulta;
-	private JFormattedTextField TextXA, TextYA, TextXR, TextYR;
+	private JTextField textXA, textYA, textXR, textYR;
+	private JLabel pontos;
+	private ITabuleiro tab;
+	private IDataProvider data;
+	private int comando, x, y;
 	
-	public PainelMenu() {
+	public PainelMenu(ITabuleiro tab, IDataProvider data) {
+		this.tab = tab;
+		this.data = data;
+		System.out.println(data.getPontos());
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		JLabel titulo = new JLabel("Jogo Mate o Dragão");
 		titulo.setFont(new Font("Arial", Font.BOLD, 20));
@@ -49,18 +62,18 @@ public class PainelMenu extends JPanel implements ActionListener{
 		
 		try {
 			MaskFormatter mask = new MaskFormatter("##");
-			TextXA = new JFormattedTextField(mask);
-			TextYA = new JFormattedTextField(mask);
-			TextXR = new JFormattedTextField(mask);
-			TextYR = new JFormattedTextField(mask);
+			textXA = new JTextField();
+			textYA = new JTextField();
+			textXR = new JTextField();
+			textYR = new JTextField();
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		
-		TextXA.setPreferredSize(new Dimension(40,20));
-		TextYA.setPreferredSize(new Dimension(40,20));
-		TextXR.setPreferredSize(new Dimension(40,20));
-		TextYR.setPreferredSize(new Dimension(40,20));
+		textXA.setPreferredSize(new Dimension(40,20));
+		textYA.setPreferredSize(new Dimension(40,20));
+		textXR.setPreferredSize(new Dimension(40,20));
+		textYR.setPreferredSize(new Dimension(40,20));
 		
 		adicionar = new JButton("Adicionar");
 		adicionar.addActionListener(this);
@@ -73,10 +86,10 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelTextA.setPreferredSize(new Dimension(300,300));
 		painelTextA.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextA.add(new JLabel("Horizontal:"));
-		painelTextA.add(TextXA);
+		painelTextA.add(textXA);
 		painelTextA.add(Box.createRigidArea(new Dimension(10,0)));
 		painelTextA.add(new JLabel("Vertical:"));
-		painelTextA.add(TextYA);
+		painelTextA.add(textYA);
 		painelTextA.add(adicionar);
 		
 		painelTextR = new JPanel();
@@ -84,10 +97,10 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelTextR.setPreferredSize(new Dimension(300,300));
 		painelTextR.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextR.add(new JLabel("Horizontal:"));
-		painelTextR.add(TextXR);
+		painelTextR.add(textXR);
 		painelTextR.add(Box.createRigidArea(new Dimension(10,0)));
 		painelTextR.add(new JLabel("Vertical:"));
-		painelTextR.add(TextYR);
+		painelTextR.add(textYR);
 		painelTextR.add(remover);
 		
 		arqueiro = new JButton("Arqueiro");
@@ -112,6 +125,23 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelSoldado.add(lanceiro);
 		painelSoldado.add(mago);
 		painelSoldado.add(catapulta);
+		
+		painelPontos = new JPanel();
+		painelPontos.setLayout(new BoxLayout(painelPontos, BoxLayout.Y_AXIS));
+		painelPontos.setPreferredSize(new Dimension(300,50));
+		JLabel titulo5 = new JLabel("PONTOS");
+		titulo5.setAlignmentX(CENTER_ALIGNMENT);
+		pontos = new JLabel(Integer.toString(data.getPontos()));
+		pontos.setAlignmentX(CENTER_ALIGNMENT);
+		pontos.setHorizontalAlignment(0);
+		pontos.setMaximumSize(new Dimension(50,30));
+		pontos.setBorder(BorderFactory.createLineBorder(Color.black));
+		painelPontos.setAlignmentX(CENTER_ALIGNMENT);
+		painelPontos.add(titulo5);
+		painelPontos.add(pontos);
+		add(Box.createRigidArea(new Dimension(0,20)));
+		add(painelPontos);
+		add(Box.createRigidArea(new Dimension(0,40)));
 		
 		painelInicial = new JPanel();
 		painelInicial.setLayout(new BoxLayout(painelInicial, BoxLayout.Y_AXIS));
@@ -145,6 +175,8 @@ public class PainelMenu extends JPanel implements ActionListener{
 		add(painelRemocao);
 		painelRemocao.setVisible(false);
 		
+		
+		
 	}
 
 	@Override
@@ -160,16 +192,59 @@ public class PainelMenu extends JPanel implements ActionListener{
 		}
 		else if (e.getSource() == iniciar) {
 			painelInicial.setVisible(false);
+			tab.play();
 		}
 		else if (e.getSource() == arqueiro) {
 			painelSoldado.setVisible(false);
 			painelTextA.setVisible(true);
+			comando = 1;
 		}
-		else if (e.getSource() == adicionar || e.getSource() == remover) {
+		else if (e.getSource() == lanceiro) {
+			painelSoldado.setVisible(false);
+			painelTextA.setVisible(true);
+			comando = 2;
+		}
+		else if (e.getSource() == mago) {
+			painelSoldado.setVisible(false);
+			painelTextA.setVisible(true);
+			comando = 3;
+		}
+		else if (e.getSource() == catapulta) {
+			painelSoldado.setVisible(false);
+			painelTextA.setVisible(true);
+			comando = 4;
+		}
+		else if (e.getSource() == adicionar) {
 			painelAdicao.setVisible(false);
-			painelRemocao.setVisible(false);
+			//painelRemocao.setVisible(false);
 			painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
+			
+			x = Integer.parseInt(textXA.getText());
+			y = Integer.parseInt(textYA.getText());
+			
+			data.inserePersonagem(comando, x, y); //fazer try/catch
+			tab.receiveData(data);
+			System.out.println(data.getPontos());
+			textXA.setText(null);
+			textYA.setText(null);
+			pontos.setText(Integer.toString(data.getPontos()));
 		}
+		else if (e.getSource() == remover) {
+			//painelAdicao.setVisible(false);
+			painelRemocao.setVisible(false);
+			//painelTextA.setVisible(false);
+			painelInicial.setVisible(true);
+			
+			x = Integer.parseInt(textXR.getText());
+			y = Integer.parseInt(textYR.getText());
+			data.removePersonagem(x, y); //fazer try/catch
+			tab.receiveData(data);
+			
+			textXR.setText(null);
+			textYR.setText(null);
+			pontos.setText(Integer.toString(data.getPontos()));
+		}
+		SwingUtilities.updateComponentTreeUI(this);
 	}
 }

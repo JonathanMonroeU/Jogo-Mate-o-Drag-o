@@ -18,13 +18,15 @@ import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
 	private static final long serialVersionUID = -4923736996545875913L;
+	public static String DIRETORIO = Dragao.class.getResource(".").getPath();
 	private IPersonagem vPersonagem[][];		//matriz para guardar os personagens nas suas devidas posições no campo
 	private IProjetil vProjetil[][][];			//matriz de projeteis lançados pelos personagens, com 3 dimensões pois a terceira serve para guardar uma segunda camada de projeteis, que são as pedras de catapultas 
 	private IProjetil vConflito[];				//vetor que guarda os projeteis que estão na mesma posição, para comparar quem tem o maior dano
 	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
 	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
 	private int atual;							
-	private Metronomo metro = new Metronomo(500,10);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private Metronomo metro = new Metronomo(1000,50);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private PecaIcon compl1,compl2,compl3;
 	
 	public Tabuleiro() {
 		super();
@@ -36,10 +38,16 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		numeroSoldados = 0;
 		
 		vPersonagem[8][1] = new Dragao(8,1);
-		vPersonagem[7][1]=vPersonagem[7][1];
-		vPersonagem[8][0]=vPersonagem[8][0];
-		vPersonagem[7][0]=vPersonagem[7][0];
+		vPersonagem[7][1]=vPersonagem[8][1];
+		vPersonagem[7][0]=vPersonagem[8][1];
+		vPersonagem[8][0]=vPersonagem[8][1];
+		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",7,1);
+		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",8,0);
+		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",7,0);
 		setElemento(8,1,(PecaIcon) vPersonagem[8][1]);
+		setElemento(7,1,compl1);
+		setElemento(7,0,compl2);
+		setElemento(8,0,compl3);
 		
 		DragonPosition[0] = 8;
 		DragonPosition[1] = 1;
@@ -70,6 +78,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		//primeiro faz as modificações necessárias no dragão, dispara a bola de fogo e move
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
+				/*essa linha é pra ajudar*/ setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
+				setElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
+				setElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
+				setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
 		
 		//primeira passagem por todas as posições do tabuleiro para mover personagens e projeteis e disparar projeteis
 		for (int i=0; i<16; i++) {
@@ -145,7 +157,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void setPeca(int x, int y, IPersonagem peca) {
 		vPersonagem[x][y] = peca;
 		if (peca != null)
-			setElemento(x, y, (PecaIcon) vPersonagem[x][y]);
+			setElemento(x, y, (PecaIcon) peca);
 	}
 
 	@Override
@@ -157,12 +169,15 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				break;
 			case 2:
 				vPersonagem[x][y] = new Lanceiro(x,y);
+				setElemento(x, y, (PecaIcon) vPersonagem[x][y]);
 				break;
 			case 3:
 				vPersonagem[x][y] = new Mago(x,y);
+				setElemento(x, y, (PecaIcon) vPersonagem[x][y]);
 				break;
 			case 4:
 				vPersonagem[x][y] = new Catapulta(x,y);
+				setElemento(x, y, (PecaIcon) vPersonagem[x][y]);
 				break;
 		}
 		numeroSoldados += 1;
@@ -175,8 +190,11 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	
 	@Override 
 	public void setProjetil(int x, int y,int z, IProjetil Projetil) {
+		if (Projetil != null)
+			setElemento(x,y,(PecaIcon) Projetil);
+		else if (vProjetil[x][y][z] != null)
+			removeElemento(x, y, (PecaIcon) vProjetil[x][y][z]);
 		vProjetil[x][y][z] = Projetil;
-		
 	}
 	
 	@Override
@@ -187,6 +205,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	
 	@Override
 	public void removePeca(int x, int y) {
+		removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
 		vPersonagem[x][y] = null;
 		numeroSoldados -= 1;
 	}
@@ -225,8 +244,9 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				projetil.setEmConflito(0);
 				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				
-				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null);
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				projetil.setX(projetil.getxConflito());
 				projetil.setY(projetil.getyConflito());
 			}
@@ -242,6 +262,5 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			projetil.setY(projetil.getyConflito());
 			}
 	}
-
 	
 }

@@ -29,6 +29,11 @@ public class PainelTabuleiro extends JPanel{
 		celulas[x][y].add(p);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
+	
+	public void removeElemento(int x, int y, PecaIcon p) {
+		celulas[x][y].remove(p);
+		SwingUtilities.updateComponentTreeUI(this);
+	}
 	/*private class NewContentPane extends JPanel{
 		private static final long serialVersionUID = -4416680110711209505L;
 

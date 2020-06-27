@@ -8,14 +8,18 @@ public class Lanceiro extends Personagem{
 	private static final long serialVersionUID = 779693959494716701L;
 	public static String DIRETORIO =
 		      Lanceiro.class.getResource(".").getPath();
-	{custo=10;
+	public static int custo = 10;
+	/*{custo=10;
 	frequencia = 3; //a verificar
 	movimento = 2;
-	passo = 1;}
+	passo = 1;}*/
 	
 	public Lanceiro(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 3;
+		frequencia = 3; //a verificar
+		movimento = 2;
+		passo = 1;
 	}
 
 	@Override

@@ -8,14 +8,18 @@ public class Catapulta extends Personagem{
 	private static final long serialVersionUID = 4060029049567589732L;
 	public static String DIRETORIO =
 		      Catapulta.class.getResource(".").getPath();
-	{custo=30;
+	public static int custo = 30;
+	/*{custo=30;
 	frequencia = 3;
 	movimento = 0;
-	passo = 0;}
+	passo = 0;}*/
 	
 	public Catapulta(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1;
+		frequencia = 3;
+		movimento = 0;
+		passo = 0;
 	}
 
 	@Override

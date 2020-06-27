@@ -12,10 +12,11 @@ public class JanelaJogo extends JFrame{
 	private PainelMenu painelMenu;
 	private PainelTabuleiro painelGrid;
 	
-	public JanelaJogo(String caminho, PainelTabuleiro tab) {
+	public JanelaJogo(PainelTabuleiro tab, PainelMenu menu) {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		painelGrid = tab;
+		painelMenu = menu;
 		visual();
 	}
 	
@@ -26,8 +27,6 @@ public class JanelaJogo extends JFrame{
 		contentPane.setLayout(new BorderLayout());
 		
 		contentPane.add(painelGrid, BorderLayout.CENTER);
-		
-		painelMenu = new PainelMenu();
 	    contentPane.add(painelMenu, BorderLayout.EAST);
 	    
 	    setVisible(true);

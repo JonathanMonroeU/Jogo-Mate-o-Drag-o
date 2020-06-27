@@ -5,7 +5,7 @@ public class Flecha extends Projetil{
 	public static String DIRETORIO =
 		      Flecha.class.getResource(".").getPath();
 	public Flecha(int x, int y, int z, String direcaoA) {
-		super(DIRETORIO+"yoshi.png", x, y, z);
+		super(DIRETORIO+"flecha1.png", x, y, z);
 		direcao=direcaoA;
 		dano= 15;
 		velocidade= 3;

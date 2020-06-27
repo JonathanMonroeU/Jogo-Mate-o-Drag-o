@@ -8,14 +8,18 @@ public class Mago extends Personagem{
 	private static final long serialVersionUID = 3986495568011382602L;
 	public static String DIRETORIO =
 		      Mago.class.getResource(".").getPath();
-	{custo=15;
+	public static int custo = 15;
+	/*{custo=15;
 	frequencia = 2;
 	movimento = 1;
-	passo = 1;}
+	passo = 1;}*/
 	
 	public Mago(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 2;
+		frequencia = 2;
+		movimento = 1;
+		passo = 1;
 	}
 
 	@Override
