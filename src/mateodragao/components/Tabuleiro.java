@@ -18,14 +18,14 @@ import mateodragao.interfaces.ITabuleiro;
 
 public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
 	private static final long serialVersionUID = -4923736996545875913L;
-	private IProjetil vProjetil[][][];
-	private IProjetil vConflito[];
-	private IPersonagem vPersonagem[][];
-	private int DragonPosition[];
-	private int numeroSoldados;
-	private int atual;
-	private Metronomo metro = new Metronomo(500,10);
-		
+	private IPersonagem vPersonagem[][];		//matriz para guardar os personagens nas suas devidas posições no campo
+	private IProjetil vProjetil[][][];			//matriz de projeteis lançados pelos personagens, com 3 dimensões pois a terceira serve para guardar uma segunda camada de projeteis, que são as pedras de catapultas 
+	private IProjetil vConflito[];				//vetor que guarda os projeteis que estão na mesma posição, para comparar quem tem o maior dano
+	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
+	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
+	private int atual;							
+	private Metronomo metro = new Metronomo(500,10);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	
 	public Tabuleiro() {
 		super();
 		vProjetil = new IProjetil[16][16][2];
@@ -53,6 +53,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		metro.start();
 	}
 	
+	//a cada passo do metrônomo, 
 	public void actionPerformed(ActionEvent e) {
 		if (numeroSoldados != 0 && DragonPosition[0] != -1) {
 			modificaTabuleiro();
