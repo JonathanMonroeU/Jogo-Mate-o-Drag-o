@@ -78,7 +78,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		//primeiro faz as modificações necessárias no dragão, dispara a bola de fogo e move
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
 				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
-				/*essa linha é pra ajudar*/ setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
+				/*essa linha é pra ajudar*/ //setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
 				setElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
 				setElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
 				setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
