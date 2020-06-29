@@ -25,7 +25,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
 	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
 	private int atual;							
-	private Metronomo metro = new Metronomo(20,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private Metronomo metro = new Metronomo(1000,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
 	private PecaIcon compl1,compl2,compl3;
 	
 	public Tabuleiro() {

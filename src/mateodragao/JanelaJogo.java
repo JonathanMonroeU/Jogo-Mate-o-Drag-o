@@ -2,8 +2,15 @@ package mateodragao;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Dimension;
+import java.awt.Font;
+import java.awt.GridLayout;
 
+import javax.swing.Box;
+import javax.swing.BoxLayout;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 
@@ -29,6 +36,37 @@ public class JanelaJogo extends JFrame{
 		contentPane.add(painelGrid, BorderLayout.CENTER);
 	    contentPane.add(painelMenu, BorderLayout.EAST);
 	    
+	    JPanel letras = new JPanel();
+	    letras.setLayout(new BoxLayout(letras, BoxLayout.X_AXIS));
+	    JPanel vLetras = new JPanel();
+	    vLetras.setLayout(new GridLayout(1,16));
+	    vLetras.setPreferredSize(new Dimension(0,20));
+	    for (char c = 'a'; c<'q'; c++) {
+	    	JLabel j = new JLabel(Character.toString(Character.toUpperCase(c)));
+	    	j.setHorizontalAlignment(0);
+	    	j.setFont(new Font("Arial", Font.BOLD, 18));
+	    	vLetras.add(j);
+	    }
+	    letras.add(Box.createRigidArea(new Dimension(30,0)));
+	    letras.add(vLetras);
+	    letras.add(Box.createRigidArea(new Dimension(360,0)));
+	    contentPane.add(letras, BorderLayout.SOUTH);
+	    
+	    JPanel numeros = new JPanel();
+	    numeros.setLayout(new BoxLayout(numeros, BoxLayout.Y_AXIS));
+	    JPanel vNumeros = new JPanel();
+	    vNumeros.setLayout(new GridLayout(16,1));
+	    vNumeros.setPreferredSize(new Dimension(30,0));
+	    for (int n = 1; n<=16; n++) {
+	    	JLabel j = new JLabel(Integer.toString(n));
+	    	j.setVerticalAlignment(0);
+	    	j.setHorizontalAlignment(0);
+	    	j.setFont(new Font("Arial", Font.BOLD, 18));
+	    	vNumeros.add(j);
+	    }
+	    
+	    numeros.add(vNumeros);
+	    contentPane.add(numeros, BorderLayout.WEST);
 	    setVisible(true);
 	}
 	
