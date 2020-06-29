@@ -21,7 +21,15 @@ public class Catapulta extends Personagem{
 		movimento = 0;
 		passo = 0;
 	}
-
+	
+	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
+	/*Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
+	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa.
+	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
+	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
+	 * comparando ver-hor, que é a distância entre o ataque e o alvo quando está na linha do alvo, com hor que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.
+	 * Se for horizontalmente: Se hor for negativo, atira para esquerda, se for positivo, atira para direita, depois o método testa se tem que atirar diretamente para esquerda/direita ou em alguma das diagonais, 
+	 * comparando hor-ver, que é a distância entre o ataque e o alvo quando está na coluna do alvo, com ver que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.  */
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
@@ -32,7 +40,7 @@ public class Catapulta extends Personagem{
 			
 			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 				if (ver<0) {	//atira para cima
-					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor)))  //ver-hor é a distância entre meu ataque e o dragão quando estiver na linha do dragão
+					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor)))  //ver-hor é a distância entre o ataque e o dragão quando estiver na linha do dragão
 						tab.putProjetil(x, y, 1, new Pedra(x, y, 1,"ci"));
 					else {
 						if (hor<0)

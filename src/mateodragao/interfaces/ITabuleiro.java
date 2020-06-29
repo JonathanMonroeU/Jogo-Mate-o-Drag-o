@@ -1,5 +1,7 @@
 package mateodragao.interfaces;
 
+import mateodragao.Metronomo;
+
 public interface ITabuleiro {
 	public void play();
 	public void modificaTabuleiro();
@@ -16,4 +18,5 @@ public interface ITabuleiro {
 	public void adicionaConflito(IProjetil projetil);
 	public void resolveConflito(IProjetil projetil);
 	public void setDragonPosition(int x, int y);
+	public Metronomo getMetro();
 }

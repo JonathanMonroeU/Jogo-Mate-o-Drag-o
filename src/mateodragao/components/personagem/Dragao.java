@@ -16,11 +16,21 @@ public class Dragao extends Personagem{
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1000;
-		frequencia = 1;
+		frequencia = 1;	//estávamos pensando em 1
 		movimento = 1;
 		passo = 1;
 	}
 
+	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
+	/*Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
+	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa, no caso do dragão, ele procura alvos em uma distância de 4 casas para cada lado.
+	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
+	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
+	 * comparando ver-hor, que é a distância entre o ataque e o alvo quando está na linha do alvo, com hor que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.
+	 * Se for horizontalmente: Se hor for negativo, atira para esquerda, se for positivo, atira para direita, depois o método testa se tem que atirar diretamente para esquerda/direita ou em alguma das diagonais, 
+	 * comparando hor-ver, que é a distância entre o ataque e o alvo quando está na coluna do alvo, com ver que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo. 
+	 * 
+	 *  Caso o dragão não encontre alvos no seu raio específico de tiro direcionado, ele atira aleatoriamente em uma das 12 posições+direções possíveis */
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {

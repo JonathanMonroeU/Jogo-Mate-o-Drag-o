@@ -25,7 +25,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
 	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
 	private int atual;							
-	private Metronomo metro = new Metronomo(1000,50);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private Metronomo metro = new Metronomo(20,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
 	private PecaIcon compl1,compl2,compl3;
 	
 	public Tabuleiro() {
@@ -37,7 +37,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
 		
-		vPersonagem[8][1] = new Dragao(8,1);
+		vPersonagem[8][1] = new Dragao(8,1);					//4 posições vizinhas do tabuleiro apontam para o dragão
 		vPersonagem[7][1]=vPersonagem[8][1];
 		vPersonagem[7][0]=vPersonagem[8][1];
 		vPersonagem[8][0]=vPersonagem[8][1];
@@ -49,21 +49,22 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		setElemento(7,0,compl2);
 		setElemento(8,0,compl3);
 		
-		DragonPosition[0] = 8;
+		DragonPosition[0] = 8;									
 		DragonPosition[1] = 1;
 		atual=-1;
 		
 		metro.addActionListener(this);
 	}
 	
+	//método que inicia o metrônomo que cadencia os passos do jogo
 	@Override
 	public void play() {
 		metro.start();
 	}
 	
-	//a cada passo do metrônomo, 
+	//a cada passo do metrônomo, se nem todos os soldados tiverem morrido, nem o dragão, então o jogo continua
 	public void actionPerformed(ActionEvent e) {
-		if (numeroSoldados != 0 && DragonPosition[0] != -1) {
+		if (numeroSoldados != 0 && vPersonagem[DragonPosition[0]][DragonPosition[1]].getVida()>0) {
 			modificaTabuleiro();
 		}
 		else {
@@ -71,34 +72,35 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		}
 	}
 
+	//
 	@Override
 	public void modificaTabuleiro() {
 		System.out.println("----------------------------");
 		
-		//primeiro faz as modificações necessárias no dragão, dispara a bola de fogo e move
-				vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
-				vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
-				/*essa linha é pra ajudar*/ //setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
-				setElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
-				setElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
-				setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
+		//o ddragão é o primeiro a disparar seu projétil e se mover
+		vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
+		vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
+		/*essa linha é pra ajudar*/ //setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
+		setElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
+		setElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
+		setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
 		
 		//primeira passagem por todas as posições do tabuleiro para mover personagens e projeteis e disparar projeteis
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
 				if (vPersonagem[i][j] != null) {
-					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {	//se o personagem não for o dragão e não tiver agido ainda nesse tempo do jogo
+					//se o personagem não for o dragão e não tiver agido ainda nesse tempo do jogo:
+					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {	
 						vPersonagem[i][j].setJaAgiu(1);
 						vPersonagem[i][j].disparaProjetil(this);
 						vPersonagem[i][j].move(this);
-						
 					}
 				}
-				
+				//se houver um projétil na posição atual e ele não tiver agido ainda nesse tempo, ele é movido
 				if (vProjetil[i][j][0] != null) {
 					if (vProjetil[i][j][0].getJaAgiu()==0)
 						vProjetil[i][j][0].move(this);
-					
+					//se houver um projétil na posição atual e ele não tiver agido ainda nesse tempo, ele é movido	
 				}if (vProjetil[i][j][1] != null) {
 					if (vProjetil[i][j][1].getJaAgiu()==0)
 						vProjetil[i][j][1].move(this); 
@@ -106,7 +108,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			}
 		}
 		
-		//passagem pelo vetor de conflitos de projeteis
+		//passagem pelo vetor de conflitos de projeteis, se houver algum conflito no vetor, ele é percorrido e os conflitos são resolvidos pelo método resolveConflito
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
 				resolveConflito(vConflito[atual]);
@@ -117,23 +119,28 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		//segunda passagem por todo o tabuleiro para analisar projeteis que acertaram personagens
 		for (int i=0; i<16; i++) {
 			for (int j=0; j<16; j++) {
+				//se houver um pesonagem e um projetil na mesma posição é ativado o método que checa se ele deve perder vida
 				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) { 
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][0],this);
 					setProjetil(i, j, 0, null);
 				}
+				//se houver um pesonagem e um projetil na mesma posição é ativado o método que checa se ele deve perder vida
 				if (vPersonagem[i][j] != null && vProjetil[i][j][1]!=null) {
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][1],this);
 					setProjetil(i, j, 1, null);
 				}
+				//se houver um personagem na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo
 				if (vPersonagem[i][j] != null) {
 					vPersonagem[i][j].setJaAgiu(0);
+					//se a vida for menor que 1, o personagem morreu e é removido de campo
 					if (vPersonagem[i][j].getVida()<=0) 
 						removePeca(i,j); 	//morte
-				}	
+				}
+				//se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo
 				if (vProjetil[i][j][0] != null) 
 					vProjetil[i][j][0].setJaAgiu(0);
 						
-					
+				//se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo
 				if (vProjetil[i][j][1] != null) 
 					vProjetil[i][j][1].setJaAgiu(0);
 				
@@ -147,19 +154,55 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		
 		
 	}
-
+	
+	//pega os dados armazenados na vetor pecaPositionAtual do dataProvider para fazer a remoção ou inserção do personagem no campo, dependendo dasinformações contidas nele
 	@Override
-	public IPersonagem getPeca(int x, int y) {
-		return vPersonagem[x][y];
+	public void receiveData(IDataProvider dataProvider) {
+		int position[] = dataProvider.getData();
+		if (position[0] == 0)  //zero é remocao
+			removePeca(position[1],position[2]);
+		else
+			putPeca(position[1],position[2],position[0]);
 	}
 	
+	//adiciona o conflito no vetor de conflitos de projeteis a serem resolvidos depois que todo o campo for percorrido a primeira vez em modificaTabuleiro
 	@Override
-	public void setPeca(int x, int y, IPersonagem peca) {
-		vPersonagem[x][y] = peca;
-		if (peca != null)
-			setElemento(x, y, (PecaIcon) peca);
+	public void adicionaConflito(IProjetil projetil) {
+		atual+=1;
+		vConflito[atual]=projetil;
+		projetil.setEmConflito(1);
 	}
-
+	
+	//resolve o conflito da posição atual do vetor de conflitos de projeteis
+	public void resolveConflito (IProjetil projetil) {
+		//se a posição para o qual o projetil quer se mover ainda estiver ocupada:
+		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
+			//se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro
+			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+				projetil.setEmConflito(0);
+				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
+				
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+				projetil.setX(projetil.getxConflito());
+				projetil.setY(projetil.getyConflito());
+			}
+			//caso o dano seja menor ou igual, ele some
+			else
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+		//caso a posição para o qual ele quer se mover já esteja vazia, ele se move
+		}else {
+			projetil.setEmConflito(0);
+			projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
+			
+			setProjetil(projetil.getX(), projetil.getY(), 0, null);
+			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+			projetil.setX(projetil.getxConflito());
+			projetil.setY(projetil.getyConflito());
+			}
+	}
+	
+	//recebe o tipo e posição do personagem, e com essa informação o instancia e o insere na posição solicitada
 	@Override
 	public void putPeca(int x, int y, int tipo) {
 		switch(tipo) {
@@ -183,6 +226,35 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		numeroSoldados += 1;
 	}
 	
+	//coloca o projetil já instanciado na posição solicitada
+	@Override
+	public void putProjetil(int x, int y, int z, IProjetil Projetil) {
+		vProjetil[x][y][z] = Projetil;
+		setElemento(x,y,(PecaIcon) Projetil);
+	}
+	
+	//recebe a posição da peça a ser removida, a remove e diminui o número de soldados em campo em 1
+	@Override
+	public void removePeca(int x, int y) {
+		removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
+		vPersonagem[x][y] = null;
+		numeroSoldados -= 1;
+	}
+	
+	//abaixo tem-se alguns métodos para retornar e modificar os atributos privados do Tabuleiro
+	
+	@Override
+	public IPersonagem getPeca(int x, int y) {
+		return vPersonagem[x][y];
+	}
+	
+	@Override
+	public void setPeca(int x, int y, IPersonagem peca) {
+		vPersonagem[x][y] = peca;
+		if (peca != null)
+			setElemento(x, y, (PecaIcon) peca);
+	}
+	
 	@Override
 	public IProjetil getProjetil(int x, int y, int z) {
 		return vProjetil[x][y][z];
@@ -198,28 +270,6 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	}
 	
 	@Override
-	public void putProjetil(int x, int y, int z, IProjetil Projetil) {
-		vProjetil[x][y][z] = Projetil;
-		setElemento(x,y,(PecaIcon) Projetil);
-	}
-	
-	@Override
-	public void removePeca(int x, int y) {
-		removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
-		vPersonagem[x][y] = null;
-		numeroSoldados -= 1;
-	}
-
-	@Override
-	public void receiveData(IDataProvider dataProvider) {
-		int position[] = dataProvider.getData();
-		if (position[0] == 0)  //zero é remocao
-			removePeca(position[1],position[2]);
-		else
-			putPeca(position[1],position[2],position[0]);
-	}
-
-	@Override
 	public int[] getDragonPosition() {
 		return DragonPosition;
 	}
@@ -230,37 +280,11 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		DragonPosition[1]=y;
 	}
 	
-	
 	@Override
-	public void adicionaConflito(IProjetil projetil) {
-		atual+=1;
-		vConflito[atual]=projetil;
-		projetil.setEmConflito(1);
+	public Metronomo getMetro() {
+		return metro;
 	}
 	
-	public void resolveConflito (IProjetil projetil) {
-		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
-			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
-				projetil.setEmConflito(0);
-				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
-				
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);
-				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null);
-				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
-				projetil.setX(projetil.getxConflito());
-				projetil.setY(projetil.getyConflito());
-			}
-			else
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);
-		}else {
-			projetil.setEmConflito(0);
-			projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
-			
-			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
-			setProjetil(projetil.getX(), projetil.getY(), 0, null);
-			projetil.setX(projetil.getxConflito());
-			projetil.setY(projetil.getyConflito());
-			}
-	}
+	
 	
 }

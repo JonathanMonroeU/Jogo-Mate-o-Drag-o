@@ -4,13 +4,14 @@ import mateodragao.interfaces.IDataProvider;
 import mateodragao.components.personagem.*;
 
 public class DataProvider implements IDataProvider{
-	private int pontos;
-	private int pecaPosition[]; 
-	private int pecaPositionAtual[];
+	private int pontos;				//quantidade de pontos disponível para serem gastos na inserção de personagens
+	private int pecaPosition[]; 	//vetor que guarda a posição das peças que já foram colocadas em campo
+	private int pecaPositionAtual[];//guarda a solicitação atual de inserção de peça em campo
 	private int atual; //posiçao atual de pecaPosition
 	
+	//inicia o objeto com a quantidade de pontos máxima determinada e dois vetores auxiliares, o tamanho de pecaPosition considera a quantidade máxima de personagens a serem inseridos, para não haver problemas
 	public DataProvider(int pontos) {
-		this.pontos = pontos;
+		this.pontos = pontos;	
 		pecaPosition = new int[66];
 		for (int i=0; i<66; i++) {
 			pecaPosition[i] = 0;
@@ -21,9 +22,7 @@ public class DataProvider implements IDataProvider{
 	
 	@Override
 	public boolean insertData() {
-		//texto mostrando os comandos, pontos
 		
-		//usuario insere o comando
 		int comando = 3; //está tres, mas depois vai colocar a classe de entrada de dados
 		
 		/*dependendo do comando realiza um dos metodos abaixo
@@ -45,13 +44,8 @@ public class DataProvider implements IDataProvider{
 	
 	@Override
 	public void inserePersonagem(int comando, int x, int y) {
-		//texto com opçoes de personagem
 		
-		//dependendo do comando realiza um dos metodos abaixo
-		/*int comando = 0;
-		int x = 0;
-		int y = 0;*/
-		
+		//dependendo do tipo do personagem solicitado, se os pontos restantes forem suficientes, sua posição e tipo são colocados nos vetores auxiliares
 		switch(comando) {
 			case 1:
 				if (Arqueiro.custo <= pontos) {
@@ -112,15 +106,10 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
+	//passa por pecaPosition e vê se existe uma peca nessa posicao, se houver, ela é removida do vetor que guarda as peças já inseridas e os pontos são devolvidos 
 	@Override
 	public void removePersonagem(int x, int y) {
-		//texto pedindo para inserir x e y
 		
-		//entra com as posiçoes x e y
-		/*int x = 0;
-		int y = 0;*/
-		
-		//passar por pecaPosition e ver se tem peca nessa posicao
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
 				pecaPositionAtual[0] = 0;
@@ -150,6 +139,20 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
+	//devolve o custo aos pontos após a remoção de uma peça
+	@Override
+	public void inserePontos(int valor) {
+		pontos += valor;
+	}
+	
+	//subtrai o custo dos pontos após a inserção de uma peça
+	@Override
+	public void removePontos(int valor) {
+		pontos -= valor;
+	}
+	
+	//abaixo tem-se alguns métodos para retornar e modificar os atributos privados do DataProvider
+	
 	@Override
 	public void setX(int x) {
 		pecaPositionAtual[1] = x;
@@ -171,16 +174,6 @@ public class DataProvider implements IDataProvider{
 	@Override
 	public int[] getData() {
 		return pecaPositionAtual;
-	}
-	
-	@Override
-	public void inserePontos(int valor) {
-		pontos += valor;
-	}
-	
-	@Override
-	public void removePontos(int valor) {
-		pontos -= valor;
 	}
 	
 	public int getPontos() {
