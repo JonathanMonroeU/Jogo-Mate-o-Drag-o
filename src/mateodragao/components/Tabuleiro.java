@@ -1,7 +1,12 @@
 package mateodragao.components;
 
+import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
+import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 
 import mateodragao.Metronomo;
 import mateodragao.PainelTabuleiro;
@@ -11,6 +16,7 @@ import mateodragao.components.personagem.Catapulta;
 import mateodragao.components.personagem.Dragao;
 import mateodragao.components.personagem.Lanceiro;
 import mateodragao.components.personagem.Mago;
+import mateodragao.exceptions.SemPersonagem;
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.IProjetil;
@@ -53,12 +59,20 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		DragonPosition[1] = 1;
 		atual=-1;
 		
+		vida = new JLabel(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]].getVida()));
+		vida.setAlignmentX(CENTER_ALIGNMENT);
+		vida.setHorizontalAlignment(0);
+		vida.setMaximumSize(new Dimension(50,30));
+		vida.setBorder(BorderFactory.createLineBorder(Color.black));
+		
 		metro.addActionListener(this);
 	}
 	
 	//método que inicia o metrônomo que cadencia os passos do jogo
 	@Override
-	public void play() {
+	public void play() throws SemPersonagem{
+		if (numeroSoldados == 0)
+			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
 		metro.start();
 	}
 	
@@ -112,7 +126,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		//passagem pelo vetor de conflitos de projeteis, se houver algum conflito no vetor, ele é percorrido e os conflitos são resolvidos pelo método resolveConflito
 		if (atual>-1) {
 			for (int i=0;i<=atual;i++) {
-				resolveConflito(vConflito[atual]);
+				resolveConflito(vConflito[i]);
 			}
 			atual=-1;
 		}
@@ -147,6 +161,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				
 			}
 		}
+		vida.setText(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]].getVida()));
 		
 	}
 

@@ -18,16 +18,19 @@ import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
 import javax.swing.text.MaskFormatter;
 
+import mateodragao.exceptions.AdicaoInvalida;
+import mateodragao.exceptions.RemocaoInvalida;
+import mateodragao.exceptions.SemPersonagem;
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.interfaces.ITabuleiro;
 
 public class PainelMenu extends JPanel implements ActionListener{
 	private static final long serialVersionUID = 6299309752925290728L;
-	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos;
+	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVida, painelAviso;
 	private JButton addPersonagem, remPersonagem, iniciar, adicionar, remover;
 	private JButton arqueiro, lanceiro, mago, catapulta;
 	private JTextField textXA, textYA, textXR, textYR;
-	private JLabel pontos, arqueiroInfo, lanceiroInfo, magoInfo, catapultaInfo;
+	private JLabel pontos, arqueiroInfo, lanceiroInfo, magoInfo, catapultaInfo, aviso;
 	private ITabuleiro tab;
 	private IDataProvider data;
 	private int comando, x, y;
@@ -87,10 +90,10 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelTextA.setMaximumSize(new Dimension(300,300));
 		painelTextA.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextA.add(new JLabel("Horizontal:"));
-		painelTextA.add(textXA);
+		painelTextA.add(textYA);
 		painelTextA.add(Box.createRigidArea(new Dimension(10,0)));
 		painelTextA.add(new JLabel("Vertical:"));
-		painelTextA.add(textYA);
+		painelTextA.add(textXA);
 		painelTextA.add(adicionar);
 		
 		painelTextR = new JPanel();
@@ -98,10 +101,10 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelTextR.setMaximumSize(new Dimension(300,300));
 		painelTextR.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextR.add(new JLabel("Horizontal:"));
-		painelTextR.add(textXR);
+		painelTextR.add(textYR);
 		painelTextR.add(Box.createRigidArea(new Dimension(10,0)));
 		painelTextR.add(new JLabel("Vertical:"));
-		painelTextR.add(textYR);
+		painelTextR.add(textXR);
 		painelTextR.add(remover);
 		
 		arqueiro = new JButton("Adicionar Arqueiro");
@@ -178,7 +181,7 @@ public class PainelMenu extends JPanel implements ActionListener{
 		
 		painelPontos = new JPanel();
 		painelPontos.setLayout(new BoxLayout(painelPontos, BoxLayout.Y_AXIS));
-		painelPontos.setPreferredSize(new Dimension(300,50));
+		painelPontos.setPreferredSize(new Dimension(300,70));
 		JLabel titulo5 = new JLabel("PONTOS");
 		titulo5.setAlignmentX(CENTER_ALIGNMENT);
 		pontos = new JLabel(Integer.toString(data.getPontos()));
@@ -186,12 +189,11 @@ public class PainelMenu extends JPanel implements ActionListener{
 		pontos.setHorizontalAlignment(0);
 		pontos.setMaximumSize(new Dimension(50,30));
 		pontos.setBorder(BorderFactory.createLineBorder(Color.black));
-		painelPontos.setAlignmentX(CENTER_ALIGNMENT);
+		painelPontos.add(Box.createRigidArea(new Dimension(0,10)));
 		painelPontos.add(titulo5);
 		painelPontos.add(pontos);
-		add(Box.createRigidArea(new Dimension(0,10)));
+		painelPontos.add(Box.createRigidArea(new Dimension(0,10)));
 		add(painelPontos);
-		add(Box.createRigidArea(new Dimension(0,10)));
 		
 		painelInicial = new JPanel();
 		painelInicial.setLayout(new BoxLayout(painelInicial, BoxLayout.Y_AXIS));
@@ -199,6 +201,7 @@ public class PainelMenu extends JPanel implements ActionListener{
 		painelInicial.add(addPersonagem);
 		painelInicial.add(remPersonagem);
 		painelInicial.add(iniciar);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,40)));
 		painelInicial.setAlignmentX(CENTER_ALIGNMENT);
 		add(painelInicial);
 		
@@ -217,15 +220,46 @@ public class PainelMenu extends JPanel implements ActionListener{
 		
 		painelRemocao = new JPanel();
 		painelRemocao.setLayout(new BoxLayout(painelRemocao, BoxLayout.Y_AXIS));
-		JLabel titulo4 = new JLabel("TELA DE REMOCAO");
-		titulo4.setAlignmentX(CENTER_ALIGNMENT);
+		/*JLabel titulo4 = new JLabel("TELA DE REMOCAO");
+		titulo4.setAlignmentX(CENTER_ALIGNMENT);*/
 		painelRemocao.setAlignmentX(CENTER_ALIGNMENT);
-		painelRemocao.add(titulo4);
+		//painelRemocao.add(titulo4);
 		painelRemocao.add(painelTextR);
 		add(painelRemocao);
 		painelRemocao.setVisible(false);
 		
+		painelAviso = new JPanel();
+		painelAviso.setLayout(new BoxLayout(painelAviso, BoxLayout.Y_AXIS));
+		painelAviso.setPreferredSize(new Dimension(300,50));
+		JLabel titulo7 = new JLabel("ATENÇÃO");
+		titulo7.setAlignmentX(CENTER_ALIGNMENT);
+		aviso = new JLabel();
+		aviso.setAlignmentX(CENTER_ALIGNMENT);
+		aviso.setHorizontalAlignment(0);
+		aviso.setMaximumSize(new Dimension(300,50));
+		aviso.setForeground(Color.RED);
+		painelAviso.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+		painelAviso.setAlignmentX(CENTER_ALIGNMENT);
+		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
+		painelAviso.add(titulo7);
+		painelAviso.add(aviso);
+		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
+		add(painelAviso);
+		//add(Box.createRigidArea(new Dimension(0,10)));
+		painelAviso.setVisible(false);
 		
+		painelVida = new JPanel();
+		painelVida.setLayout(new BoxLayout(painelVida, BoxLayout.Y_AXIS));
+		painelVida.setPreferredSize(new Dimension(300,50));
+		JLabel titulo6 = new JLabel("VIDA DO DRAGÃO");
+		titulo6.setAlignmentX(CENTER_ALIGNMENT);
+		painelVida.setAlignmentX(CENTER_ALIGNMENT);
+		painelVida.add(titulo6);
+		painelVida.add(((PainelTabuleiro) tab).getVidaLabel());
+		add(Box.createRigidArea(new Dimension(0,10)));
+		add(painelVida);
+		add(Box.createRigidArea(new Dimension(0,10)));
+		painelVida.setVisible(false);
 		
 	}
 
@@ -233,16 +267,27 @@ public class PainelMenu extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addPersonagem) {
 			painelInicial.setVisible(false);
+			painelAviso.setVisible(false);
 			painelAdicao.setVisible(true);
 			painelSoldado.setVisible(true);
 		}
 		else if (e.getSource() == remPersonagem) {
 			painelInicial.setVisible(false);
+			painelAviso.setVisible(false);
 			painelRemocao.setVisible(true);
 		}
 		else if (e.getSource() == iniciar) {
-			painelInicial.setVisible(false);
-			tab.play();
+			try {
+				tab.play();
+				painelPontos.setVisible(false);
+				painelInicial.setVisible(false);
+				painelAviso.setVisible(false);
+				painelVida.setVisible(true);
+			} catch (SemPersonagem erro) {
+				aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");
+				painelAviso.setVisible(true);
+			}
+			
 		}
 		else if (e.getSource() == arqueiro) {
 			painelSoldado.setVisible(false);
@@ -270,15 +315,27 @@ public class PainelMenu extends JPanel implements ActionListener{
 			painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
 			
-			x = Integer.parseInt(textXA.getText());
-			y = Integer.parseInt(textYA.getText());
+			try { 
+				x = Integer.parseInt(textXA.getText());
+				y = Integer.parseInt(textYA.getText());
+				
+				try {
+					data.inserePersonagem(comando, x, y); //fazer try/catch
+					tab.receiveData(data);
+					//System.out.println(data.getPontos());
+					pontos.setText(Integer.toString(data.getPontos()));
+				} catch (AdicaoInvalida erro) {
+					aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");
+					painelAviso.setVisible(true);
+				}
+			} catch (Exception erro) {
+				aviso.setText("<html>"+"<center>"+"As informações não foram inseridas!"+"</center>"+"</html>");
+				painelAviso.setVisible(true);
+			}
 			
-			data.inserePersonagem(comando, x, y); //fazer try/catch
-			tab.receiveData(data);
-			System.out.println(data.getPontos());
 			textXA.setText(null);
 			textYA.setText(null);
-			pontos.setText(Integer.toString(data.getPontos()));
+			
 		}
 		else if (e.getSource() == remover) {
 			//painelAdicao.setVisible(false);
@@ -286,14 +343,26 @@ public class PainelMenu extends JPanel implements ActionListener{
 			//painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
 			
-			x = Integer.parseInt(textXR.getText());
-			y = Integer.parseInt(textYR.getText());
-			data.removePersonagem(x, y); //fazer try/catch
-			tab.receiveData(data);
+			try {
+				x = Integer.parseInt(textXR.getText());
+				y = Integer.parseInt(textYR.getText());
+				
+				try {
+					data.removePersonagem(x, y); //fazer try/catch
+					tab.receiveData(data);
+					pontos.setText(Integer.toString(data.getPontos()));
+				} catch (RemocaoInvalida erro){
+					aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");
+					painelAviso.setVisible(true);
+				}
+			} catch (Exception erro) {
+				aviso.setText("<html>"+"<center>"+"As informações não foram inseridas!"+"</center>"+"</html>");
+				painelAviso.setVisible(true);
+			}
 			
 			textXR.setText(null);
 			textYR.setText(null);
-			pontos.setText(Integer.toString(data.getPontos()));
+			
 		}
 		SwingUtilities.updateComponentTreeUI(this);
 	}

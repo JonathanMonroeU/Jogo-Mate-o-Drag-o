@@ -2,6 +2,16 @@ package mateodragao.components;
 
 import mateodragao.interfaces.IDataProvider;
 import mateodragao.components.personagem.*;
+import mateodragao.exceptions.AdicaoInvalida;
+import mateodragao.exceptions.AdicaoLugarInexistente;
+import mateodragao.exceptions.AdicaoLugarOcupado;
+import mateodragao.exceptions.AdicaoLugarProibido;
+import mateodragao.exceptions.AdicaoPontosInsuficientes;
+import mateodragao.exceptions.RemocaoAntesDeAdicao;
+import mateodragao.exceptions.RemocaoInvalida;
+import mateodragao.exceptions.RemocaoLugarDragao;
+import mateodragao.exceptions.RemocaoLugarInexistente;
+import mateodragao.exceptions.RemocaoSemPersonagem;
 
 public class DataProvider implements IDataProvider{
 	private int pontos;				//quantidade de pontos disponível para serem gastos na inserção de personagens
@@ -43,9 +53,19 @@ public class DataProvider implements IDataProvider{
 	}
 	
 	@Override
-	public void inserePersonagem(int comando, int x, int y) {
+	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida{
+		//texto com opçoes de personagem
+		if (x<0 || x>15 || y<0 || y>15)
+			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
+		if (y<8)
+			throw new AdicaoLugarProibido("Voce nao pode adicionar nesse lugar!");
+		//dependendo do comando realiza um dos metodos abaixo
+		for(int i=1; i<pecaPosition.length; i+=3) {
+			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
+				throw new AdicaoLugarOcupado("Já há um personagem nessa posicao!");
+			}
+		}
 		
-		//dependendo do tipo do personagem solicitado, se os pontos restantes forem suficientes, sua posição e tipo são colocados nos vetores auxiliares
 		switch(comando) {
 			case 1:
 				if (Arqueiro.custo <= pontos) {
@@ -59,7 +79,7 @@ public class DataProvider implements IDataProvider{
 					//removePontos(Arqueiro.custo);
 				}
 				else
-					System.out.println("Pontos Insuficientes!");
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
 			case 2:
 				if (Lanceiro.custo <= pontos) {
@@ -72,7 +92,7 @@ public class DataProvider implements IDataProvider{
 					}
 				}
 				else
-					System.out.println("Pontos Insuficientes!");
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
 			case 3:
 				if (Mago.custo <= pontos) {
@@ -85,7 +105,7 @@ public class DataProvider implements IDataProvider{
 					}
 				}
 				else
-					System.out.println("Pontos Insuficientes!");
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
 			case 4:
 				if (Catapulta.custo <= pontos) {
@@ -98,7 +118,7 @@ public class DataProvider implements IDataProvider{
 					}
 				}
 				else
-					System.out.println("Pontos Insuficientes!");
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
 			default:
 				System.out.println("Comando Inválido!");
@@ -108,8 +128,17 @@ public class DataProvider implements IDataProvider{
 	
 	//passa por pecaPosition e vê se existe uma peca nessa posicao, se houver, ela é removida do vetor que guarda as peças já inseridas e os pontos são devolvidos 
 	@Override
-	public void removePersonagem(int x, int y) {
+	public void removePersonagem(int x, int y) throws RemocaoInvalida{
+		//texto pedindo para inserir x e y
+		if (x<0 || x>15 || y<0 || y>15)
+			throw new RemocaoLugarInexistente("Nao existe essa posicao!");
+		if (pontos == 100)
+			throw new RemocaoAntesDeAdicao("Voce deve adicionar pelo menos um personagem para poder fazer uma remocao!");
+		if ((x==7 && y==0)||(x==7 && y==1)||(x==8 && y==0)||(x==8 && y==1))
+			throw new RemocaoLugarDragao("Voce nao pode remover o dragao!");
 		
+		
+		//passar por pecaPosition e ver se tem peca nessa posicao
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
 				pecaPositionAtual[0] = 0;
@@ -134,9 +163,8 @@ public class DataProvider implements IDataProvider{
 				atual = i-1;
 				return;
 			}
-
-		//System.out.println("Não há peça nessa posição!");
 		}
+		throw new RemocaoSemPersonagem("Nao ha personagem nesse lugar!");
 	}
 	
 	//devolve o custo aos pontos após a remoção de uma peça

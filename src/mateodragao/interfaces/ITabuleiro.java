@@ -1,9 +1,10 @@
 package mateodragao.interfaces;
 
 import mateodragao.Metronomo;
+import mateodragao.exceptions.SemPersonagem;
 
 public interface ITabuleiro {
-	public void play();
+	public void play() throws SemPersonagem;
 	public void modificaTabuleiro();
 	public void mostraTabuleiro();
 	public IMovimento getPeca(int x, int y);

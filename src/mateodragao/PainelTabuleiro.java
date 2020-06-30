@@ -10,6 +10,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
@@ -17,6 +18,7 @@ public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
 	public static String DIRETORIO = PainelTabuleiro.class.getResource(".").getPath();
 	protected GramaPanel celulas[][] = new GramaPanel[16][16];
+	protected JLabel vida;
 	
 	public PainelTabuleiro() {
 		setLayout(new GridLayout(16,16));
@@ -52,5 +54,9 @@ public class PainelTabuleiro extends JPanel{
 			graf.drawImage(gramaImage, 0, 0, this);
 
 		}
+	}
+	
+	public JLabel getVidaLabel() {
+		return vida;
 	}
 }
