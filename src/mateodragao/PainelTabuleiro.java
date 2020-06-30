@@ -1,5 +1,7 @@
 package mateodragao;
 
+import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -22,7 +24,7 @@ public class PainelTabuleiro extends JPanel{
 	    	for (int j=0; j<16; j++) {
 	    		celulas[i][j] = new GramaPanel(); //new JPanel()
 	    		add(celulas[i][j]);
-	    		celulas[i][j].setLayout(null);
+	    		celulas[i][j].setLayout(new BorderLayout());		//celulas[i][j].setLayout(null);
 	    		celulas[i][j].setBackground(Color.green);
 	    		celulas[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
 	    	}
@@ -30,7 +32,7 @@ public class PainelTabuleiro extends JPanel{
 	}
 	
 	public void setElemento(int x, int y, PecaIcon p) {
-		celulas[x][y].add(p);
+		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.CENTER);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	

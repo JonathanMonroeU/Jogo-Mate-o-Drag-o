@@ -5,7 +5,7 @@ public class BolaDeEnergia extends Projetil{
 	public static String DIRETORIO =
 		      BolaDeEnergia.class.getResource(".").getPath();
 	public BolaDeEnergia(int x, int y, int z, String direcaoA) {
-		super(DIRETORIO+"yoshi.png", x, y, z);
+		super(DIRETORIO+"bola-de-energia.png", x, y, z);
 		direcao=direcaoA;
 		dano= 50;
 		velocidade= 2;

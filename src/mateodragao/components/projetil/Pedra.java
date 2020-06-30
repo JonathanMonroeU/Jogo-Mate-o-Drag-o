@@ -5,7 +5,7 @@ public class Pedra extends Projetil{
 	public static String DIRETORIO =
 		      Pedra.class.getResource(".").getPath();
 	public Pedra(int x, int y, int z, String direcaoA) {
-		super(DIRETORIO+"yoshi.png", x, y, z);
+		super(DIRETORIO+"pedra.png", x, y, z);
 		direcao=direcaoA;
 		dano= 100;
 		velocidade= 4;

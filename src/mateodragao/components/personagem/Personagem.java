@@ -156,4 +156,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	public int getVida() {
 		return vida;
 	}
+	
+	@Override
+	public int getMovimento() {
+		return movimento;
+	}
 }

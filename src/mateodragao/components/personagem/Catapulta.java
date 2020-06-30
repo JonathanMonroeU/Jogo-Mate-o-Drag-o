@@ -15,7 +15,7 @@ public class Catapulta extends Personagem{
 	passo = 0;}*/
 	
 	public Catapulta(int x, int y) {
-		super(DIRETORIO+"yoshi.png",x,y);
+		super(DIRETORIO+"catapulta.png",x,y);
 		vida = 1;
 		frequencia = 3;
 		movimento = 0;

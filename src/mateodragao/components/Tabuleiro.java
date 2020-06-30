@@ -93,7 +93,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {	
 						vPersonagem[i][j].setJaAgiu(1);
 						vPersonagem[i][j].disparaProjetil(this);
-						vPersonagem[i][j].move(this);
+						if(vPersonagem[i][j].getMovimento()!=0)
+							vPersonagem[i][j].move(this);
 					}
 				}
 				//se houver um projétil na posição atual e ele não tiver agido ainda nesse tempo, ele é movido

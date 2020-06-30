@@ -15,7 +15,7 @@ public class Mago extends Personagem{
 	passo = 1;}*/
 	
 	public Mago(int x, int y) {
-		super(DIRETORIO+"yoshi.png",x,y);
+		super(DIRETORIO+"mago.png",x,y);
 		vida = 2;
 		frequencia = 2;
 		movimento = 1;

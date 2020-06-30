@@ -15,7 +15,7 @@ public class Lanceiro extends Personagem{
 	passo = 1;}*/
 	
 	public Lanceiro(int x, int y) {
-		super(DIRETORIO+"yoshi.png",x,y);
+		super(DIRETORIO+"lanceiro.png",x,y);
 		vida = 3;
 		frequencia = 3; //a verificar
 		movimento = 2;
