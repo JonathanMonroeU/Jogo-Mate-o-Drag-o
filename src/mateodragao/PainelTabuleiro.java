@@ -17,13 +17,13 @@ import javax.swing.SwingUtilities;
 public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
 	public static String DIRETORIO = PainelTabuleiro.class.getResource(".").getPath();
-	protected GramaPanel celulas[][] = new GramaPanel[16][16];
+	protected GramaPanel celulas[][] = new GramaPanel[20][20];
 	protected JLabel vida;
 	
 	public PainelTabuleiro() {
-		setLayout(new GridLayout(16,16));
-		for (int i=0; i<16; i++) {
-	    	for (int j=0; j<16; j++) {
+		setLayout(new GridLayout(20,20));
+		for (int i=0; i<20; i++) {
+	    	for (int j=0; j<20; j++) {
 	    		celulas[i][j] = new GramaPanel(); //new JPanel()
 	    		add(celulas[i][j]);
 	    		celulas[i][j].setLayout(new BorderLayout());		//celulas[i][j].setLayout(null);
@@ -34,7 +34,7 @@ public class PainelTabuleiro extends JPanel{
 	}
 	
 	public void setElemento(int x, int y, PecaIcon p) {
-		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.CENTER);
+		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.NORTH);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	

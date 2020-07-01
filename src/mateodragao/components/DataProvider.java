@@ -55,7 +55,7 @@ public class DataProvider implements IDataProvider{
 	@Override
 	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida{
 		//texto com opçoes de personagem
-		if (x<0 || x>15 || y<0 || y>15)
+		if (x<0 || x>19 || y<0 || y>19)
 			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
 		if (y<8)
 			throw new AdicaoLugarProibido("Voce nao pode adicionar nesse lugar!");
@@ -130,7 +130,7 @@ public class DataProvider implements IDataProvider{
 	@Override
 	public void removePersonagem(int x, int y) throws RemocaoInvalida{
 		//texto pedindo para inserir x e y
-		if (x<0 || x>15 || y<0 || y>15)
+		if (x<0 || x>19 || y<0 || y>19)
 			throw new RemocaoLugarInexistente("Nao existe essa posicao!");
 		if (pontos == 100)
 			throw new RemocaoAntesDeAdicao("Voce deve adicionar pelo menos um personagem para poder fazer uma remocao!");

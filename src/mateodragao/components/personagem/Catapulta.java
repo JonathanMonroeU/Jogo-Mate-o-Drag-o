@@ -1,7 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.Pedra;
-import mateodragao.components.projetil.Pedra;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Catapulta extends Personagem{

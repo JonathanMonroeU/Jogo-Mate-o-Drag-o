@@ -36,26 +36,27 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	
 	public Tabuleiro() {
 		super();
-		vProjetil = new IProjetil[16][16][2];
+		vProjetil = new IProjetil[20][20][2];
 		vConflito = new IProjetil [20];
 		
-		vPersonagem = new IPersonagem[16][16];
+		vPersonagem = new IPersonagem[20][20];
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
 		
-		vPersonagem[8][1] = new Dragao(8,1);					//4 posições vizinhas do tabuleiro apontam para o dragão
-		vPersonagem[7][1]=vPersonagem[8][1];
-		vPersonagem[7][0]=vPersonagem[8][1];
-		vPersonagem[8][0]=vPersonagem[8][1];
-		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",7,1);
-		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",8,0);
-		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",7,0);
-		setElemento(8,1,(PecaIcon) vPersonagem[8][1]);
-		setElemento(7,1,compl1);
-		setElemento(7,0,compl2);
-		setElemento(8,0,compl3);
+		vPersonagem[10][1] = new Dragao(10,1);					//4 posições vizinhas do tabuleiro apontam para o dragão
+		vPersonagem[9][1]=vPersonagem[9][1];
+		vPersonagem[10][0]=vPersonagem[10][0];
+		vPersonagem[9][0]=vPersonagem[9][0];
 		
-		DragonPosition[0] = 8;									
+		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",9,1);
+		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",10,0);
+		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",9,0);
+		setElemento(10,1,(PecaIcon) vPersonagem[10][1]);
+		setElemento(9,1,compl1);
+		setElemento(9,0,compl2);
+		setElemento(10,0,compl3);
+		
+		DragonPosition[0] = 10;									
 		DragonPosition[1] = 1;
 		atual=-1;
 		
@@ -100,8 +101,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
 		
 		//primeira passagem por todas as posições do tabuleiro para mover personagens e projeteis e disparar projeteis
-		for (int i=0; i<16; i++) {
-			for (int j=0; j<16; j++) {
+		for (int i=0; i<20; i++) {
+			for (int j=0; j<20; j++) {
 				if (vPersonagem[i][j] != null) {
 					//se o personagem não for o dragão e não tiver agido ainda nesse tempo do jogo:
 					if (vPersonagem[i][j].getVida()<4 && vPersonagem[i][j].getJaAgiu()==0) {	
@@ -132,8 +133,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		}
 		
 		//segunda passagem por todo o tabuleiro para analisar projeteis que acertaram personagens
-		for (int i=0; i<16; i++) {
-			for (int j=0; j<16; j++) {
+		for (int i=0; i<20; i++) {
+			for (int j=0; j<20; j++) {
 				//se houver um pesonagem e um projetil na mesma posição é ativado o método que checa se ele deve perder vida
 				if (vPersonagem[i][j] != null && vProjetil[i][j][0]!=null) { 
 					vPersonagem[i][j].perdeVida(vProjetil[i][j][0],this);
@@ -193,8 +194,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void resolveConflito (IProjetil projetil) {
 		//se a posição para o qual o projetil quer se mover ainda estiver ocupada:
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
-			//se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro
-			if (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+			//se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ou for a bola de fogo, ele se move ocupando o lugar do outro
+			if (projetil.getDano()==1 || projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
 				projetil.setEmConflito(0);
 				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				

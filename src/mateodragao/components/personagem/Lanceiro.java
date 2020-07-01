@@ -2,6 +2,7 @@ package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.Lanca;
 import mateodragao.components.projetil.Lanca;
+import mateodragao.components.projetil.Lanca;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Lanceiro extends Personagem{
@@ -41,21 +42,21 @@ public class Lanceiro extends Personagem{
 			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 				if (ver<0) {	//atira para cima
 					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor)))  //ver-hor é a distância entre o ataque e o dragão quando estiver na linha do dragão
-						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"ci"));
+						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"ci","lanca-ci.png"));
 					else {
 						if (hor<0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cies"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cies","lanca-cies.png"));
 						if (hor>0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cidi"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cidi","lanca-cidi.png"));
 					}
 				}if (ver>0) {	//atira para baixo
 					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
-						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bx"));
+						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bx","lanca-bx.png"));
 					else {
 						if (hor<0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxes"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxes","lanca-bxes.png"));
 						if (hor>0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxdi"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxdi","lanca-bxdi.png"));
 					}
 				}
 			}
@@ -63,21 +64,21 @@ public class Lanceiro extends Personagem{
 			else {		//atira na horizontal
 				if (hor<0) {	//atira para esquerda
 					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"es"));
+						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"es","lanca-es.png"));
 					else {
 						if (ver<0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cies"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cies","lanca-cies.png"));
 						if (ver>0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxes"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxes","lanca-bxes.png"));
 					}
 				}if (hor>0) {	//atira para direita
 					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"di"));
+						tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"di","lanca-di.png"));
 					else {
 						if (ver<0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cidi"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"cidi","lanca-cidi.png"));
 						if (ver>0)
-							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxdi"));
+							tab.putProjetil(x, y, 0, new Lanca(x, y, 0,"bxdi","lanca-bxdi.png"));
 					}
 				}
 			}tab.getProjetil(x,y,0).move(tab);

@@ -45,7 +45,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					newX += passo*addX;	System.out.println("newx:"+newX);
 					newY += passo*addY; System.out.println("newy:"+newY);
 					//se a nova posição estiver fora do campo, reinicia e volta do inicio do while
-					if(newX<0 || newX>15 || newY<0 || newY>15) {
+					if(newX<0 || newX>19 || newY<0 || newY>19) {
 						newX = x;
 						newY = y;
 						continue;
@@ -69,7 +69,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					}else {		
 						newY += passo*addY;		System.out.println("newy:"+newY);
 					//se a nova posição estiver fora do campo, reinicia e volta do início do while
-					}if(newX<1 || newX>15 || newY<1 || newY>15) {
+					}if(newX<1 || newX>19 || newY<1 || newY>19) {
 						newX = x;
 						newY = y;
 						continue;

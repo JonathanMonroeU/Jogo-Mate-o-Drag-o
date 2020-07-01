@@ -60,7 +60,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 		}	
 		
 		//se a nova posição for fora do tabuleiro:
-		if (newX<0 || newX>15 || newY<0 || newY>15) {
+		if (newX<0 || newX>19 || newY<0 || newY>19) {
 			tab.setProjetil(x, y, z, null);	System.out.println("saiu");
 		//se a nova posiçao estiver vazia o projetil se move para ela
 		}else if (tab.getProjetil(newX, newY, z) == null) {	

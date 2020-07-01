@@ -41,21 +41,21 @@ public class Arqueiro extends Personagem{
 			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 				if (ver<0) {	//atira para cima
 					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor)))  //ver-hor é a distância entre o ataque e o dragão quando estiver na linha do dragão
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"ci"));
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"ci","flecha-ci.png"));
 					else {
 						if (hor<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies","flecha-cies.png"));
 						if (hor>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi","flecha-cidi.png"));
 					}
 				}if (ver>0) {	//atira para baixo
 					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bx"));
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bx","flecha-bx.png"));
 					else {
 						if (hor<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes","flecha-bxes.png"));
 						if (hor>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi","flecha-bxdi.png"));
 					}
 				}
 			}
@@ -63,21 +63,21 @@ public class Arqueiro extends Personagem{
 			else {		//atira na horizontal
 				if (hor<0) {	//atira para esquerda
 					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"es"));
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"es","flecha-es.png"));
 					else {
 						if (ver<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies","flecha-cies.png"));
 						if (ver>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes","flecha-bxes.png"));
 					}
 				}if (hor>0) {	//atira para direita
 					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"di"));
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"di","flecha-di.png"));
 					else {
 						if (ver<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi","flecha-cidi.png"));
 						if (ver>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi"));
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi","flecha-bxdi.png"));
 					}
 				}
 			}tab.getProjetil(x,y,0).move(tab);
