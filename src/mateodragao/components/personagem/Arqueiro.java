@@ -35,8 +35,8 @@ public class Arqueiro extends Personagem{
 			System.out.println("dispara");
 			int hor,ver; //distância horizontal e vertical ao dragao
 			
-			hor=(tab.getDragonPosition()[0])-x;
-			ver=(tab.getDragonPosition()[1])-y;
+			hor=(tab.getDragonPosition()[0])-y;
+			ver=(tab.getDragonPosition()[1])-x;
 			
 			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 				if (ver<0) {	//atira para cima

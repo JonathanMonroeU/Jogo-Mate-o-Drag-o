@@ -206,7 +206,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				projetil.setEmConflito(0);
 				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null);
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);	
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				projetil.setX(projetil.getxConflito());
 				projetil.setY(projetil.getyConflito());
