@@ -126,8 +126,8 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
 		if (vida>4 && projetil.getDano()>3) {
 			vida -= projetil.getDano();
-			if (vida<=0)
-				tab.getMetro().stop();
+			/*if (vida<=0)
+				tab.getMetro().stop();*/
 		}else if (vida<4 && projetil.getDano()<3)
 			vida -= projetil.getDano();
 	}

@@ -66,6 +66,12 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		vida.setMaximumSize(new Dimension(50,30));
 		vida.setBorder(BorderFactory.createLineBorder(Color.black));
 		
+		finish = new JLabel();
+		finish.setAlignmentX(CENTER_ALIGNMENT);
+		finish.setHorizontalAlignment(0);
+		finish.setMaximumSize(new Dimension(300,100));
+		finish.setForeground(Color.RED);
+		
 		metro.addActionListener(this);
 	}
 	
@@ -83,6 +89,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			modificaTabuleiro();
 		}
 		else {
+			finish();
 			metro.stop();
 		}
 	}
@@ -253,9 +260,17 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	//recebe a posição da peça a ser removida, a remove e diminui o número de soldados em campo em 1
 	@Override
 	public void removePeca(int x, int y) {
-		removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
-		vPersonagem[x][y] = null;
-		numeroSoldados -= 1;
+		if (vPersonagem[x][y] instanceof Dragao) {
+			removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
+			removeElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
+			removeElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
+			removeElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
+		}
+		else {
+			removeElemento(x,y, (PecaIcon) vPersonagem[x][y]);
+			vPersonagem[x][y] = null;
+			numeroSoldados -= 1;
+		}
 	}
 	
 	//abaixo tem-se alguns métodos para retornar e modificar os atributos privados do Tabuleiro
@@ -302,6 +317,18 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		return metro;
 	}
 	
+	public PainelTabuleiro getPanel() {
+		return ((PainelTabuleiro)this);
+	}
 	
+	public void finish() {
+		if (vPersonagem[DragonPosition[0]][DragonPosition[1]].getVida() <= 0) {
+			finish.setText("Você Ganhou!");
+			vida.setText("0");
+		}
+		else
+			finish.setText("Você Perdeu!");
+		
+	}
 	
 }

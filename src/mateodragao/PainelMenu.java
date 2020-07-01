@@ -22,9 +22,10 @@ import mateodragao.exceptions.AdicaoInvalida;
 import mateodragao.exceptions.RemocaoInvalida;
 import mateodragao.exceptions.SemPersonagem;
 import mateodragao.interfaces.IDataProvider;
+import mateodragao.interfaces.IMenu;
 import mateodragao.interfaces.ITabuleiro;
 
-public class PainelMenu extends JPanel implements ActionListener{
+public class PainelMenu extends JPanel implements IMenu, ActionListener{
 	private static final long serialVersionUID = 6299309752925290728L;
 	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVida, painelAviso;
 	private JButton addPersonagem, remPersonagem, iniciar, adicionar, remover;
@@ -283,6 +284,7 @@ public class PainelMenu extends JPanel implements ActionListener{
 				painelInicial.setVisible(false);
 				painelAviso.setVisible(false);
 				painelVida.setVisible(true);
+				add(((PainelTabuleiro)tab).getFinishLabel());
 			} catch (SemPersonagem erro) {
 				aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");
 				painelAviso.setVisible(true);
@@ -365,5 +367,9 @@ public class PainelMenu extends JPanel implements ActionListener{
 			
 		}
 		SwingUtilities.updateComponentTreeUI(this);
+	}
+	
+	public PainelMenu getPanel() {
+		return ((PainelMenu)this);
 	}
 }

@@ -1,6 +1,7 @@
 package mateodragao.interfaces;
 
 import mateodragao.Metronomo;
+import mateodragao.PainelTabuleiro;
 import mateodragao.exceptions.SemPersonagem;
 
 public interface ITabuleiro {
@@ -20,4 +21,5 @@ public interface ITabuleiro {
 	public void resolveConflito(IProjetil projetil);
 	public void setDragonPosition(int x, int y);
 	public Metronomo getMetro();
+	public PainelTabuleiro getPanel();
 }

@@ -18,7 +18,7 @@ public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
 	public static String DIRETORIO = PainelTabuleiro.class.getResource(".").getPath();
 	protected GramaPanel celulas[][] = new GramaPanel[20][20];
-	protected JLabel vida;
+	protected JLabel vida, finish;
 	
 	public PainelTabuleiro() {
 		setLayout(new GridLayout(20,20));
@@ -58,5 +58,9 @@ public class PainelTabuleiro extends JPanel{
 	
 	public JLabel getVidaLabel() {
 		return vida;
+	}
+	
+	public JLabel getFinishLabel() {
+		return finish;
 	}
 }

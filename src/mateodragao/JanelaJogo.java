@@ -13,13 +13,16 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
+import mateodragao.interfaces.IMenu;
+import mateodragao.interfaces.ITabuleiro;
+
 
 public class JanelaJogo extends JFrame{
 	private static final long serialVersionUID = -617666447542987164L;
-	private PainelMenu painelMenu;
-	private PainelTabuleiro painelGrid;
+	private IMenu painelMenu;
+	private ITabuleiro painelGrid;
 	
-	public JanelaJogo(PainelTabuleiro tab, PainelMenu menu) {
+	public JanelaJogo(ITabuleiro tab, IMenu menu) {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		painelGrid = tab;
@@ -33,8 +36,8 @@ public class JanelaJogo extends JFrame{
 		
 		contentPane.setLayout(new BorderLayout());
 		
-		contentPane.add(painelGrid, BorderLayout.CENTER);
-	    contentPane.add(painelMenu, BorderLayout.EAST);
+		contentPane.add(painelGrid.getPanel(), BorderLayout.CENTER);
+	    contentPane.add(painelMenu.getPanel(), BorderLayout.EAST);
 	    
 	    JPanel letras = new JPanel();
 	    letras.setLayout(new BoxLayout(letras, BoxLayout.X_AXIS));
@@ -70,10 +73,10 @@ public class JanelaJogo extends JFrame{
 	    setVisible(true);
 	}
 	
-	public void adicionaElemento(PecaIcon obj) {
+	/*public void adicionaElemento(PecaIcon obj) {
 		painelGrid.setElemento(obj.getX(),obj.getY(),obj);
 		SwingUtilities.updateComponentTreeUI(this);
-	}
+	}*/
 	
 	
 	/*private class NewContentPane extends JPanel{
