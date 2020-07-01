@@ -13,6 +13,7 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
+import java.awt.Color;
 
 public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
@@ -28,13 +29,13 @@ public class PainelTabuleiro extends JPanel{
 	    		add(celulas[i][j]);
 	    		celulas[i][j].setLayout(new BorderLayout());		//celulas[i][j].setLayout(null);
 	    		celulas[i][j].setBackground(Color.green);
-	    		celulas[i][j].setBorder(BorderFactory.createLineBorder(Color.black));
+	    		celulas[i][j].setBorder(BorderFactory.createLineBorder(Color.green,0));
 	    	}
 	    }
 	}
 	
 	public void setElemento(int x, int y, PecaIcon p) {
-		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.NORTH);
+		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.CENTER);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	

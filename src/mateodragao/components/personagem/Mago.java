@@ -36,8 +36,8 @@ public class Mago extends Personagem{
 		if (freqA==0){
 			int hor,ver; //distância horizontal e vertical ao dragao
 			
-			hor=(tab.getDragonPosition()[0])-x;
-			ver=(tab.getDragonPosition()[1])-y;
+			ver=(tab.getDragonPosition()[0])-x;
+			hor=(tab.getDragonPosition()[1])-y;
 			
 			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 				if (ver<0) {	//atira para cima

@@ -31,7 +31,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
 	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
 	private int atual;							
-	private Metronomo metro = new Metronomo(1000,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private Metronomo metro = new Metronomo(250,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
 	private PecaIcon compl1,compl2,compl3;
 	
 	public Tabuleiro() {
@@ -43,21 +43,21 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		DragonPosition = new int[2];
 		numeroSoldados = 0;
 		
-		vPersonagem[10][1] = new Dragao(10,1);					//4 posições vizinhas do tabuleiro apontam para o dragão
-		vPersonagem[9][1]=vPersonagem[9][1];
-		vPersonagem[10][0]=vPersonagem[10][0];
-		vPersonagem[9][0]=vPersonagem[9][0];
+		vPersonagem[1][10] = new Dragao(1,10);					//4 posições vizinhas do tabuleiro apontam para o dragão
+		vPersonagem[1][9]=vPersonagem[1][10];
+		vPersonagem[0][10]=vPersonagem[1][10];
+		vPersonagem[0][9]=vPersonagem[1][10];
 		
-		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",9,1);
-		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",10,0);
-		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",9,0);
-		setElemento(10,1,(PecaIcon) vPersonagem[10][1]);
-		setElemento(9,1,compl1);
-		setElemento(9,0,compl2);
-		setElemento(10,0,compl3);
+		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",1,9);
+		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",0,10);
+		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",0,9);
+		setElemento(1,10,(PecaIcon) vPersonagem[1][10]);
+		setElemento(1,9,compl1);
+		setElemento(0,10,compl2);
+		setElemento(0,9,compl3);
 		
-		DragonPosition[0] = 10;									
-		DragonPosition[1] = 1;
+		DragonPosition[0] = 1;									
+		DragonPosition[1] = 10;
 		atual=-1;
 		
 		vida = new JLabel(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]].getVida()));

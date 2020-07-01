@@ -30,28 +30,28 @@ public class Projetil extends PecaIcon implements IProjetil{
 	
 		switch(direcao) {
 		case "ci":
-			newY-=velocidade;
-			break;
-		case "bx":
-			newY+=velocidade;
-			break;
-		case "es":
 			newX-=velocidade;
 			break;
-		case "di":
+		case "bx":
 			newX+=velocidade;
+			break;
+		case "es":
+			newY-=velocidade;
+			break;
+		case "di":
+			newY+=velocidade;
 			break;
 		case "cies":
 			newX-=velocidade;
 			newY-=velocidade;
 			break;
 		case "cidi":
-			newX+=velocidade;
-			newY-=velocidade;
-			break;
-		case "bxes":
 			newX-=velocidade;
 			newY+=velocidade;
+			break;
+		case "bxes":
+			newX+=velocidade;
+			newY-=velocidade;
 			break;
 		case "bxdi":
 			newX+=velocidade;

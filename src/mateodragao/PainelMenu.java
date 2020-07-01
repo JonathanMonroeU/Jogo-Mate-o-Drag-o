@@ -317,12 +317,18 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 			painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
 			
+			char i;
+			y=0;
 			try { 
 				x = Integer.parseInt(textXA.getText());
-				y = Integer.parseInt(textYA.getText());
-				
+				i = (textYA.getText()).charAt(0);
+				for (char c='a';c<='t';c++) {
+					if (i==c)
+						break;
+					y++;
+				}
 				try {
-					data.inserePersonagem(comando, x, y); //fazer try/catch
+					data.inserePersonagem(comando, x-1, y); //fazer try/catch
 					tab.receiveData(data);
 					//System.out.println(data.getPontos());
 					pontos.setText(Integer.toString(data.getPontos()));
@@ -345,12 +351,18 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 			//painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
 			
-			try {
-				x = Integer.parseInt(textXR.getText());
-				y = Integer.parseInt(textYR.getText());
-				
+			char i;
+			y=0;
+			try { 
+				x = Integer.parseInt(textXA.getText());
+				i = (textYA.getText()).charAt(0);
+				for (char c='a';c<='t';c++) {
+					if (i==c)
+						break;
+					y++;
+				}
 				try {
-					data.removePersonagem(x, y); //fazer try/catch
+					data.removePersonagem(x-1, y); //fazer try/catch
 					tab.receiveData(data);
 					pontos.setText(Integer.toString(data.getPontos()));
 				} catch (RemocaoInvalida erro){

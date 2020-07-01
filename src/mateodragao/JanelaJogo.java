@@ -42,9 +42,9 @@ public class JanelaJogo extends JFrame{
 	    JPanel letras = new JPanel();
 	    letras.setLayout(new BoxLayout(letras, BoxLayout.X_AXIS));
 	    JPanel vLetras = new JPanel();
-	    vLetras.setLayout(new GridLayout(1,16));
+	    vLetras.setLayout(new GridLayout(1,20)); //1,16
 	    vLetras.setPreferredSize(new Dimension(0,20));
-	    for (char c = 'a'; c<'q'; c++) {
+	    for (char c = 'a'; c<='t'; c++) {
 	    	JLabel j = new JLabel(Character.toString(Character.toUpperCase(c)));
 	    	j.setHorizontalAlignment(0);
 	    	j.setFont(new Font("Arial", Font.BOLD, 18));
@@ -58,9 +58,9 @@ public class JanelaJogo extends JFrame{
 	    JPanel numeros = new JPanel();
 	    numeros.setLayout(new BoxLayout(numeros, BoxLayout.Y_AXIS));
 	    JPanel vNumeros = new JPanel();
-	    vNumeros.setLayout(new GridLayout(16,1));
+	    vNumeros.setLayout(new GridLayout(20,1)); //16,1
 	    vNumeros.setPreferredSize(new Dimension(30,0));
-	    for (int n = 1; n<=16; n++) {
+	    for (int n = 1; n<=20; n++) {   //1 até 16
 	    	JLabel j = new JLabel(Integer.toString(n));
 	    	j.setVerticalAlignment(0);
 	    	j.setHorizontalAlignment(0);

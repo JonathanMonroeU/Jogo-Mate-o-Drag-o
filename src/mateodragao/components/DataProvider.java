@@ -57,7 +57,7 @@ public class DataProvider implements IDataProvider{
 		//texto com opçoes de personagem
 		if (x<0 || x>19 || y<0 || y>19)
 			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
-		if (y<8)
+		if (x<10)
 			throw new AdicaoLugarProibido("Voce nao pode adicionar nesse lugar!");
 		//dependendo do comando realiza um dos metodos abaixo
 		for(int i=1; i<pecaPosition.length; i+=3) {
