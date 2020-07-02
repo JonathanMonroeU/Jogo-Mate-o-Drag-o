@@ -8,7 +8,7 @@ public class BolaDeFogo extends Projetil{
 		super(DIRETORIO+imagem, x, y, z);
 		direcao=direcaoA;
 		dano=1;
-		velocidade= 1; //estávamos pensando em 2
+		velocidade= 2; //estávamos pensando em 2
 		jaAgiu=0;
 		
 	}

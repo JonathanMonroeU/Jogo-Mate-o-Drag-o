@@ -3,6 +3,7 @@ package mateodragao.components.personagem;
 import java.util.Random;
 
 import mateodragao.PecaIcon;
+import mateodragao.components.projetil.BolaDeFogo;
 import mateodragao.interfaces.IPersonagem;
 import mateodragao.interfaces.IProjetil;
 import mateodragao.interfaces.ITabuleiro;
@@ -41,7 +42,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				System.out.println("addx:"+addX+" addy:"+addY);
 				
 				//se não for o dragão, testa se a nova posição é coerente para o guerreiro:
-				if (vida<4) { 
+				if (this instanceof Dragao==false) { 
 					newX += passo*addX;	System.out.println("newx:"+newX);
 					newY += passo*addY; System.out.println("newy:"+newY);
 					//se a nova posição estiver fora do campo, reinicia e volta do inicio do while
@@ -61,7 +62,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					}
 				}	
 				//se for o dragão, testa se a nova posição é coerente para o dragão:
-				if (vida>4) { 
+				if (this instanceof Dragao) { 
 					//o dragão só se move em x ou y a cada passo, então é escolhido aleatoriamente um dos dois para ser modificado
 					int a=alea.nextInt(2);
 					if (a==0) {
@@ -96,7 +97,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				//((PainelTabuleiro) tab).setElemento(newX,newY,(PecaIcon) this);
 				
 				//se for o dragão, as outras 3 posições que o compõem tem que ser ajustadas também
-				if (vida>4) {//se for o dragão
+				if (this instanceof Dragao) {//se for o dragão
 					tab.setDragonPosition(newX,newY);
 					tab.setPeca(x-1, y, null);	
 					tab.setPeca(x, y-1, null);
@@ -124,11 +125,11 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	//pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. Se a vida do dragão for menor que 1, o jogo para
 	@Override
 	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
-		if (vida>4 && projetil.getDano()>3) {
+		if (this instanceof Dragao && projetil instanceof BolaDeFogo==false) {
 			vida -= projetil.getDano();
 			/*if (vida<=0)
 				tab.getMetro().stop();*/
-		}else if (vida<4 && projetil.getDano()<3)
+		}else if (this instanceof Dragao==false && projetil instanceof BolaDeFogo)
 			vida -= projetil.getDano();
 	}
 

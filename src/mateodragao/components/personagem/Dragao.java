@@ -16,7 +16,7 @@ public class Dragao extends Personagem{
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1000;
-		frequencia = 2;	//estávamos pensando em 1
+		frequencia = 1;	//estávamos pensando em 1
 		movimento = 1;
 		passo = 1;
 	}
@@ -40,27 +40,27 @@ public class Dragao extends Personagem{
 			
 			for (int i=-5;i<=4;i++) {
 				if (i!=0 && i!=1) {
-					if (x+i>=0 && x+i<=15 && y-4>=0){
+					if (x+i>=0 && x+i<=19 && y-4>=0){
 						if (tab.getPeca(x+i,y-4)!=null){
 							pX=x+i;
 							pY=-y-4;
 							break;
 						}
 					}
-					if (x+i>=0 && x+i<=15 && y+4<=15){
+					if (x+i>=0 && x+i<=19 && y+4<=19){
 						if (tab.getPeca(x+i,y+4)!=null) {
 							pX=x+i;
 							pY=y+4;
 							break;
 						}
 					}	
-					if (x-4>=0 && y+i>=0 && y+i<=15){
+					if (x-4>=0 && y+i>=0 && y+i<=19){
 						if (tab.getPeca(x-4,y+i)!=null) {
 							pX=x-4;
 							pY=y+i;
 							break;
 						}
-					}if (x+4<=15 && y+i>=0 && y+i<=15){
+					}if (x+4<=19 && y+i>=0 && y+i<=19){
 						if (tab.getPeca(x+4,y+i)!=null) {
 							pX=x+4;
 							pY=y+i;
@@ -70,14 +70,14 @@ public class Dragao extends Personagem{
 				}
 			}
 			if (pX!=100) {
-				hor=pX-x;
-				ver=pY-y;
+				hor=pY-y;
+				ver=pX-x;
 				
 				if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 					if (ver<0) {	//atira para cima
 						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
-							tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"ci", "boladefogo-ci.png"));
-							tab.getProjetil(x,y-1,0).move(tab);
+							tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
+							tab.getProjetil(x-1, y,0).move(tab);
 						}else {
 							if (hor<0) {
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
@@ -106,12 +106,12 @@ public class Dragao extends Personagem{
 				else {		//atira na horizontal
 					if (hor<0) {	//atira para esquerda
 						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
-							tab.putProjetil(x-1,y, 0, new BolaDeFogo(x-1, y, 0,"es", "boladefogo-es.png"));
-							tab.getProjetil(x-1,y,0).move(tab);
+							tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
+							tab.getProjetil(x, y-1, 0).move(tab);
 						}else {
 							if (ver<0) {
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies", "boladefogo-cies.png"));
-								tab.getProjetil(x-1,y-1,0).move(tab);
+								tab.getProjetil(x-1, y-1, 0).move(tab);
 							}if (ver>0) {
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes", "boladefogo-bxes.png"));
 								tab.getProjetil(x,y,0).move(tab);
@@ -141,73 +141,73 @@ public class Dragao extends Personagem{
 						case 0:
 							if (x-2>0 && y-2>0){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies", "boladefogo-cies.png"));
-								tab.getProjetil(x-1,y-1,0).move(tab);
+								tab.getProjetil(x-1, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 						case 1:
-							if (x-1>0 && y-2>0){
+							if (x-2>0 && y-1>0){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"ci", "boladefogo-ci.png"));
-								tab.getProjetil(x-1,y-1,0).move(tab);
+								tab.getProjetil(x-1, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 						case 2:
-							if (y-2>0){
-								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"ci", "boladefogo-ci.png"));
-								tab.getProjetil(x,y-1,0).move(tab);
+							if (x-2>0){
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
+								tab.getProjetil(x-1, y, 0).move(tab);
 								disparado=1;
 							}break;
 						case 3:
-							if (x+1<15 && y-2>0){
-								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"cidi", "boladefogo-cidi.png"));
-								tab.getProjetil(x,y-1,0).move(tab);
+							if (x-2<19 && y+1>0){
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"cidi", "boladefogo-cidi.png"));
+								tab.getProjetil(x-1, y, 0).move(tab);
 								disparado=1;
 							}break;
 						case 4:
-							if (x+1<15 && y-1>0){
-								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"di", "boladefogo-di.png"));
-								tab.getProjetil(x,y-1,0).move(tab);
+							if (x-1<19 && y+1>0){
+								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"di", "boladefogo-di.png"));
+								tab.getProjetil(x-1, y, 0).move(tab);
 								break;
 							}
 						case 5:
-							if (x+1<15){
+							if (y+1<19){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
-								tab.getProjetil(x,y,0).move(tab);
+								tab.getProjetil(x, y, 0).move(tab);
 								disparado=1;
 							}break;
 						case 6:
-							if (x+1<15 && y+1<15){
+							if (x+1<19 && y+1<19){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
-								tab.getProjetil(x,y,0).move(tab);
+								tab.getProjetil(x, y, 0).move(tab);
 								disparado=1;
 							}break;
 						case 7:
-							if (y+1<15){
+							if (x+1<19){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
-								tab.getProjetil(x,y,0).move(tab);
+								tab.getProjetil(x, y, 0).move(tab);
 								disparado=1;
 							}break;
 						case 8:
-							if (x-1>0 && y+1<15){
-								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"bx", "boladefogo-bx.png"));
-								tab.getProjetil(x-1,y,0).move(tab);
+							if (x+1>0 && y-1<19){
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bx", "boladefogo-bx.png"));
+								tab.getProjetil(x, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 						case 9:
-							if (x-2>0 && y+1<15){
-								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"bxes","boladefogo-bxes.png"));
-								tab.getProjetil(x-1,y,0).move(tab);
+							if (x+1>0 && y-2<19){
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bxes","boladefogo-bxes.png"));
+								tab.getProjetil(x, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 						case 10:
-							if (x-2>0){
-								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"es", "boladefogo-es.png"));
-								tab.getProjetil(x-1,y,0).move(tab);
+							if (y-2>0){
+								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
+								tab.getProjetil(x, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 						case 11:
-							if (x-2>0 && y-1>0){
+							if (x-1>0 && y-2>0){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"es", "boladefogo-es.png"));
-								tab.getProjetil(x-1,y-1,0).move(tab);
+								tab.getProjetil(x-1, y-1, 0).move(tab);
 								disparado=1;
 							}break;
 					}
