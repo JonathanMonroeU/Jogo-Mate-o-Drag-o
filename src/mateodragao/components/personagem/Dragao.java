@@ -12,7 +12,7 @@ public class Dragao extends Personagem{
 	/*{frequencia = 1;
 	movimento = 1;
 	passo = 1;}*/
-	
+	int especial=10;
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"yoshi.png",x,y);
 		vida = 1000;
@@ -35,184 +35,308 @@ public class Dragao extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			System.out.println("dispara");
-			int hor,ver, //distância horizontal e vertical do dragão ao personagem
-				pX=100,pY=100; //posição
-			
-			for (int i=-5;i<=4;i++) {
-				if (i!=0 && i!=1) {
-					if (x+i>=0 && x+i<=19 && y-4>=0){
-						if (tab.getPeca(x+i,y-4)!=null){
-							pX=x+i;
-							pY=-y-4;
-							break;
-						}
-					}
-					if (x+i>=0 && x+i<=19 && y+4<=19){
-						if (tab.getPeca(x+i,y+4)!=null) {
-							pX=x+i;
-							pY=y+4;
-							break;
-						}
-					}	
-					if (x-4>=0 && y+i>=0 && y+i<=19){
-						if (tab.getPeca(x-4,y+i)!=null) {
-							pX=x-4;
-							pY=y+i;
-							break;
-						}
-					}if (x+4<=19 && y+i>=0 && y+i<=19){
-						if (tab.getPeca(x+4,y+i)!=null) {
-							pX=x+4;
-							pY=y+i;
-							break;
-						}
-					}
-				}
-			}
-			if (pX!=100) {
-				hor=pY-y;
-				ver=pX-x;
-				
-				if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
-					if (ver<0) {	//atira para cima
-						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
-							tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
-							tab.getProjetil(x-1, y,0).move(tab);
-						}else {
-							if (hor<0) {
-								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
-								tab.getProjetil(x-1,y-1,0).move(tab);
-							}if (hor>0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}
-						}
-					}if (ver>0) {	//atira para baixo
-						if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) { 
-							tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
-							tab.getProjetil(x,y,0).move(tab);
-						}else {
-							if (hor<0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes","boladefogo-bxes.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}if (hor>0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxdi","boladefogo-bxdi.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}
-						}
-					}
-				}
-				
-				else {		//atira na horizontal
-					if (hor<0) {	//atira para esquerda
-						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
-							tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
-							tab.getProjetil(x, y-1, 0).move(tab);
-						}else {
-							if (ver<0) {
-								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies", "boladefogo-cies.png"));
-								tab.getProjetil(x-1, y-1, 0).move(tab);
-							}if (ver>0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes", "boladefogo-bxes.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}
-						}
-					}if (hor>0) {	//atira para direita
-						if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
-							tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
-							tab.getProjetil(x,y,0).move(tab);
-						}else {
-							if (ver<0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}if (ver>0) {
-								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
-								tab.getProjetil(x,y,0).move(tab);
-							}
-						}
-					}
-				}
-			}
-			else {
-				int disparado=0;
-				while (disparado==0) {
-					int direcaoAlea = alea.nextInt(12);
-					switch (direcaoAlea) {
+			//DISPARO ESPECIAL
+			if(vida/100<=especial) {
+				especial--;
+				for(int i=0;i<12;i++) {
+					switch (i) {
 						case 0:
-							if (x-2>0 && y-2>0){
+							if (x-2>0 && y-2>0 && tab.getProjetil(x-1, y-1, 0)==null){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies", "boladefogo-cies.png"));
 								tab.getProjetil(x-1, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 1:
-							if (x-2>0 && y-1>0){
+							if (x-2>0 && y-1>0 && tab.getProjetil(x-1, y-1, 0)==null){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"ci", "boladefogo-ci.png"));
 								tab.getProjetil(x-1, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 2:
-							if (x-2>0){
+							if (x-2>0 && tab.getProjetil(x-1, y, 0)==null){
 								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
 								tab.getProjetil(x-1, y, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 3:
-							if (x-2<19 && y+1>0){
+							if (x-2>0 && y+1<19 && tab.getProjetil(x-1, y, 0)==null){
 								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"cidi", "boladefogo-cidi.png"));
 								tab.getProjetil(x-1, y, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 4:
-							if (x-1<19 && y+1>0){
+							if (x-1>0 && y+1<19 && tab.getProjetil(x-1, y, 0)==null){
 								tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"di", "boladefogo-di.png"));
 								tab.getProjetil(x-1, y, 0).move(tab);
-								break;
 							}
+							break;
 						case 5:
-							if (y+1<19){
+							if (y+1<19 && tab.getProjetil(x, y, 0)==null){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
 								tab.getProjetil(x, y, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 6:
-							if (x+1<19 && y+1<19){
+							if (x+1<19 && y+1<19 && tab.getProjetil(x, y, 0)==null){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
 								tab.getProjetil(x, y, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 7:
-							if (x+1<19){
+							if (x+1<19 && tab.getProjetil(x, y, 0)==null){
 								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
 								tab.getProjetil(x, y, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 8:
-							if (x+1>0 && y-1<19){
+							if (x+1<19 && y-1>0 && tab.getProjetil(x, y-1, 0)==null){
 								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bx", "boladefogo-bx.png"));
 								tab.getProjetil(x, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 9:
-							if (x+1>0 && y-2<19){
+							if (x+1<19 && y-2>0 && tab.getProjetil(x, y-1, 0)==null){
 								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bxes","boladefogo-bxes.png"));
 								tab.getProjetil(x, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 10:
-							if (y-2>0){
+							if (y-2>0 && tab.getProjetil(x, y-1, 0)==null){
 								tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
 								tab.getProjetil(x, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 						case 11:
-							if (x-1>0 && y-2>0){
+							if (x-1>0 && y-2>0 && tab.getProjetil(x-1, y-1, 0)==null){
 								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"es", "boladefogo-es.png"));
 								tab.getProjetil(x-1, y-1, 0).move(tab);
-								disparado=1;
-							}break;
+							}
+							break;
 					}
-				}	
+				}
 			}	
+			else {
+				//DISPARO DIRECIONADO:
+				
+				int hor,ver, //distância horizontal e vertical do dragão ao personagem
+					pX=100,pY=100; //posição
+				
+				
+				for (int i=-5;i<=4;i++) {
+					if (i!=0 && i!=1) {
+						if (x+i>=0 && x+i<=19 && y-4>=0){
+							if (tab.getPeca(x+i,y-4)!=null){
+								pX=x+i;
+								pY=-y-4;
+								break;
+							}
+						}
+						if (x+i>=0 && x+i<=19 && y+4<=19){
+							if (tab.getPeca(x+i,y+4)!=null) {
+								pX=x+i;
+								pY=y+4;
+								break;
+							}
+						}	
+						if (x-4>=0 && y+i>=0 && y+i<=19){
+							if (tab.getPeca(x-4,y+i)!=null) {
+								pX=x-4;
+								pY=y+i;
+								break;
+							}
+						}if (x+4<=19 && y+i>=0 && y+i<=19){
+							if (tab.getPeca(x+4,y+i)!=null) {
+								pX=x+4;
+								pY=y+i;
+								break;
+							}
+						}
+					}
+				}
+				if (pX!=100) {
+					hor=pY-y;
+					ver=pX-x;
+					
+					if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
+						if (ver<0) {	//atira para cima
+							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+								if(tab.getProjetil(x-1, y,0)==null) {
+									tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
+									tab.getProjetil(x-1, y,0).move(tab);
+								}
+							}else {
+								if (hor<0) {
+									if(tab.getProjetil(x-1,y-1,0)==null) {
+										tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
+										tab.getProjetil(x-1,y-1,0).move(tab);
+									}
+								}if (hor>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}if (ver>0) {	//atira para baixo
+							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) { 
+								if(tab.getProjetil(x,y,0)==null) { 
+									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
+									tab.getProjetil(x,y,0).move(tab);
+								}
+							}else {
+								if (hor<0) {
+									if(tab.getProjetil(x,y,0)==null) { 
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes","boladefogo-bxes.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}if (hor>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxdi","boladefogo-bxdi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}
+					}
+					
+					else {		//atira na horizontal
+						if (hor<0) {	//atira para esquerda
+							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
+								if(tab.getProjetil(x, y-1, 0)==null) {
+									tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
+									tab.getProjetil(x, y-1, 0).move(tab);
+								}
+							}else {
+								if (ver<0) {
+									if(tab.getProjetil(x-1, y-1, 0)==null) {
+											tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies", "boladefogo-cies.png"));
+											tab.getProjetil(x-1, y-1, 0).move(tab);
+									}
+								}if (ver>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes", "boladefogo-bxes.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}if (hor>0) {	//atira para direita
+							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
+								if(tab.getProjetil(x,y,0)==null) {
+									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
+									tab.getProjetil(x,y,0).move(tab);
+								}
+							}else {
+								if (ver<0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}if (ver>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}
+					}
+				}
+				
+				//DISPARO ALEATÓRIO:
+				
+				else {
+					int disparado=0, tentativas=0;	
+					while (disparado==0 && tentativas<30) {
+						int direcaoAlea = alea.nextInt(12);
+						switch (direcaoAlea) {
+							case 0:
+								if (x-2>0 && y-2>0 && tab.getProjetil(x-1, y-1, 0)==null){
+									tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"cies", "boladefogo-cies.png"));
+									tab.getProjetil(x-1, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 1:
+								if (x-2>0 && y-1>0 && tab.getProjetil(x-1, y-1, 0)==null){
+									tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"ci", "boladefogo-ci.png"));
+									tab.getProjetil(x-1, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 2:
+								if (x-2>0 && tab.getProjetil(x-1, y, 0)==null){
+									tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
+									tab.getProjetil(x-1, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 3:
+								if (x-2>0 && y+1<19 && tab.getProjetil(x-1, y, 0)==null){
+									tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"cidi", "boladefogo-cidi.png"));
+									tab.getProjetil(x-1, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 4:
+								if (x-1>0 && y+1<19 && tab.getProjetil(x-1, y, 0)==null){
+									tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"di", "boladefogo-di.png"));
+									tab.getProjetil(x-1, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 5:
+								if (y+1<19 && tab.getProjetil(x, y, 0)==null){
+									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
+									tab.getProjetil(x, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 6:
+								if (x+1<19 && y+1<19 && tab.getProjetil(x, y, 0)==null){
+									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
+									tab.getProjetil(x, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 7:
+								if (x+1<19 && tab.getProjetil(x, y, 0)==null){
+									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
+									tab.getProjetil(x, y, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 8:
+								if (x+1<19 && y-1>0 && tab.getProjetil(x, y-1, 0)==null){
+									tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bx", "boladefogo-bx.png"));
+									tab.getProjetil(x, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 9:
+								if (x+1<19 && y-2>0 && tab.getProjetil(x, y-1, 0)==null){
+									tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"bxes","boladefogo-bxes.png"));
+									tab.getProjetil(x, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 10:
+								if (y-2>0 && tab.getProjetil(x, y-1, 0)==null){
+									tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
+									tab.getProjetil(x, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+							case 11:
+								if (x-1>0 && y-2>0 && tab.getProjetil(x-1, y-1, 0)==null){
+									tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0,"es", "boladefogo-es.png"));
+									tab.getProjetil(x-1, y-1, 0).move(tab);
+									disparado=1;
+								}tentativas++;
+								break;
+						}
+					}	
+				}	
+			}
 		}freqA = (freqA + 1)%frequencia;	
 	}
 }
