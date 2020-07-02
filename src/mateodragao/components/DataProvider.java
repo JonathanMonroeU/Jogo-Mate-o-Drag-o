@@ -134,7 +134,7 @@ public class DataProvider implements IDataProvider{
 			throw new RemocaoLugarInexistente("Nao existe essa posicao!");
 		if (pontos == 100)
 			throw new RemocaoAntesDeAdicao("Voce deve adicionar pelo menos um personagem para poder fazer uma remocao!");
-		if ((x==7 && y==0)||(x==7 && y==1)||(x==8 && y==0)||(x==8 && y==1))
+		if ((x==0 && y==9)||(x==0 && y==10)||(x==1 && y==9)||(x==1 && y==10))
 			throw new RemocaoLugarDragao("Voce nao pode remover o dragao!");
 		
 		
@@ -160,6 +160,8 @@ public class DataProvider implements IDataProvider{
 						break;
 				}
 				pecaPosition[i-1] = 0;
+				pecaPosition[i] = 0;
+				pecaPosition[i+1] = 0;
 				atual = i-1;
 				return;
 			}

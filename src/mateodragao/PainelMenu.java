@@ -354,8 +354,8 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 			char i;
 			y=0;
 			try { 
-				x = Integer.parseInt(textXA.getText());
-				i = (textYA.getText()).charAt(0);
+				x = Integer.parseInt(textXR.getText());
+				i = (textYR.getText()).charAt(0);
 				for (char c='a';c<='t';c++) {
 					if (i==c)
 						break;
