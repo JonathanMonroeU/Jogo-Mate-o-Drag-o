@@ -8,7 +8,8 @@ public class Pedra extends Projetil{
 		super(DIRETORIO+"pedra.png", x, y, z);
 		direcao=direcaoA;
 		dano= 100;
-		velocidade= 4;
+		freqMov=3;
+		velocidade= 1;
 		jaAgiu=2;  //nunca entra em conflito
 	}
 	

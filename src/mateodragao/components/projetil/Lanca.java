@@ -8,7 +8,8 @@ public class Lanca extends Projetil{
 		super(DIRETORIO+imagem, x, y, z);
 		direcao=direcaoA;
 		dano= 25;
-		velocidade= 2;
+		freqMov=6;
+		velocidade= 1;
 		jaAgiu=0;
 	}
 	

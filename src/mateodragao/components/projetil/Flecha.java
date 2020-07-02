@@ -8,7 +8,8 @@ public class Flecha extends Projetil{
 		super(DIRETORIO+imagem, x, y, z);
 		direcao=direcaoA;
 		dano= 15;
-		velocidade= 3;
+		freqMov=4;
+		velocidade= 1;
 		jaAgiu=0;
 	}
 	

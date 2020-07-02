@@ -1,8 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.BolaDeEnergia;
-import mateodragao.components.projetil.BolaDeEnergia;
-import mateodragao.components.projetil.BolaDeEnergia;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Mago extends Personagem{
@@ -18,8 +16,8 @@ public class Mago extends Personagem{
 	public Mago(int x, int y) {
 		super(DIRETORIO+"mago.png",x,y);
 		vida = 2;
-		frequencia = 2;
-		movimento = 1;
+		frequencia = 24;
+		movimento = 12;
 		passo = 1;
 	}
 	

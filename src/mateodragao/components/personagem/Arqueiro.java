@@ -16,9 +16,9 @@ public class Arqueiro extends Personagem{
 	public Arqueiro(int x, int y) {
 		super(DIRETORIO+"arqueiro.png",x,y);
 		vida = 1;
-		frequencia = 1;
-		movimento = 1;
-		passo = 2;
+		frequencia = 12;
+		movimento = 6;
+		passo = 1;
 	}
 
 	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0

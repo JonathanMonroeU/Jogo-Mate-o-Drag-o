@@ -12,17 +12,21 @@ public class Dragao extends Personagem{
 	/*{frequencia = 1;
 	movimento = 1;
 	passo = 1;}*/
-	int especial=10;
+	int especial;
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"dragao.png",x,y);
 		vida = 1000;
-		frequencia = 1;	//estávamos pensando em 1
-		movimento = 1;
+		frequencia = 12;	//estávamos pensando em 1
+		movimento = 12;
 		passo = 1;
+		especial=9;
 	}
 
 	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
-	/*Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
+	
+	
+	/* Disparo especial: a cada vez que a vida do dragão passa por uma centena, decrescendo, ele dispara um ataque e todas as direções
+	 * Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
 	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa, no caso do dragão, ele procura alvos em uma distância de 4 casas para cada lado.
 	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
 	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
@@ -122,40 +126,40 @@ public class Dragao extends Personagem{
 				int hor,ver, //distância horizontal e vertical do dragão ao personagem
 					pX=100,pY=100; //posição
 				
-				
-				for (int i=-5;i<=4;i++) {
-					if (i!=0 && i!=1) {
-						if (x+i>=0 && x+i<=19 && y-4>=0){
-							if (tab.getPeca(x+i,y-4)!=null){
+				//para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão
+				for (int r=0;r<=4;r++) {	
+					for (int i=-6+r;i<=5-r;i++) {
+						if (x+i>=0 && x+i<=19 && y-6+r>=0){
+							if (tab.getPeca(x+i,y-6+r)!=null){
 								pX=x+i;
-								pY=-y-4;
+								pY=-y-6+r;
 								break;
 							}
 						}
-						if (x+i>=0 && x+i<=19 && y+4<=19){
-							if (tab.getPeca(x+i,y+4)!=null) {
+						if (x+i>=0 && x+i<=19 && y+5-r<=19){
+							if (tab.getPeca(x+i,y+5-r)!=null) {
 								pX=x+i;
-								pY=y+4;
+								pY=y+5-r;
 								break;
 							}
 						}	
-						if (x-4>=0 && y+i>=0 && y+i<=19){
-							if (tab.getPeca(x-4,y+i)!=null) {
-								pX=x-4;
+						if (x-6+r>=0 && y+i>=0 && y+i<=19){
+							if (tab.getPeca(x-6+r,y+i)!=null) {
+								pX=x-6+r;
 								pY=y+i;
 								break;
 							}
-						}if (x+4<=19 && y+i>=0 && y+i<=19){
-							if (tab.getPeca(x+4,y+i)!=null) {
-								pX=x+4;
+						}if (x+5-r<=19 && y+i>=0 && y+i<=19){
+							if (tab.getPeca(x+5-r,y+i)!=null) {
+								pX=x+5-r;
 								pY=y+i;
 								break;
 							}
 						}
 					}
 				}
-				if (pX!=100) {
-					hor=pY-y;
+				if (pX!=100) { //quer dizer que ele encontrou um personagem nesse alcance
+					hor=pY-y;	
 					ver=pX-x;
 					
 					if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical

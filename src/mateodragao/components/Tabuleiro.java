@@ -32,7 +32,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int DragonPosition[];				//guarda as posições x,y do dragão, para que sejam acessíveis a todos os outros personagens
 	private int numeroSoldados;					//quantidade de soldados inseridos pelo jogador no momento
 	private int atual;							
-	private Metronomo metro = new Metronomo(400,500);	//metronomo definindo o tempo para ativação de cada modificação do campo
+	private Metronomo metro = new Metronomo(25,1000000);	//metronomo definindo o tempo para ativação de cada modificação do campo
 	private PecaIcon compl1,compl2,compl3;
 	
 	public Tabuleiro() {
@@ -49,9 +49,9 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		vPersonagem[0][9]=vPersonagem[1][10];
 		vPersonagem[1][9]=vPersonagem[1][10];
 		
-		compl1 = new PecaIcon(DIRETORIO+"dragao1.png",0,9);
-		compl2 = new PecaIcon(DIRETORIO+"dragao2.png",0,10);
-		compl3 = new PecaIcon(DIRETORIO+"dragao3.png",1,9);
+		compl1 = new PecaIcon(DIRETORIO+"dragao1.png");
+		compl2 = new PecaIcon(DIRETORIO+"dragao2.png");
+		compl3 = new PecaIcon(DIRETORIO+"dragao3.png");
 		setElemento(1,10,(PecaIcon) vPersonagem[1][10]);
 		setElemento(0,9,compl1);
 		setElemento(0,10,compl2);

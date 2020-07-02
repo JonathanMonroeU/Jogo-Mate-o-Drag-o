@@ -1,8 +1,6 @@
 package mateodragao.components.personagem;
 
 import mateodragao.components.projetil.Lanca;
-import mateodragao.components.projetil.Lanca;
-import mateodragao.components.projetil.Lanca;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Lanceiro extends Personagem{
@@ -18,8 +16,8 @@ public class Lanceiro extends Personagem{
 	public Lanceiro(int x, int y) {
 		super(DIRETORIO+"lanceiro.png",x,y);
 		vida = 3;
-		frequencia = 3; //a verificar
-		movimento = 2;
+		frequencia = 36; //a verificar
+		movimento = 24;
 		passo = 1;
 	}
 	
@@ -33,7 +31,7 @@ public class Lanceiro extends Personagem{
 	 * comparando hor-ver, que é a distância entre o ataque e o alvo quando está na coluna do alvo, com ver que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.  */
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
-		if (freqA==0 || freqA==1) {
+		if (freqA==0 || freqA==12) {
 			int hor,ver; //distância horizontal e vertical ao dragao
 		
 			ver=(tab.getDragonPosition()[0])-x;

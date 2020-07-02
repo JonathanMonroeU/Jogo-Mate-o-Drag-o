@@ -11,7 +11,7 @@ public class PecaIcon extends JLabel implements ActionListener{
 	private static final long serialVersionUID = 2743679226737045610L;
 	private int x, y;
 	
-	public PecaIcon(String arquivoImage, int x, int y) {
+	public PecaIcon(String arquivoImage) {
 		super(new ImageIcon(arquivoImage));
 		 //estava 150x100
 		//setBounds(0,0,50,50);

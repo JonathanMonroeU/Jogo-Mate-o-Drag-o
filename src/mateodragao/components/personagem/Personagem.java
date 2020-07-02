@@ -14,7 +14,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	protected Random alea=new Random();
 	
 	public Personagem(String caminho, int x, int y) {
-		super(caminho,x,y);
+		super(caminho);
 		this.x = x;
 		this.y = y;
 		freqM = 0;	
@@ -50,7 +50,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 						newX = x;
 						newY = y;
 						continue;
-					//se a nova posição estiver a uma distância mínima do dragão, volta para o início do while, que testa se ela está vazia
+					//se a nova posição estiver a uma distância mínima do dragão, que é até 4 raios volta para o início do while, que testa se ela está vazia
 					}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
 					||newY-tab.getDragonPosition()[1]<=-5||newY-tab.getDragonPosition()[1]>=4) {	
 						continue;
