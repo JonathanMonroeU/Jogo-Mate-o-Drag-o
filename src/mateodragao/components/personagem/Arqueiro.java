@@ -15,7 +15,7 @@ public class Arqueiro extends Personagem{
 	}*/
 	public Arqueiro(int x, int y) {
 		super(DIRETORIO+"arqueiro.png",x,y);
-		vida = 1;
+		vida = 100;
 		frequencia = 12;
 		movimento = 6;
 		passo = 1;

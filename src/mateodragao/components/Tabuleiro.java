@@ -204,8 +204,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void resolveConflito (IProjetil projetil) {
 		//se a posição para o qual o projetil quer se mover ainda estiver ocupada:
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
-			//se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ou for a bola de fogo, ele se move ocupando o lugar do outro
-			if ( (projetil instanceof BolaDeFogo || projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) && vProjetil[projetil.getxConflito()][projetil.getyConflito()][0] instanceof BolaDeFogo==false) {
+			//se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro
+			if  (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
 				projetil.setEmConflito(0);
 				projetil.setJaAgiu(1);		System.out.println("rescon dano:"+projetil.getDano()+" newX:"+projetil.getxConflito()+" newY:"+projetil.getyConflito());
 				

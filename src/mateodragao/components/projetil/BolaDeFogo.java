@@ -7,7 +7,7 @@ public class BolaDeFogo extends Projetil{
 	public BolaDeFogo(int x, int y, int z, String direcaoA, String imagem) {
 		super(DIRETORIO+imagem, x, y, z);
 		direcao=direcaoA;
-		dano=1;
+		dano=100;
 		freqMov=6;
 		velocidade= 1; //estávamos pensando em 2
 		jaAgiu=0;

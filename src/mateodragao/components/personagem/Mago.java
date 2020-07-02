@@ -15,7 +15,7 @@ public class Mago extends Personagem{
 	
 	public Mago(int x, int y) {
 		super(DIRETORIO+"mago.png",x,y);
-		vida = 2;
+		vida = 200;
 		frequencia = 24;
 		movimento = 12;
 		passo = 1;
