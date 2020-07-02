@@ -14,7 +14,7 @@ public class Dragao extends Personagem{
 	passo = 1;}*/
 	int especial=10;
 	public Dragao(int x, int y) {
-		super(DIRETORIO+"yoshi.png",x,y);
+		super(DIRETORIO+"dragao.png",x,y);
 		vida = 1000;
 		frequencia = 1;	//estávamos pensando em 1
 		movimento = 1;
@@ -35,6 +35,7 @@ public class Dragao extends Personagem{
 	public void disparaProjetil(ITabuleiro tab) {
 		if (freqA==0) {
 			System.out.println("dispara");
+			
 			//DISPARO ESPECIAL
 			if(vida/100<=especial) {
 				especial--;

@@ -45,17 +45,17 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		numeroSoldados = 0;
 		
 		vPersonagem[1][10] = new Dragao(1,10);					//4 posições vizinhas do tabuleiro apontam para o dragão
-		vPersonagem[1][9]=vPersonagem[1][10];
 		vPersonagem[0][10]=vPersonagem[1][10];
 		vPersonagem[0][9]=vPersonagem[1][10];
+		vPersonagem[1][9]=vPersonagem[1][10];
 		
-		compl1 = new PecaIcon(DIRETORIO+"yoshi.png",1,9);
-		compl2 = new PecaIcon(DIRETORIO+"yoshi.png",0,10);
-		compl3 = new PecaIcon(DIRETORIO+"yoshi.png",0,9);
+		compl1 = new PecaIcon(DIRETORIO+"dragao1.png",0,9);
+		compl2 = new PecaIcon(DIRETORIO+"dragao2.png",0,10);
+		compl3 = new PecaIcon(DIRETORIO+"dragao3.png",1,9);
 		setElemento(1,10,(PecaIcon) vPersonagem[1][10]);
-		setElemento(1,9,compl1);
+		setElemento(0,9,compl1);
 		setElemento(0,10,compl2);
-		setElemento(0,9,compl3);
+		setElemento(1,9,compl3);
 		
 		DragonPosition[0] = 1;									
 		DragonPosition[1] = 10;
@@ -104,9 +104,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		vPersonagem[DragonPosition[0]][DragonPosition[1]].disparaProjetil(this);
 		vPersonagem[DragonPosition[0]][DragonPosition[1]].move(this);
 		/*essa linha é pra ajudar*/ //setElemento(DragonPosition[0],DragonPosition[1],(PecaIcon)vPersonagem[DragonPosition[0]][DragonPosition[1]]);
-		setElemento(DragonPosition[0]-1,DragonPosition[1],compl1);
-		setElemento(DragonPosition[0],DragonPosition[1]-1,compl2);
-		setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl3);
+		setElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl1);
+		setElemento(DragonPosition[0]-1,DragonPosition[1],compl2);
+		setElemento(DragonPosition[0],DragonPosition[1]-1,compl3);
+		
 		
 		//primeira passagem por todas as posições do tabuleiro para mover personagens e projeteis e disparar projeteis
 		for (int i=0; i<20; i++) {
