@@ -1,6 +1,7 @@
 package mateodragao;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -43,6 +44,7 @@ public class JanelaJogo extends JFrame implements ActionListener{
 		contentPane.add(painelGrid.getPanel(), BorderLayout.CENTER);
 	    contentPane.add(painelMenu.getPanel(), BorderLayout.EAST);
 	    
+	    	    
 	    JPanel letras = new JPanel();
 	    letras.setLayout(new BoxLayout(letras, BoxLayout.X_AXIS));
 	    JPanel vLetras = new JPanel();
@@ -52,8 +54,10 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    	JLabel j = new JLabel(Character.toString(Character.toUpperCase(c)));
 	    	j.setHorizontalAlignment(0);
 	    	j.setFont(new Font("Arial", Font.BOLD, 18));
+	    	j.setForeground(Color.WHITE);
 	    	vLetras.add(j);
 	    }
+	    letras.setBackground(new java.awt.Color(175, 0 , 0));
 	    letras.add(Box.createRigidArea(new Dimension(30,0)));
 	    letras.add(vLetras);
 	    letras.add(Box.createRigidArea(new Dimension(360,0)));
@@ -69,9 +73,11 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    	j.setVerticalAlignment(0);
 	    	j.setHorizontalAlignment(0);
 	    	j.setFont(new Font("Arial", Font.BOLD, 18));
+	    	j.setForeground(Color.WHITE);
 	    	vNumeros.add(j);
 	    }
-	    
+	    vLetras.setBackground(new java.awt.Color(175, 0 , 0));
+	    vNumeros.setBackground(new java.awt.Color(175, 0 , 0));
 	    numeros.add(vNumeros);
 	    contentPane.add(numeros, BorderLayout.WEST);
 	    setVisible(true);

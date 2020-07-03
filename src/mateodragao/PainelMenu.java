@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
 
 import mateodragao.exceptions.AdicaoInvalida;
@@ -40,15 +41,14 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		System.out.println(data.getPontos());
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(360,1000));
-		JLabel titulo = new JLabel("Jogo Mate o Dragão");
-		titulo.setFont(new Font("Arial", Font.BOLD, 20));
-		JLabel titulo2 = new JLabel("Adicione personagens e comece o jogo!");
+		JLabel titulo = new JLabel("Mate o Dragão");
+		titulo.setFont(new Font("Arial", Font.BOLD, 35));
+		titulo.setForeground(Color.lightGray);
 		titulo.setAlignmentX(CENTER_ALIGNMENT);
-		titulo2.setAlignmentX(CENTER_ALIGNMENT);
+		this.setBackground(new java.awt.Color(175, 0 , 0));		//cor
 		
+		add(Box.createRigidArea(new Dimension(0,10)));
 		add(titulo);
-		add(Box.createRigidArea(new Dimension(0,20)));
-		add(titulo2);
 		add(Box.createRigidArea(new Dimension(0,20)));
 		
 		addPersonagem = new JButton("Adicionar Personagem");
@@ -78,27 +78,41 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		remover = new JButton("Remover");
 		remover.addActionListener(this);
 		
-				
+		
+		
+		
 		painelTextA = new JPanel();
 		painelTextA.setLayout(new FlowLayout());
 		painelTextA.setMaximumSize(new Dimension(300,300));
 		painelTextA.setAlignmentX(CENTER_ALIGNMENT);
-		painelTextA.add(new JLabel("Horizontal:"));
+		JLabel horizontal=new JLabel("Horizontal:");
+		horizontal.setForeground(Color.WHITE);
+		painelTextA.add(Box.createRigidArea(new Dimension(0,40)));
+		painelTextA.add(horizontal);
 		painelTextA.add(textYA);
 		painelTextA.add(Box.createRigidArea(new Dimension(10,0)));
-		painelTextA.add(new JLabel("Vertical:"));
+		JLabel vertical=new JLabel("Vertical:");
+		vertical.setForeground(Color.WHITE);
+		painelTextA.add(vertical);
 		painelTextA.add(textXA);
+		painelTextA.setBackground(new java.awt.Color(175, 0 , 0));		//cor
 		painelTextA.add(adicionar);
 		
 		painelTextR = new JPanel();
 		painelTextR.setLayout(new FlowLayout());
 		painelTextR.setMaximumSize(new Dimension(300,300));
 		painelTextR.setAlignmentX(CENTER_ALIGNMENT);
-		painelTextR.add(new JLabel("Horizontal:"));
+		JLabel horizontalR=new JLabel("Horizontal:");
+		horizontalR.setForeground(Color.WHITE);
+		painelTextR.add(Box.createRigidArea(new Dimension(0,40)));
+		painelTextR.add(horizontalR);
 		painelTextR.add(textYR);
 		painelTextR.add(Box.createRigidArea(new Dimension(10,0)));
-		painelTextR.add(new JLabel("Vertical:"));
+		JLabel verticalR=new JLabel("Vertical:");
+		verticalR.setForeground(Color.WHITE);
+		painelTextR.add(verticalR);
 		painelTextR.add(textXR);
+		painelTextR.setBackground(new java.awt.Color(175, 0 , 0));		//cor
 		painelTextR.add(remover);
 		
 		arqueiro = new JButton("Adicionar Arqueiro");
@@ -115,50 +129,54 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		mago.addActionListener(this);
 		catapulta.addActionListener(this);
 		
-		Font fonte = new Font("SansSerif", Font.PLAIN, 12);
+		Font fonte = new Font("SansSerif", Font.PLAIN, 14);
 		arqueiroInfo = new JLabel("<html>"
 			+"<b>--ARQUEIRO</b>"+"<br/>"
-			+"<b>Custo:</b>"+" 5 pontos"+"<br/>"
-			+"<b>Dano da flecha:</b>"+" 15 pontos de vida"+"<br/>"
-			+"<b>Frenquência de disparo:</b>"+" A todo passo do jogo"+"<br/>"
-			+"<b>Velocidade da flecha:</b>"+" 3 casas por passo do jogo"+"<br/>"
-			+"<b>Resistência:</b>"+" Morte com uma bola de fogo"+"<br/>"
-			+"<b>Movimento:</b>"+" 2 casas por passo do jogo"+"</html>");
-		arqueiroInfo.setPreferredSize(new Dimension(300,160));
+			+"<b>Custo:</b>"+" 5 pontos."+"<br/>"
+			+"<b>Resistência: </b>"+" 1 bola de fogo."+"<br/>"
+			+"<b>Movimento: </b>"+" 6 passos."+"<br/>"
+			+"<b>Frequência de disparos: </b>"+" 12 passos."+"<br/>"
+			+"<b>Movimento do projétil: </b>"+" 4 passos."+"<br/>"
+			+"<b>Dano do projétil:</b>"+" 15 pontos."+"</html>");
+		arqueiroInfo.setPreferredSize(new Dimension(300,155));
 		arqueiroInfo.setFont(fonte);
+		arqueiroInfo.setForeground(Color.WHITE);
 		
 		lanceiroInfo = new JLabel("<html>"
 			+"<b>--LANCEIRO</b>"+"<br/>"
-			+"<b>Custo:</b>"+" 10 pontos"+"<br/>"
-			+"<b>Dano da lança:</b>"+" 25 pontos de vida"+"<br/>"
-			+"<b>Frenquência de disparo:</b>"+" 2 passos sim, 1 passo não"+"<br/>"
-			+"<b>Velocidade da lança:</b>"+" 2 casas por passo do jogo"+"<br/>"
-			+"<b>Resistência:</b>"+" Morte com 3 bolas de fogo"+"<br/>"
-			+"<b>Movimento:</b>"+" 1 casa, intercalando os passos do jogo"+"</html>");
-		lanceiroInfo.setPreferredSize(new Dimension(300,160));
+			+"<b>Custo:</b>"+" 10 pontos."+"<br/>"
+			+"<b>Resistência: </b>"+" 3 bolas de fogo."+"<br/>"
+			+"<b>Movimento: </b>"+" 12 passos."+"<br/>"
+			+"<b>Frequência de disparos: </b>"+" De 12 em 12 passos, 2 vezes sim, uma vez não."+"<br/>"
+			+"<b>Movimento do projétil: </b>"+" 6 passos."+"<br/>"
+			+"<b>Dano do projétil:</b>"+" 25 pontos."+"</html>");
+		lanceiroInfo.setPreferredSize(new Dimension(300,155));
 		lanceiroInfo.setFont(fonte);
+		lanceiroInfo.setForeground(Color.WHITE);
 		
 		magoInfo = new JLabel("<html>"
 			+"<b>--MAGO</b>"+"<br/>"
-			+"<b>Custo:</b>"+" 15 pontos"+"<br/>"
-			+"<b>Dano da bola de energia:</b>"+" 50 pontos de vida"+"<br/>"
-			+"<b>Frenquência de disparo:</b>"+" A cada 2 passos do jogo"+"<br/>"
-			+"<b>Velocidade da bola de energia:</b>"+" 2 casas por passo do jogo"+"<br/>"
-			+"<b>Resistência:</b>"+" Morte com 2 bolas de fogo"+"<br/>"
-			+"<b>Movimento:</b>"+" 1 casa por passo do jogo"+"</html>");
-		magoInfo.setPreferredSize(new Dimension(300,160));
+			+"<b>Custo:</b>"+" 15 pontos."+"<br/>"
+			+"<b>Resistência: </b>"+" 2 bolas de fogo."+"<br/>"
+			+"<b>Movimento: </b>"+" 12 passos."+"<br/>"
+			+"<b>Frequência de disparos: </b>"+" 24 passos."+"<br/>"
+			+"<b>Movimento do projétil: </b>"+" 6 passos."+"<br/>"
+			+"<b>Dano do projétil:</b>"+" 50 pontos."+"</html>");
+		magoInfo.setPreferredSize(new Dimension(300,155));
 		magoInfo.setFont(fonte);
+		magoInfo.setForeground(Color.WHITE);
 		
 		catapultaInfo = new JLabel("<html>"
 			+"<b>--CATAPULTA</b>"+"<br/>"
-			+"<b>Custo:</b>"+" 30 pontos"+"<br/>"
-			+"<b>Dano da pedra:</b>"+" 100 pontos de vida"+"<br/>"
-			+"<b>Frenquência de disparo:</b>"+" A cada 3 passos do jogo"+"<br/>"
-			+"<b>Velocidade da pedra:</b>"+" 4 casas por passo do jogo"+"<br/>"
-			+"<b>Resistência:</b>"+" Destruida com 1 bola de fogo"+"<br/>"
-			+"<b>Movimento:</b>"+" Não se move"+"</html>");
-		catapultaInfo.setPreferredSize(new Dimension(300,160));
+			+"<b>Custo:</b>"+" 30 pontos."+"<br/>"
+			+"<b>Resistência: </b>"+" 1 bola de fogo."+"<br/>"
+			+"<b>Movimento: </b>"+" Não se move."+"<br/>"
+			+"<b>Frequência de disparos: </b>"+" 36 passos."+"<br/>"
+			+"<b>Movimento do projétil: </b>"+" 3 passos."+"<br/>"
+			+"<b>Dano do projétil:</b>"+" 100 pontos."+"</html>");
+		catapultaInfo.setPreferredSize(new Dimension(300,155));
 		catapultaInfo.setFont(fonte);
+		catapultaInfo.setForeground(Color.WHITE);
 		
 		painelSoldado = new JPanel();
 		painelSoldado.setLayout(new FlowLayout());
@@ -172,12 +190,15 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelSoldado.add(mago);
 		painelSoldado.add(catapultaInfo);
 		painelSoldado.add(catapulta);
+		painelSoldado.setBackground(new java.awt.Color(175, 0 , 0));
 		
 		painelPontos = new JPanel();
+		painelPontos.setPreferredSize(new Dimension(30,70));
 		painelPontos.setLayout(new BoxLayout(painelPontos, BoxLayout.Y_AXIS));
-		painelPontos.setPreferredSize(new Dimension(300,70));
-		JLabel titulo5 = new JLabel("PONTOS");
+		painelPontos.setBorder(BorderFactory.createLineBorder(Color.black));
+		JLabel titulo5 = new JLabel("  PONTOS  ");
 		titulo5.setAlignmentX(CENTER_ALIGNMENT);
+		titulo5.setForeground(Color.blue);
 		pontos = new JLabel(Integer.toString(data.getPontos()));
 		pontos.setAlignmentX(CENTER_ALIGNMENT);
 		pontos.setHorizontalAlignment(0);
@@ -192,11 +213,56 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelInicial = new JPanel();
 		painelInicial.setLayout(new BoxLayout(painelInicial, BoxLayout.Y_AXIS));
 		painelInicial.setPreferredSize(new Dimension(300,400));
+		JLabel titulo2 = new JLabel("Adicione personagens e comece o jogo!");
+		titulo2.setAlignmentX(CENTER_ALIGNMENT);
+		titulo2.setForeground(Color.white);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
+		painelInicial.add(titulo2);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
 		painelInicial.add(addPersonagem);
 		painelInicial.add(remPersonagem);
 		painelInicial.add(iniciar);
 		painelInicial.add(Box.createRigidArea(new Dimension(0,40)));
 		painelInicial.setAlignmentX(CENTER_ALIGNMENT);
+		painelInicial.setBackground(new java.awt.Color(175, 0 , 0));
+		JLabel texto = new JLabel("<html>"
+			+"	O dragão atacou o reino  repentinamente e a princesa"+"<br/>"
+			+"está bem no meio do ataque, reúna os"+"<br/>"
+			+"soldados e mate-o antes que o pior aconteça."+"</html>");
+		texto.setPreferredSize(new Dimension(300,155));
+		texto.setFont(new Font("SansSerif", Font.BOLD, 16));
+		texto.setForeground(Color.WHITE);
+		texto.setAlignmentX(CENTER_ALIGNMENT);
+		painelInicial.add(texto);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
+		JLabel instrucoesTitulo = new JLabel("Instruções:");
+		instrucoesTitulo.setFont(new Font("Arial", Font.BOLD, 25));
+		instrucoesTitulo.setForeground(Color.white);
+		
+		instrucoesTitulo.setAlignmentX(CENTER_ALIGNMENT);
+		painelInicial.add(instrucoesTitulo);
+		JLabel instrucoes = new JLabel("<html>"
+			+"O objetivo do jogo é matar o dragão,"+"<br/>"
+			+"para isso, escolha como quer posicionar os"+"<br/>"
+			+"soldados que adicionar em campo. Após"+"<br/>"
+			+"iniciar o jogo, controle a princesa "+"<br/>"
+			+"usando o direcional, de forma a evitar que seja"+"<br/>"
+			+"atingida por ataques amigos e inimigos."+"<br/>"
+			+"Você perde o jogo se a princesa ou todos"+"<br/>"
+			+"os soldados morrerem, e vence se matar"+"<br/>"
+			+"o dragão antes disso."+"<br/>"
+			+"<b>--ATRIBUTOS DOS SOLDADOS:</b>"+"<br/>"
+			+"<b>Custo:</b>"+"Pontos necessários para inserí-lo em campo."+"<br/>"
+			+"<b>Resistência: </b>"+"Quantas bolas de fogo são necessárias para matá-lo."+"<br/>"
+			+"<b>Movimento: </b>"+" A cada quantos passos do jogo ele se movimenta."+"<br/>"
+			+"<b>Frequência de disparos: </b>"+"A cada quantos passos é feito um disparo."+"<br/>"
+			+"<b>Movimento do projétil: </b>"+"A cada quantos passos o projétil se movimenta."+"<br/>"
+			+"<b>Dano do projétil:</b>"+"Quantos pontos de vida subtrai do inimigo ou da princesa."+"</html>");
+		instrucoes.setPreferredSize(new Dimension(300,155));
+		instrucoes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		instrucoes.setForeground(Color.WHITE);
+		instrucoes.setAlignmentX(CENTER_ALIGNMENT);
+		painelInicial.add(instrucoes);
 		add(painelInicial);
 		
 		painelAdicao = new JPanel();
@@ -244,8 +310,10 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		
 		painelVidaDragao = new JPanel();
 		painelVidaDragao.setLayout(new BoxLayout(painelVidaDragao, BoxLayout.Y_AXIS));
-		painelVidaDragao.setPreferredSize(new Dimension(300,50));
-		JLabel titulo6 = new JLabel("VIDA DO DRAGÃO");
+		painelVidaDragao.setPreferredSize(new Dimension(30,70));
+		painelVidaDragao.setBorder(BorderFactory.createLineBorder(Color.black));
+		JLabel titulo6 = new JLabel("  VIDA DO DRAGÃO  ");
+		titulo6.setForeground(Color.RED);
 		titulo6.setAlignmentX(CENTER_ALIGNMENT);
 		painelVidaDragao.setAlignmentX(CENTER_ALIGNMENT);
 		painelVidaDragao.add(titulo6);
@@ -258,7 +326,9 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelVidaPrincesa = new JPanel();
 		painelVidaPrincesa.setLayout(new BoxLayout(painelVidaPrincesa, BoxLayout.Y_AXIS));
 		painelVidaPrincesa.setPreferredSize(new Dimension(300,50));
-		JLabel titulo8 = new JLabel("VIDA DA PRINCESA");
+		painelVidaPrincesa.setBorder(BorderFactory.createLineBorder(Color.black));
+		JLabel titulo8 = new JLabel("  VIDA DA PRINCESA  ");
+		titulo8.setForeground(new java.awt.Color(147, 6 , 175));
 		titulo8.setAlignmentX(CENTER_ALIGNMENT);
 		painelVidaPrincesa.setAlignmentX(CENTER_ALIGNMENT);
 		painelVidaPrincesa.add(titulo8);

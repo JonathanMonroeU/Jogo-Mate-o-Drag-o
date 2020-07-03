@@ -23,6 +23,7 @@ public class PainelTabuleiro extends JPanel{
 	
 	public PainelTabuleiro() {
 		setLayout(new GridLayout(20,20));
+		this.setBackground(new java.awt.Color(175, 0 , 0));
 		for (int i=0; i<20; i++) {
 	    	for (int j=0; j<20; j++) {
 	    		celulas[i][j] = new GramaPanel(); //new JPanel()
