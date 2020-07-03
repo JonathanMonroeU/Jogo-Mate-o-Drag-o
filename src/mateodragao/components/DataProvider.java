@@ -59,6 +59,8 @@ public class DataProvider implements IDataProvider{
 			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
 		if (x<10)
 			throw new AdicaoLugarProibido("Voce nao pode adicionar nesse lugar!");
+		if (x==19 && y==10)
+			throw new AdicaoLugarOcupado("Já há um personagem nessa posicao!");
 		//dependendo do comando realiza um dos metodos abaixo
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
@@ -166,7 +168,7 @@ public class DataProvider implements IDataProvider{
 				return;
 			}
 		}
-		throw new RemocaoSemPersonagem("Nao ha personagem nesse lugar!");
+		throw new RemocaoSemPersonagem("Nao há personagem removível nesse lugar!");
 	}
 	
 	//devolve o custo aos pontos após a remoção de uma peça

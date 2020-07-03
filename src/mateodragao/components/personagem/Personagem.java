@@ -31,7 +31,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			newX = x;
 			newY = y;
 			
-			while (tab.getPeca(newX, newY) != null && tentativas<=30) {	//fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas
+			while (tab.getPeca(newX, newY,0) != null && tentativas<=30) {	//fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas
 				tentativas+=1;
 				newX = x;
 				newY = y;
@@ -75,10 +75,10 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 						newY = y;
 						continue;
 					//se a nova posição estiver vazia ou for parte do prṕrio dragão, para as 4 posições que o compõe, a nova posição é válida e sai do while imediatamente
-					}if ((tab.getPeca(newX, newY)==null || tab.getPeca(newX, newY)==this) &&
-						(tab.getPeca(newX-1, newY)==null || tab.getPeca(newX-1, newY)==this) &&
-					 (tab.getPeca(newX, newY-1)==null || tab.getPeca(newX, newY-1)==this )&&
-					 (tab.getPeca(newX-1, newY-1)==null || tab.getPeca(newX-1, newY-1)==this)) {
+					}if ( ( (tab.getPeca(newX, newY, 0)==null && (tab.getPeca(newX, newY, 1)==null) )|| tab.getPeca(newX, newY, 0)==this) &&
+						(  (tab.getPeca(newX-1, newY,0)==null && (tab.getPeca(newX-1, newY,1)==null) )|| tab.getPeca(newX-1, newY, 0)==this) &&
+					 ( (tab.getPeca(newX, newY-1, 0)==null &&  (tab.getPeca(newX, newY-1, 1)==null) )|| tab.getPeca(newX, newY-1, 0)==this )&&
+					 ( (tab.getPeca(newX-1, newY-1, 0)==null && (tab.getPeca(newX-1, newY-1, 1)==null) )|| tab.getPeca(newX-1, newY-1, 0)==this) ) {
 						break;
 					//se não, reinicia e volta do início do while	
 					}else {
@@ -92,22 +92,22 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			/*se achar a nova posição tiver sido tentado menos de 30 vezes, ou seja, passado por dentro do while e sido aprovada, 
 			 * a posição atual vira null e o personagem é colocado na nova posição*/
 			if (tentativas<=30) {
-				tab.setPeca(x, y, null);
+				tab.setPeca(x, y, 0, null);
 				
 				//((PainelTabuleiro) tab).setElemento(newX,newY,(PecaIcon) this);
 				
 				//se for o dragão, as outras 3 posições que o compõem tem que ser ajustadas também
 				if (this instanceof Dragao) {//se for o dragão
 					tab.setDragonPosition(newX,newY);
-					tab.setPeca(x-1, y, null);	
-					tab.setPeca(x, y-1, null);
-					tab.setPeca(x-1, y-1, null);
+					tab.setPeca(x-1, y, 0, null);	
+					tab.setPeca(x, y-1, 0, null);
+					tab.setPeca(x-1, y-1,0, null);
 					
-					tab.setPeca(newX-1, newY, this);
-					tab.setPeca(newX, newY-1, this);	
-					tab.setPeca(newX-1, newY-1, this);
+					tab.setPeca(newX-1, newY, 0, this);
+					tab.setPeca(newX, newY-1, 0, this);	
+					tab.setPeca(newX-1, newY-1, 0, this);
 				}
-				tab.setPeca(newX, newY, this);
+				tab.setPeca(newX, newY, 0, this);
 				this.jaAgiu=1;
 				
 				//os atributos x e y do objeto são atualizados
@@ -125,7 +125,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	//pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. Se a vida do dragão for menor que 1, o jogo para
 	@Override
 	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
-		if (this instanceof Dragao && projetil instanceof BolaDeFogo==false) {
+		if ( (this instanceof Dragao || this instanceof Princesa) && projetil instanceof BolaDeFogo==false) {
 			vida -= projetil.getDano();
 			/*if (vida<=0)
 				tab.getMetro().stop();*/
@@ -161,5 +161,11 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	@Override
 	public int getMovimento() {
 		return movimento;
+	}
+	
+	@Override
+	public void movePrincesa(String direcao) {
+		// TODO Auto-generated method stub
+		
 	}
 }

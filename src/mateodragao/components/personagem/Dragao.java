@@ -123,51 +123,61 @@ public class Dragao extends Personagem{
 			else {
 				//DISPARO DIRECIONADO:
 				
-				int hor,ver, //distância horizontal e vertical do dragão ao personagem
+				int hor,ver,encontrado=0, //distância horizontal e vertical do dragão ao personagem
 					pX=100,pY=100; //posição
 				
 				//para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão
-				for (int r=0;r<=4;r++) {	
-					for (int i=-6+r;i<=5-r;i++) {
-						if (x+i>=0 && x+i<=19 && y-6+r>=0){
-							if (tab.getPeca(x+i,y-6+r)!=null){
-								pX=x+i;
-								pY=-y-6+r;
-								break;
+				for (int r=0;r<=4;r++) {
+					if(encontrado==1)
+						break;
+					else {
+						for (int i=-6+r;i<=5-r;i++) {
+							if (x+i>=0 && x+i<=19 && y-6+r>=0){
+								if (tab.getPeca(x+i,y-6+r, 0)!=null || tab.getPeca(x+i,y-6+r, 1)!=null){
+									pX=x+i;
+									pY=-y-6+r;
+									encontrado=1;
+									break;
+								}
+							}
+							if (x+i>=0 && x+i<=19 && y+5-r<=19){
+								if (tab.getPeca(x+i,y+5-r, 0)!=null || tab.getPeca(x+i,y+5-r, 1)!=null) {
+									pX=x+i;
+									pY=y+5-r;
+									encontrado=1;
+									break;
+								}
+							}	
+							if (x-6+r>=0 && y+i>=0 && y+i<=19){
+								if (tab.getPeca(x-6+r,y+i, 0)!=null || tab.getPeca(x-6+r,y+i, 1)!=null) {
+									pX=x-6+r;
+									pY=y+i;
+									encontrado=1;
+									break;
+								}
+							}if (x+5-r<=19 && y+i>=0 && y+i<=19){
+								if (tab.getPeca(x+5-r,y+i, 0)!=null || tab.getPeca(x+5-r,y+i, 1)!=null) {
+									pX=x+5-r;
+									pY=y+i;
+									encontrado=1;
+									break;
+								}
 							}
 						}
-						if (x+i>=0 && x+i<=19 && y+5-r<=19){
-							if (tab.getPeca(x+i,y+5-r)!=null) {
-								pX=x+i;
-								pY=y+5-r;
-								break;
-							}
-						}	
-						if (x-6+r>=0 && y+i>=0 && y+i<=19){
-							if (tab.getPeca(x-6+r,y+i)!=null) {
-								pX=x-6+r;
-								pY=y+i;
-								break;
-							}
-						}if (x+5-r<=19 && y+i>=0 && y+i<=19){
-							if (tab.getPeca(x+5-r,y+i)!=null) {
-								pX=x+5-r;
-								pY=y+i;
-								break;
-							}
-						}
-					}
+					}	
 				}
 				if (pX!=100) { //quer dizer que ele encontrou um personagem nesse alcance
 					hor=pY-y;	
 					ver=pX-x;
+					int j;
 					
 					if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
 						if (ver<0) {	//atira para cima
 							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
-								if(tab.getProjetil(x-1, y,0)==null) {
-									tab.putProjetil(x-1, y, 0, new BolaDeFogo(x-1, y, 0,"ci", "boladefogo-ci.png"));
-									tab.getProjetil(x-1, y,0).move(tab);
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-1, y-j,0)==null) {
+									tab.putProjetil(x-1, y-j, 0, new BolaDeFogo(x-1, y-j, 0,"ci", "boladefogo-ci.png"));
+									tab.getProjetil(x-1, y-j,0).move(tab);
 								}
 							}else {
 								if (hor<0) {
@@ -183,10 +193,11 @@ public class Dragao extends Personagem{
 								}
 							}
 						}if (ver>0) {	//atira para baixo
-							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) { 
-								if(tab.getProjetil(x,y,0)==null) { 
-									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bx", "boladefogo-bx.png"));
-									tab.getProjetil(x,y,0).move(tab);
+							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x,y-j,0)==null) { 
+									tab.putProjetil(x, y-j, 0, new BolaDeFogo(x, y-j, 0,"bx", "boladefogo-bx.png"));
+									tab.getProjetil(x,y-j,0).move(tab);
 								}
 							}else {
 								if (hor<0) {
@@ -207,9 +218,10 @@ public class Dragao extends Personagem{
 					else {		//atira na horizontal
 						if (hor<0) {	//atira para esquerda
 							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
-								if(tab.getProjetil(x, y-1, 0)==null) {
-									tab.putProjetil(x, y-1, 0, new BolaDeFogo(x, y-1, 0,"es", "boladefogo-es.png"));
-									tab.getProjetil(x, y-1, 0).move(tab);
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-j, y-1, 0)==null) {
+									tab.putProjetil(x-j, y-1, 0, new BolaDeFogo(x-j, y-1, 0,"es", "boladefogo-es.png"));
+									tab.getProjetil(x-j, y-1, 0).move(tab);
 								}
 							}else {
 								if (ver<0) {
@@ -226,9 +238,10 @@ public class Dragao extends Personagem{
 							}
 						}if (hor>0) {	//atira para direita
 							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
-								if(tab.getProjetil(x,y,0)==null) {
-									tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"di", "boladefogo-di.png"));
-									tab.getProjetil(x,y,0).move(tab);
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-j,y,0)==null) {
+									tab.putProjetil(x-j, y, 0, new BolaDeFogo(x-j, y, 0,"di", "boladefogo-di.png"));
+									tab.getProjetil(x-j,y,0).move(tab);
 								}
 							}else {
 								if (ver<0) {

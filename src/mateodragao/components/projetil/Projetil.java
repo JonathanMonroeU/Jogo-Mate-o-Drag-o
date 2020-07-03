@@ -68,7 +68,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 				tab.setProjetil(x, y, z, null);	System.out.println("saiu");
 			//se a nova posiçao estiver vazia o projetil se move para ela
 			}else if (tab.getProjetil(newX, newY, z) == null) {	
-				jaAgiu=1;  System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+newY);
+				jaAgiu=1; 
 				tab.setProjetil(x, y, z, null);
 				tab.setProjetil(newX, newY, z, this);
 				x = newX;
@@ -86,7 +86,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 					tab.adicionaConflito(this);
 				/*se não estiver vazia, mas os outros requisitos acima não forem preenchidos, o projetil pode ir para a nova posição normalmente*/
 				}else {
-					jaAgiu=1;	System.out.println("moveproj dano:"+dano+" newX:"+newX+" newY:"+newY);
+					jaAgiu=1;	
 					tab.setProjetil(x, y, z, null);
 					tab.setProjetil(newX, newY, z, this);
 					x = newX;
@@ -152,6 +152,12 @@ public class Projetil extends PecaIcon implements IProjetil{
 	@Override
 	public int getyConflito() {
 		return yConflito;
+	}
+
+	@Override
+	public void movePrincesa(String direcao) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	

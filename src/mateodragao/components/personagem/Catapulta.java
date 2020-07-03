@@ -81,5 +81,5 @@ public class Catapulta extends Personagem{
 				}
 			}tab.getProjetil(x,y,1).move(tab);
 		}freqA = (freqA + 1)%frequencia;
-	}
+	}	
 }

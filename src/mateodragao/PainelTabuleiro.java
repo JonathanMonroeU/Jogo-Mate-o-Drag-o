@@ -13,7 +13,6 @@ import javax.swing.BorderFactory;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
-import java.awt.Color;
 
 public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
