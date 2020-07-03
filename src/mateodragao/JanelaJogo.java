@@ -57,7 +57,7 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    	j.setForeground(Color.WHITE);
 	    	vLetras.add(j);
 	    }
-	    letras.setBackground(new java.awt.Color(175, 0 , 0));
+	    letras.setBackground(new java.awt.Color(150, 0, 0));
 	    letras.add(Box.createRigidArea(new Dimension(30,0)));
 	    letras.add(vLetras);
 	    letras.add(Box.createRigidArea(new Dimension(360,0)));
@@ -76,8 +76,8 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    	j.setForeground(Color.WHITE);
 	    	vNumeros.add(j);
 	    }
-	    vLetras.setBackground(new java.awt.Color(175, 0 , 0));
-	    vNumeros.setBackground(new java.awt.Color(175, 0 , 0));
+	    vLetras.setBackground(new java.awt.Color(150, 0, 0));
+	    vNumeros.setBackground(new java.awt.Color(150, 0, 0));
 	    numeros.add(vNumeros);
 	    contentPane.add(numeros, BorderLayout.WEST);
 	    setVisible(true);

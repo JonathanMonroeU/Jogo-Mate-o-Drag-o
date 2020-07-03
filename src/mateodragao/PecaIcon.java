@@ -13,8 +13,6 @@ public class PecaIcon extends JLabel implements ActionListener{
 	
 	public PecaIcon(String arquivoImage) {
 		super(new ImageIcon(arquivoImage));
-		 //estava 150x100
-		//setBounds(0,0,50,50);
 	}
 
 	

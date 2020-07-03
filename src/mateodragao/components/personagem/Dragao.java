@@ -41,7 +41,7 @@ public class Dragao extends Personagem{
 			System.out.println("dispara");
 			
 			//DISPARO ESPECIAL
-			if(vida/100<=especial) {
+			if(vida/100<especial) {
 				especial--;
 				for(int i=0;i<12;i++) {
 					switch (i) {

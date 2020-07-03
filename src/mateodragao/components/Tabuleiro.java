@@ -2,6 +2,7 @@ package mateodragao.components;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -49,27 +50,27 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		PrincesaPosition=new int[2];
 		numeroSoldados = 0;
 		
-		vPersonagem[1][10][0] = new Dragao(1,10);					//4 posições vizinhas do tabuleiro apontam para o dragão
-		vPersonagem[0][10][0]=vPersonagem[1][10][0];
-		vPersonagem[0][9][0]=vPersonagem[1][10][0];
-		vPersonagem[1][9][0]=vPersonagem[1][10][0];
+		vPersonagem[5][10][0] = new Dragao(5,10);					//4 posições vizinhas do tabuleiro apontam para o dragão
+		vPersonagem[4][10][0]=vPersonagem[5][10][0];
+		vPersonagem[4][9][0]=vPersonagem[5][10][0];
+		vPersonagem[5][9][0]=vPersonagem[5][10][0];
 		
 		compl1 = new PecaIcon(DIRETORIO+"dragao1.png");
 		compl2 = new PecaIcon(DIRETORIO+"dragao2.png");
 		compl3 = new PecaIcon(DIRETORIO+"dragao3.png");
-		setElemento(1,10,(PecaIcon) vPersonagem[1][10][0]);
-		setElemento(0,9,compl1);
-		setElemento(0,10,compl2);
-		setElemento(1,9,compl3);
+		setElemento(5,10,(PecaIcon) vPersonagem[5][10][0]);
+		setElemento(4,9,compl1);
+		setElemento(4,10,compl2);
+		setElemento(5,9,compl3);
 		
-		DragonPosition[0] = 1;									
+		DragonPosition[0] = 5;									
 		DragonPosition[1] = 10;
 		atual=-1;
 		
-		vPersonagem[19][10][1] = new Princesa(19,10, this);	
-		PrincesaPosition[0] = 19;									
+		vPersonagem[18][10][1] = new Princesa(18,10, this);	
+		PrincesaPosition[0] = 18;									
 		PrincesaPosition[1] = 10;
-		setElemento(19,10,(PecaIcon) vPersonagem[19][10][1]);
+		setElemento(18,10,(PecaIcon) vPersonagem[18][10][1]);
 		
 		vidaDragao = new JLabel(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida()));
 		vidaDragao.setAlignmentX(CENTER_ALIGNMENT);
@@ -84,10 +85,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		vidaPrincesa.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		finish = new JLabel();
+		finish.setFont(new Font("SansSerif", Font.BOLD, 16));
 		finish.setAlignmentX(CENTER_ALIGNMENT);
 		finish.setHorizontalAlignment(0);
 		finish.setMaximumSize(new Dimension(300,100));
-		finish.setForeground(Color.RED);
 		
 		again = new JButton("Jogar Novamente");
 		again.setAlignmentX(CENTER_ALIGNMENT);
@@ -407,7 +408,12 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	
 	public void finish() {
 		if (vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida() <= 0) {
-			finish.setText("Você Ganhou!");
+			finish.setForeground(Color.GREEN);
+			finish.setText("<html>"+"<center>"
+				+"<b>VOCÊ GANHOU!</b>"+"<br/>"
+				+"	Você conseguiu matar o dragão"+"<br/>"
+				+ "e salvar a princesa "+"<br/>"
+				+"e todo o reino!!!"+"<center>"+"</html>");
 			vidaDragao.setText("0");
 			PrincesaPosition[0]=-1;
 		}
@@ -415,9 +421,22 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			if (vPersonagem[PrincesaPosition[0]][PrincesaPosition[1]][1].getVida()<=0) {
 				removePeca(PrincesaPosition[0], PrincesaPosition[1], 1);
 				vidaPrincesa.setText("0");
+				finish.setForeground(Color.lightGray);
+				finish.setText("<html>"+"<center>"
+						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
+						+"A princesa morreu e todo"+"<br/>"
+						+"o reino perdeu a alegria."+"<br/>"
+						+"O rei infartou ao saber."+"<center>"+"</html>");
+				PrincesaPosition[0]=-1;	
+			}else {
+				finish.setForeground(Color.lightGray);
+				finish.setText("<html>"+"<center>"
+						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
+						+"Todos os soldados morreram e o"+"<br/>"
+						+ "dragão pôde avançar pelo reino,"+"<br/>"
+						+"causando caos e morte."+"<center>"+"</html>");
+				PrincesaPosition[0]=-1;
 			}
-			finish.setText("Você Perdeu!");
-			PrincesaPosition[0]=-1;
 		}
 	}
 	

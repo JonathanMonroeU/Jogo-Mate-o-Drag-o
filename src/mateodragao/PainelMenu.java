@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingConstants;
 import javax.swing.SwingUtilities;
+import javax.swing.border.LineBorder;
 
 import mateodragao.exceptions.AdicaoInvalida;
 import mateodragao.exceptions.RemocaoInvalida;
@@ -26,7 +27,7 @@ import mateodragao.interfaces.ITabuleiro;
 
 public class PainelMenu extends JPanel implements IMenu, ActionListener{
 	private static final long serialVersionUID = 6299309752925290728L;
-	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVidaDragao, painelVidaPrincesa, painelAviso;
+	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVidaDragao, painelVidaPrincesa, painelAviso, painelInstrucoes;
 	private JButton addPersonagem, remPersonagem, iniciar, adicionar, remover;
 	private JButton arqueiro, lanceiro, mago, catapulta;
 	private JTextField textXA, textYA, textXR, textYR;
@@ -45,7 +46,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		titulo.setFont(new Font("Arial", Font.BOLD, 35));
 		titulo.setForeground(Color.lightGray);
 		titulo.setAlignmentX(CENTER_ALIGNMENT);
-		this.setBackground(new java.awt.Color(175, 0 , 0));		//cor
+		this.setBackground(new java.awt.Color(150, 0, 0));		//cor
 		
 		add(Box.createRigidArea(new Dimension(0,10)));
 		add(titulo);
@@ -54,6 +55,10 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		addPersonagem = new JButton("Adicionar Personagem");
 		remPersonagem = new JButton("Remover Personagem");
 		iniciar = new JButton("Iniciar Jogo");
+		iniciar.setBackground(Color.RED);
+		iniciar.setForeground(Color.WHITE);
+		iniciar.setBorder(BorderFactory.createLineBorder(Color.RED, 15));
+		//iniciar.setBorder(new LineBorder(Color.WHITE));
 		
 		addPersonagem.setAlignmentX(CENTER_ALIGNMENT);
 		remPersonagem.setAlignmentX(CENTER_ALIGNMENT);
@@ -68,10 +73,10 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		textXR = new JTextField();
 		textYR = new JTextField();
 		
-		textXA.setPreferredSize(new Dimension(40,20));
-		textYA.setPreferredSize(new Dimension(40,20));
-		textXR.setPreferredSize(new Dimension(40,20));
-		textYR.setPreferredSize(new Dimension(40,20));
+		textXA.setMaximumSize(new Dimension(40,20));
+		textYA.setMaximumSize(new Dimension(40,20));
+		textXR.setMaximumSize(new Dimension(40,20));
+		textYR.setMaximumSize(new Dimension(40,20));
 		
 		adicionar = new JButton("Adicionar");
 		adicionar.addActionListener(this);
@@ -82,38 +87,65 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		
 		
 		painelTextA = new JPanel();
-		painelTextA.setLayout(new FlowLayout());
+		painelTextA.setLayout(new BoxLayout(painelTextA, BoxLayout.Y_AXIS));
 		painelTextA.setMaximumSize(new Dimension(300,300));
 		painelTextA.setAlignmentX(CENTER_ALIGNMENT);
-		JLabel horizontal=new JLabel("Horizontal:");
+		JLabel horizontal=new JLabel("Horizontal (A - T):");
 		horizontal.setForeground(Color.WHITE);
-		painelTextA.add(Box.createRigidArea(new Dimension(0,40)));
+		painelTextA.add(Box.createRigidArea(new Dimension(0,25)));
+		horizontal.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextA.add(horizontal);
+		textYA.setAlignmentX(JTextField.CENTER_ALIGNMENT);
 		painelTextA.add(textYA);
-		painelTextA.add(Box.createRigidArea(new Dimension(10,0)));
-		JLabel vertical=new JLabel("Vertical:");
+		JLabel vertical=new JLabel("Vertical (1 - 20):");
 		vertical.setForeground(Color.WHITE);
+		painelTextA.add(Box.createRigidArea(new Dimension(0,10)));
+		vertical.setAlignmentX(CENTER_ALIGNMENT);
 		painelTextA.add(vertical);
+		textXA.setAlignmentX(JTextField.CENTER_ALIGNMENT);
 		painelTextA.add(textXA);
-		painelTextA.setBackground(new java.awt.Color(175, 0 , 0));		//cor
+		painelTextA.add(Box.createRigidArea(new Dimension(0,10)));
 		painelTextA.add(adicionar);
+		painelTextA.add(Box.createRigidArea(new Dimension(0,30)));
+		JLabel dica = new JLabel("<html>"+"<center>"
+				+"<b>DICA:</b>"+"<br/>"
+				+"<b>O dragão ataca diretamente um "+"<br/>"
+				+"<b>personagem que esteja até a 5 casas"+"<br/>"
+				+"<b> de distância na horizontal ou vertical."+"<br/>"
+				+"<b>Por isso, você não pode adicionar "+"<br/>"
+				+"<b>nas casas com identificação de"+"<br/>"
+				+"<b>E a P com 1 a 11."+"<center>"+"</html>");
+			dica.setPreferredSize(new Dimension(300,155));
+			dica.setFont(new Font("SansSerif", Font.PLAIN, 14));
+			dica.setForeground(Color.WHITE);
+			dica.setAlignmentX(CENTER_ALIGNMENT);
+		painelTextA.add(dica);
+		painelTextA.setBackground(new java.awt.Color(150, 0, 0));
+		painelTextA.setAlignmentX(CENTER_ALIGNMENT);//cor
 		
 		painelTextR = new JPanel();
-		painelTextR.setLayout(new FlowLayout());
+		painelTextR.setLayout(new BoxLayout(painelTextR, BoxLayout.Y_AXIS));
 		painelTextR.setMaximumSize(new Dimension(300,300));
 		painelTextR.setAlignmentX(CENTER_ALIGNMENT);
-		JLabel horizontalR=new JLabel("Horizontal:");
+		JLabel horizontalR=new JLabel("Horizontal (A - T):");
+		horizontalR.setAlignmentX(CENTER_ALIGNMENT);
 		horizontalR.setForeground(Color.WHITE);
-		painelTextR.add(Box.createRigidArea(new Dimension(0,40)));
+		painelTextR.add(Box.createRigidArea(new Dimension(0,25)));
 		painelTextR.add(horizontalR);
+		textYR.setAlignmentX(JTextField.CENTER_ALIGNMENT);
 		painelTextR.add(textYR);
-		painelTextR.add(Box.createRigidArea(new Dimension(10,0)));
-		JLabel verticalR=new JLabel("Vertical:");
+		JLabel verticalR=new JLabel("Vertical (1 - 20):");
+		verticalR.setAlignmentX(CENTER_ALIGNMENT);
 		verticalR.setForeground(Color.WHITE);
+		painelTextR.add(Box.createRigidArea(new Dimension(0,10)));
 		painelTextR.add(verticalR);
+		textXR.setAlignmentX(JTextField.CENTER_ALIGNMENT);
 		painelTextR.add(textXR);
-		painelTextR.setBackground(new java.awt.Color(175, 0 , 0));		//cor
+		painelTextR.add(Box.createRigidArea(new Dimension(0,10)));
 		painelTextR.add(remover);
+		painelTextR.add(Box.createRigidArea(new Dimension(0,30)));
+		painelTextR.setBackground(new java.awt.Color(150, 0, 0));	
+		painelTextR.setAlignmentX(CENTER_ALIGNMENT);
 		
 		arqueiro = new JButton("Adicionar Arqueiro");
 		arqueiro.setPreferredSize(new Dimension(200,25));
@@ -190,7 +222,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelSoldado.add(mago);
 		painelSoldado.add(catapultaInfo);
 		painelSoldado.add(catapulta);
-		painelSoldado.setBackground(new java.awt.Color(175, 0 , 0));
+		painelSoldado.setBackground(new java.awt.Color(150, 0, 0));
 		
 		painelPontos = new JPanel();
 		painelPontos.setPreferredSize(new Dimension(30,70));
@@ -213,57 +245,90 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelInicial = new JPanel();
 		painelInicial.setLayout(new BoxLayout(painelInicial, BoxLayout.Y_AXIS));
 		painelInicial.setPreferredSize(new Dimension(300,400));
+		painelInicial.add(Box.createRigidArea(new Dimension(0,20)));
+		painelInicial.setAlignmentX(CENTER_ALIGNMENT);
+		painelInicial.setBackground(new java.awt.Color(150, 0, 0));
 		JLabel titulo2 = new JLabel("Adicione personagens e comece o jogo!");
 		titulo2.setAlignmentX(CENTER_ALIGNMENT);
+		titulo2.setFont(new Font("Arial", Font.BOLD, 16));
 		titulo2.setForeground(Color.white);
 		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
 		painelInicial.add(titulo2);
-		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
+		painelInicial.add(Box.createRigidArea(new Dimension(0,5)));
 		painelInicial.add(addPersonagem);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,5)));
 		painelInicial.add(remPersonagem);
+		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
 		painelInicial.add(iniciar);
-		painelInicial.add(Box.createRigidArea(new Dimension(0,40)));
-		painelInicial.setAlignmentX(CENTER_ALIGNMENT);
-		painelInicial.setBackground(new java.awt.Color(175, 0 , 0));
-		JLabel texto = new JLabel("<html>"
-			+"	O dragão atacou o reino  repentinamente e a princesa"+"<br/>"
-			+"está bem no meio do ataque, reúna os"+"<br/>"
-			+"soldados e mate-o antes que o pior aconteça."+"</html>");
+		add(painelInicial);
+		
+		painelAviso = new JPanel();
+		painelAviso.setLayout(new BoxLayout(painelAviso, BoxLayout.Y_AXIS));
+		painelAviso.setPreferredSize(new Dimension(300,50));
+		JLabel titulo7 = new JLabel("ATENÇÃO");
+		titulo7.setAlignmentX(CENTER_ALIGNMENT);
+		aviso = new JLabel();
+		aviso.setAlignmentX(CENTER_ALIGNMENT);
+		aviso.setHorizontalAlignment(0);
+		aviso.setMaximumSize(new Dimension(300,50));
+		aviso.setForeground(Color.RED);
+		painelAviso.setBorder(BorderFactory.createLineBorder(Color.black, 5));
+		painelAviso.setAlignmentX(CENTER_ALIGNMENT);
+		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
+		painelAviso.add(titulo7);
+		painelAviso.add(aviso);
+		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
+		add(painelAviso);
+		//add(Box.createRigidArea(new Dimension(0,10)));
+		painelAviso.setVisible(false);
+		
+		painelInstrucoes = new JPanel();
+		painelInstrucoes.setLayout(new BoxLayout(painelInstrucoes, BoxLayout.Y_AXIS));
+		painelInstrucoes.setPreferredSize(new Dimension(300,400));
+		
+		painelInstrucoes.add(Box.createRigidArea(new Dimension(0,40)));
+		painelInstrucoes.setAlignmentX(CENTER_ALIGNMENT);
+		painelInstrucoes.setBackground(new java.awt.Color(150, 0, 0));
+		JLabel texto = new JLabel("<html>"+"<center>"
+			+"	O dragão atacou o reino repentinamente e a princesa"+"<br/>"
+			+"está bem no meio do ataque, reúna os soldados e mate-o "+"<br/>"
+			+ "antes que o pior aconteça."+"<center>"+"</html>");
 		texto.setPreferredSize(new Dimension(300,155));
 		texto.setFont(new Font("SansSerif", Font.BOLD, 16));
 		texto.setForeground(Color.WHITE);
 		texto.setAlignmentX(CENTER_ALIGNMENT);
-		painelInicial.add(texto);
-		painelInicial.add(Box.createRigidArea(new Dimension(0,10)));
+		painelInstrucoes.add(texto);
+		painelInstrucoes.add(Box.createRigidArea(new Dimension(0,10)));
 		JLabel instrucoesTitulo = new JLabel("Instruções:");
 		instrucoesTitulo.setFont(new Font("Arial", Font.BOLD, 25));
 		instrucoesTitulo.setForeground(Color.white);
 		
 		instrucoesTitulo.setAlignmentX(CENTER_ALIGNMENT);
-		painelInicial.add(instrucoesTitulo);
-		JLabel instrucoes = new JLabel("<html>"
+		painelInstrucoes.add(instrucoesTitulo);
+		JLabel instrucoes = new JLabel("<html>"+"<center>"
 			+"O objetivo do jogo é matar o dragão,"+"<br/>"
-			+"para isso, escolha como quer posicionar os"+"<br/>"
-			+"soldados que adicionar em campo. Após"+"<br/>"
-			+"iniciar o jogo, controle a princesa "+"<br/>"
-			+"usando o direcional, de forma a evitar que seja"+"<br/>"
+			+"para isso, coloque os soldados nas"+"<br/>"
+			+"posições do campo que preferir. "+"<br/>"
+			+"Após iniciar o jogo, controle a princesa "+"<br/>"
+			+"usando o direcional, para evitar que seja"+"<br/>"
 			+"atingida por ataques amigos e inimigos."+"<br/>"
 			+"Você perde o jogo se a princesa ou todos"+"<br/>"
 			+"os soldados morrerem, e vence se matar"+"<br/>"
 			+"o dragão antes disso."+"<br/>"
-			+"<b>--ATRIBUTOS DOS SOLDADOS:</b>"+"<br/>"
+			+""+"<br/>"
+			+"<b>ATRIBUTOS DOS SOLDADOS:</b>"+"<br/>"
 			+"<b>Custo:</b>"+"Pontos necessários para inserí-lo em campo."+"<br/>"
 			+"<b>Resistência: </b>"+"Quantas bolas de fogo são necessárias para matá-lo."+"<br/>"
 			+"<b>Movimento: </b>"+" A cada quantos passos do jogo ele se movimenta."+"<br/>"
 			+"<b>Frequência de disparos: </b>"+"A cada quantos passos é feito um disparo."+"<br/>"
 			+"<b>Movimento do projétil: </b>"+"A cada quantos passos o projétil se movimenta."+"<br/>"
-			+"<b>Dano do projétil:</b>"+"Quantos pontos de vida subtrai do inimigo ou da princesa."+"</html>");
+			+"<b>Dano do projétil:</b>"+"Quantos pontos de vida subtrai do inimigo ou da princesa."+"<center>"+"</html>");
 		instrucoes.setPreferredSize(new Dimension(300,155));
-		instrucoes.setFont(new Font("SansSerif", Font.PLAIN, 14));
+		instrucoes.setFont(new Font("SansSerif", Font.PLAIN, 16));
 		instrucoes.setForeground(Color.WHITE);
 		instrucoes.setAlignmentX(CENTER_ALIGNMENT);
-		painelInicial.add(instrucoes);
-		add(painelInicial);
+		painelInstrucoes.add(instrucoes);
+		add(painelInstrucoes);
 		
 		painelAdicao = new JPanel();
 		painelAdicao.setPreferredSize(new Dimension(300,300));
@@ -287,26 +352,6 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelRemocao.add(painelTextR);
 		add(painelRemocao);
 		painelRemocao.setVisible(false);
-		
-		painelAviso = new JPanel();
-		painelAviso.setLayout(new BoxLayout(painelAviso, BoxLayout.Y_AXIS));
-		painelAviso.setPreferredSize(new Dimension(300,50));
-		JLabel titulo7 = new JLabel("ATENÇÃO");
-		titulo7.setAlignmentX(CENTER_ALIGNMENT);
-		aviso = new JLabel();
-		aviso.setAlignmentX(CENTER_ALIGNMENT);
-		aviso.setHorizontalAlignment(0);
-		aviso.setMaximumSize(new Dimension(300,50));
-		aviso.setForeground(Color.RED);
-		painelAviso.setBorder(BorderFactory.createLineBorder(Color.black, 5));
-		painelAviso.setAlignmentX(CENTER_ALIGNMENT);
-		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
-		painelAviso.add(titulo7);
-		painelAviso.add(aviso);
-		painelAviso.add(Box.createRigidArea(new Dimension(0,10)));
-		add(painelAviso);
-		//add(Box.createRigidArea(new Dimension(0,10)));
-		painelAviso.setVisible(false);
 		
 		painelVidaDragao = new JPanel();
 		painelVidaDragao.setLayout(new BoxLayout(painelVidaDragao, BoxLayout.Y_AXIS));
@@ -344,12 +389,14 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		if (e.getSource() == addPersonagem) {
 			painelInicial.setVisible(false);
+			painelInstrucoes.setVisible(false);
 			painelAviso.setVisible(false);
 			painelAdicao.setVisible(true);
 			painelSoldado.setVisible(true);
 		}
 		else if (e.getSource() == remPersonagem) {
 			painelInicial.setVisible(false);
+			painelInstrucoes.setVisible(false);
 			painelAviso.setVisible(false);
 			painelRemocao.setVisible(true);
 		}
@@ -358,6 +405,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 				tab.play();
 				painelPontos.setVisible(false);
 				painelInicial.setVisible(false);
+				painelInstrucoes.setVisible(false);
 				painelAviso.setVisible(false);
 				painelVidaDragao.setVisible(true);
 				painelVidaPrincesa.setVisible(true);
@@ -394,6 +442,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 			//painelRemocao.setVisible(false);
 			painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
+			painelInstrucoes.setVisible(true);
 			
 			char i;
 			y=0;
@@ -401,7 +450,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 				x = Integer.parseInt(textXA.getText());
 				i = (textYA.getText()).charAt(0);
 				for (char c='a';c<='t';c++) {
-					if (i==c)
+					if (Character.toLowerCase(i)==c)
 						break;
 					y++;
 				}
@@ -428,6 +477,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 			painelRemocao.setVisible(false);
 			//painelTextA.setVisible(false);
 			painelInicial.setVisible(true);
+			painelInstrucoes.setVisible(true);
 			
 			char i;
 			y=0;
