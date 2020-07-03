@@ -160,5 +160,8 @@ public class Projetil extends PecaIcon implements IProjetil{
 		
 	}
 	
+	public PecaIcon getPecaIcon() {
+		return ((PecaIcon) this);
+	}
 	
 }

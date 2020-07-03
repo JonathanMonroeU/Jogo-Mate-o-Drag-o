@@ -5,35 +5,39 @@ import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
+import mateodragao.components.DataProvider;
+import mateodragao.components.Tabuleiro;
 import mateodragao.interfaces.IMenu;
 import mateodragao.interfaces.ITabuleiro;
 
 
-public class JanelaJogo extends JFrame{
+public class JanelaJogo extends JFrame implements ActionListener{
 	private static final long serialVersionUID = -617666447542987164L;
 	private IMenu painelMenu;
 	private ITabuleiro painelGrid;
 	
-	public JanelaJogo(ITabuleiro tab, IMenu menu) {
+	public JanelaJogo() {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		painelGrid = tab;
-		painelMenu = menu;
+		setExtendedState(JFrame.MAXIMIZED_BOTH);
+		setResizable(false);
+		painelGrid = new Tabuleiro();
+		painelMenu = new PainelMenu(painelGrid, new DataProvider(100));
+		painelGrid.getAgainButton().addActionListener(this);
 		visual();
 	}
 	
 	public void visual() {
-		super.setExtendedState(JFrame.MAXIMIZED_BOTH);
 		Container contentPane = getContentPane();
-		
 		contentPane.setLayout(new BorderLayout());
 		
 		contentPane.add(painelGrid.getPanel(), BorderLayout.CENTER);
@@ -73,6 +77,18 @@ public class JanelaJogo extends JFrame{
 	    setVisible(true);
 	}
 	
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		Container contentPane = getContentPane();
+		contentPane.remove(painelGrid.getPanel());
+	    contentPane.remove(painelMenu.getPanel());
+	    painelGrid.getAgainButton().removeActionListener(this);
+	    
+		painelGrid = new Tabuleiro();
+		painelMenu = new PainelMenu(painelGrid, new DataProvider(100));
+		painelGrid.getAgainButton().addActionListener(this);
+		visual();
+	}
 	/*public void adicionaElemento(PecaIcon obj) {
 		painelGrid.setElemento(obj.getX(),obj.getY(),obj);
 		SwingUtilities.updateComponentTreeUI(this);

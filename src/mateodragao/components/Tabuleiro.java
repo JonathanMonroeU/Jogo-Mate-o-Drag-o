@@ -8,6 +8,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 
 import mateodragao.Metronomo;
@@ -70,17 +71,27 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		PrincesaPosition[1] = 10;
 		setElemento(19,10,(PecaIcon) vPersonagem[19][10][1]);
 		
-		vida = new JLabel(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida()));
-		vida.setAlignmentX(CENTER_ALIGNMENT);
-		vida.setHorizontalAlignment(0);
-		vida.setMaximumSize(new Dimension(50,30));
-		vida.setBorder(BorderFactory.createLineBorder(Color.black));
+		vidaDragao = new JLabel(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida()));
+		vidaDragao.setAlignmentX(CENTER_ALIGNMENT);
+		vidaDragao.setHorizontalAlignment(0);
+		vidaDragao.setMaximumSize(new Dimension(50,30));
+		vidaDragao.setBorder(BorderFactory.createLineBorder(Color.black));
+		
+		vidaPrincesa = new JLabel(Integer.toString(vPersonagem[PrincesaPosition[0]][PrincesaPosition[1]][1].getVida()));
+		vidaPrincesa.setAlignmentX(CENTER_ALIGNMENT);
+		vidaPrincesa.setHorizontalAlignment(0);
+		vidaPrincesa.setMaximumSize(new Dimension(50,30));
+		vidaPrincesa.setBorder(BorderFactory.createLineBorder(Color.black));
 		
 		finish = new JLabel();
 		finish.setAlignmentX(CENTER_ALIGNMENT);
 		finish.setHorizontalAlignment(0);
 		finish.setMaximumSize(new Dimension(300,100));
 		finish.setForeground(Color.RED);
+		
+		again = new JButton("Jogar Novamente");
+		again.setAlignmentX(CENTER_ALIGNMENT);
+		again.setVisible(false);
 		
 		metro.addActionListener(this);
 		
@@ -132,6 +143,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		else {
 			finish();
 			metro.stop();
+			again.setVisible(true);
 		}
 	}
 
@@ -218,8 +230,8 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				
 			}
 		}
-		vida.setText(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida()));
-		
+		vidaDragao.setText(Integer.toString(vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida()));
+		vidaPrincesa.setText(Integer.toString(vPersonagem[PrincesaPosition[0]][PrincesaPosition[1]][1].getVida()));
 	}
 
 	@Override
@@ -282,19 +294,19 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		switch(tipo) {
 			case 1:
 				vPersonagem[x][y][0] = new Arqueiro(x,y);
-				setElemento(x, y, (PecaIcon) vPersonagem[x][y][0]);
+				setElemento(x, y, vPersonagem[x][y][0].getPecaIcon());
 				break;
 			case 2:
 				vPersonagem[x][y][0] = new Lanceiro(x,y);
-				setElemento(x, y, (PecaIcon) vPersonagem[x][y][0]);
+				setElemento(x, y, vPersonagem[x][y][0].getPecaIcon());
 				break;
 			case 3:
 				vPersonagem[x][y][0] = new Mago(x,y);
-				setElemento(x, y, (PecaIcon) vPersonagem[x][y][0]);
+				setElemento(x, y, vPersonagem[x][y][0].getPecaIcon());
 				break;
 			case 4:
 				vPersonagem[x][y][0] = new Catapulta(x,y);
-				setElemento(x, y, (PecaIcon) vPersonagem[x][y][0]);
+				setElemento(x, y, vPersonagem[x][y][0].getPecaIcon());
 				break;
 		}
 		numeroSoldados += 1;
@@ -304,20 +316,20 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	@Override
 	public void putProjetil(int x, int y, int z, IProjetil Projetil) {
 		vProjetil[x][y][z] = Projetil;
-		setElemento(x,y,(PecaIcon) Projetil);
+		setElemento(x,y, Projetil.getPecaIcon());
 	}
 	
 	//recebe a posição da peça a ser removida, a remove e diminui o número de soldados em campo em 1
 	@Override
 	public void removePeca(int x, int y, int z) {
 		if (vPersonagem[x][y][z] instanceof Dragao) {
-			removeElemento(x,y, (PecaIcon) vPersonagem[x][y][z]);
+			removeElemento(x,y, vPersonagem[x][y][z].getPecaIcon());
 			removeElemento(DragonPosition[0]-1,DragonPosition[1]-1,compl1);
 			removeElemento(DragonPosition[0]-1,DragonPosition[1],compl2);
 			removeElemento(DragonPosition[0],DragonPosition[1]-1,compl3);
 		}
 		else {
-			removeElemento(x,y, (PecaIcon) vPersonagem[x][y][z]);
+			removeElemento(x,y, vPersonagem[x][y][z].getPecaIcon());
 			vPersonagem[x][y][z] = null;
 			numeroSoldados -= 1;
 		}
@@ -334,7 +346,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void setPeca(int x, int y, int z, IPersonagem peca) {
 		vPersonagem[x][y][z] = peca;
 		if (peca != null)
-			setElemento(x, y, (PecaIcon) peca);
+			setElemento(x, y, peca.getPecaIcon());
 	}
 	
 	@Override
@@ -345,9 +357,9 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	@Override 
 	public void setProjetil(int x, int y,int z, IProjetil Projetil) {
 		if (Projetil != null)
-			setElemento(x,y,(PecaIcon) Projetil);
+			setElemento(x,y, Projetil.getPecaIcon());
 		else if (vProjetil[x][y][z] != null)
-			removeElemento(x, y, (PecaIcon) vProjetil[x][y][z]);
+			removeElemento(x, y, vProjetil[x][y][z].getPecaIcon());
 		vProjetil[x][y][z] = Projetil;
 	}
 	
@@ -373,9 +385,20 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		PrincesaPosition[1]=y;
 	}
 	
-	@Override
-	public Metronomo getMetro() {
-		return metro;
+	public JLabel getVidaDragaoLabel() {
+		return vidaDragao;
+	}
+	
+	public JLabel getVidaPrincesaLabel() {
+		return vidaPrincesa;
+	}
+	
+	public JLabel getFinishLabel() {
+		return finish;
+	}
+	
+	public JButton getAgainButton() {
+		return again;
 	}
 	
 	public PainelTabuleiro getPanel() {
@@ -385,14 +408,16 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void finish() {
 		if (vPersonagem[DragonPosition[0]][DragonPosition[1]][0].getVida() <= 0) {
 			finish.setText("Você Ganhou!");
-			vida.setText("0");
+			vidaDragao.setText("0");
+			PrincesaPosition[0]=-1;
 		}
 		else {
 			if (vPersonagem[PrincesaPosition[0]][PrincesaPosition[1]][1].getVida()<=0) {
 				removePeca(PrincesaPosition[0], PrincesaPosition[1], 1);
-				PrincesaPosition[0]=-1;
+				vidaPrincesa.setText("0");
 			}
 			finish.setText("Você Perdeu!");
+			PrincesaPosition[0]=-1;
 		}
 	}
 	

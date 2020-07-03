@@ -1,7 +1,6 @@
 package mateodragao;
 
 import java.awt.BorderLayout;
-
 import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
@@ -10,6 +9,7 @@ import java.awt.Image;
 import java.awt.Toolkit;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
@@ -18,7 +18,8 @@ public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
 	public static String DIRETORIO = PainelTabuleiro.class.getResource(".").getPath();
 	protected GramaPanel celulas[][] = new GramaPanel[20][20];
-	protected JLabel vida, finish;
+	protected JLabel vidaDragao, vidaPrincesa, finish;
+	protected JButton again;
 	
 	public PainelTabuleiro() {
 		setLayout(new GridLayout(20,20));
@@ -54,13 +55,5 @@ public class PainelTabuleiro extends JPanel{
 			graf.drawImage(gramaImage, 0, 0, this);
 
 		}
-	}
-	
-	public JLabel getVidaLabel() {
-		return vida;
-	}
-	
-	public JLabel getFinishLabel() {
-		return finish;
 	}
 }

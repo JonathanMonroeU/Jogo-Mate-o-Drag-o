@@ -163,9 +163,11 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 		return movimento;
 	}
 	
+	public PecaIcon getPecaIcon() {
+		return ((PecaIcon)this);
+		
+	}
 	@Override
 	public void movePrincesa(String direcao) {
-		// TODO Auto-generated method stub
-		
 	}
 }

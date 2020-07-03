@@ -6,7 +6,6 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.text.ParseException;
 
 import javax.swing.BorderFactory;
 import javax.swing.Box;
@@ -16,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.SwingUtilities;
-import javax.swing.text.MaskFormatter;
 
 import mateodragao.exceptions.AdicaoInvalida;
 import mateodragao.exceptions.RemocaoInvalida;
@@ -27,7 +25,7 @@ import mateodragao.interfaces.ITabuleiro;
 
 public class PainelMenu extends JPanel implements IMenu, ActionListener{
 	private static final long serialVersionUID = 6299309752925290728L;
-	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVida, painelAviso;
+	private JPanel painelInicial, painelAdicao, painelRemocao, painelTextA, painelTextR, painelSoldado, painelPontos, painelVidaDragao, painelVidaPrincesa, painelAviso;
 	private JButton addPersonagem, remPersonagem, iniciar, adicionar, remover;
 	private JButton arqueiro, lanceiro, mago, catapulta;
 	private JTextField textXA, textYA, textXR, textYR;
@@ -65,15 +63,10 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		remPersonagem.addActionListener(this);
 		iniciar.addActionListener(this);
 		
-		try {
-			MaskFormatter mask = new MaskFormatter("##");
-			textXA = new JTextField();
-			textYA = new JTextField();
-			textXR = new JTextField();
-			textYR = new JTextField();
-		} catch (ParseException e) {
-			e.printStackTrace();
-		}
+		textXA = new JTextField();
+		textYA = new JTextField();
+		textXR = new JTextField();
+		textYR = new JTextField();
 		
 		textXA.setPreferredSize(new Dimension(40,20));
 		textYA.setPreferredSize(new Dimension(40,20));
@@ -249,18 +242,31 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		//add(Box.createRigidArea(new Dimension(0,10)));
 		painelAviso.setVisible(false);
 		
-		painelVida = new JPanel();
-		painelVida.setLayout(new BoxLayout(painelVida, BoxLayout.Y_AXIS));
-		painelVida.setPreferredSize(new Dimension(300,50));
+		painelVidaDragao = new JPanel();
+		painelVidaDragao.setLayout(new BoxLayout(painelVidaDragao, BoxLayout.Y_AXIS));
+		painelVidaDragao.setPreferredSize(new Dimension(300,50));
 		JLabel titulo6 = new JLabel("VIDA DO DRAGÃO");
 		titulo6.setAlignmentX(CENTER_ALIGNMENT);
-		painelVida.setAlignmentX(CENTER_ALIGNMENT);
-		painelVida.add(titulo6);
-		painelVida.add(((PainelTabuleiro) tab).getVidaLabel());
+		painelVidaDragao.setAlignmentX(CENTER_ALIGNMENT);
+		painelVidaDragao.add(titulo6);
+		painelVidaDragao.add(tab.getVidaDragaoLabel());
 		add(Box.createRigidArea(new Dimension(0,10)));
-		add(painelVida);
+		add(painelVidaDragao);
 		add(Box.createRigidArea(new Dimension(0,10)));
-		painelVida.setVisible(false);
+		painelVidaDragao.setVisible(false);
+		
+		painelVidaPrincesa = new JPanel();
+		painelVidaPrincesa.setLayout(new BoxLayout(painelVidaPrincesa, BoxLayout.Y_AXIS));
+		painelVidaPrincesa.setPreferredSize(new Dimension(300,50));
+		JLabel titulo8 = new JLabel("VIDA DA PRINCESA");
+		titulo8.setAlignmentX(CENTER_ALIGNMENT);
+		painelVidaPrincesa.setAlignmentX(CENTER_ALIGNMENT);
+		painelVidaPrincesa.add(titulo8);
+		painelVidaPrincesa.add(tab.getVidaPrincesaLabel());
+		add(Box.createRigidArea(new Dimension(0,10)));
+		add(painelVidaPrincesa);
+		add(Box.createRigidArea(new Dimension(0,10)));
+		painelVidaPrincesa.setVisible(false);
 		
 	}
 
@@ -283,8 +289,10 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 				painelPontos.setVisible(false);
 				painelInicial.setVisible(false);
 				painelAviso.setVisible(false);
-				painelVida.setVisible(true);
-				add(((PainelTabuleiro)tab).getFinishLabel());
+				painelVidaDragao.setVisible(true);
+				painelVidaPrincesa.setVisible(true);
+				add(tab.getFinishLabel());
+				add(tab.getAgainButton());
 			} catch (SemPersonagem erro) {
 				aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");
 				painelAviso.setVisible(true);

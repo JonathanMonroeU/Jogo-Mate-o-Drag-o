@@ -1,5 +1,7 @@
 package mateodragao.interfaces;
 
+import mateodragao.PecaIcon;
+
 public interface IProjetil extends IMovimento{
 	public int getDano();
 	public int getxConflito();
@@ -12,4 +14,5 @@ public interface IProjetil extends IMovimento{
 	public void setEmConflito(int j);
 	public int getJaAgiu();
 	public void setJaAgiu(int j);
+	public PecaIcon getPecaIcon();
 }

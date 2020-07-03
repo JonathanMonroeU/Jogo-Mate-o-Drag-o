@@ -1,5 +1,7 @@
 package mateodragao.interfaces;
 
+import mateodragao.PecaIcon;
+
 public interface IPersonagem extends IMovimento{
 	public void perdeVida(IProjetil Projetil, ITabuleiro tab);
 	public void disparaProjetil(ITabuleiro tab);
@@ -8,4 +10,5 @@ public interface IPersonagem extends IMovimento{
 	public int getJaAgiu();
 	public void setJaAgiu(int j);
 	public int getMovimento();
+	public PecaIcon getPecaIcon();
 }

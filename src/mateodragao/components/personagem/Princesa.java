@@ -1,14 +1,14 @@
 package mateodragao.components.personagem;
 
-import mateodragao.components.Tabuleiro;
 import mateodragao.interfaces.ITabuleiro;
 
 public class Princesa extends Personagem{
 	private static final long serialVersionUID = 1529623392218092957L;
 	public static String DIRETORIO =
 		      Princesa.class.getResource(".").getPath();
-	Tabuleiro tab;
-	public Princesa(int x, int y,Tabuleiro tab) {
+	private ITabuleiro tab;
+	
+	public Princesa(int x, int y, ITabuleiro tab) {
 		super(DIRETORIO+"princesa.png",x,y);
 		vida = 300;
 		this.tab=tab;

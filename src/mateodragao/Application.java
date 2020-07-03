@@ -11,16 +11,10 @@ public class Application {
 		      Application.class.getResource(".").getPath();
 		      
 	public static void main(String[] args) {
-		IDataProvider data = new DataProvider(100);
+		/*IDataProvider data = new DataProvider(100);
 		ITabuleiro tabuleiro = new Tabuleiro();
-		IMenu menu = new PainelMenu(tabuleiro, data);
-		JanelaJogo janela = new JanelaJogo(tabuleiro, menu);
-		
-		/*while(status) {
-			tabuleiro.mostraTabuleiro();
-			status = data.insertData();
-			//tabuleiro.receiveData(data);
-		}	tabuleiro.play();*/
+		IMenu menu = new PainelMenu(tabuleiro, data);*/
+		JanelaJogo janela = new JanelaJogo();
 	}
 
 }

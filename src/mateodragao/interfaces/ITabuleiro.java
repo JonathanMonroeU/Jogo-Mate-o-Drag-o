@@ -1,6 +1,8 @@
 package mateodragao.interfaces;
 
-import mateodragao.Metronomo;
+import javax.swing.JButton;
+import javax.swing.JLabel;
+
 import mateodragao.PainelTabuleiro;
 import mateodragao.exceptions.SemPersonagem;
 
@@ -20,8 +22,11 @@ public interface ITabuleiro {
 	public void adicionaConflito(IProjetil projetil);
 	public void resolveConflito(IProjetil projetil);
 	public void setDragonPosition(int x, int y);
-	public Metronomo getMetro();
-	public PainelTabuleiro getPanel();
 	public void setPrincesaPosition(int x, int y);
 	public int[] getPrincesaPosition();
+	public PainelTabuleiro getPanel();
+	public JLabel getVidaDragaoLabel();
+	public JLabel getVidaPrincesaLabel();
+	public JLabel getFinishLabel();
+	public JButton getAgainButton();
 }
