@@ -285,8 +285,7 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelInstrucoes = new JPanel();
 		painelInstrucoes.setLayout(new BoxLayout(painelInstrucoes, BoxLayout.Y_AXIS));
 		painelInstrucoes.setPreferredSize(new Dimension(300,400));
-		
-		painelInstrucoes.add(Box.createRigidArea(new Dimension(0,40)));
+		painelInstrucoes.add(Box.createRigidArea(new Dimension(0,30)));
 		painelInstrucoes.setAlignmentX(CENTER_ALIGNMENT);
 		painelInstrucoes.setBackground(new java.awt.Color(150, 0, 0));
 		JLabel texto = new JLabel("<html>"+"<center>"
