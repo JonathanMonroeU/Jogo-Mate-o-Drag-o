@@ -23,11 +23,12 @@ public class Dragao extends Personagem{
 	}
 
 	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
-	
+	/*OBS:O dragão tem 12 posições em sua volta, mas o tiro direcionado é calculado a partir da sua posição principal (que é guardada
+	em dragonPosition), e atirado em uma das 8 direções possíveis do tabuleiro, para ataque especial e aleatório, todas as 12 posições são levadas em conta*/
 	
 	/* Disparo especial: a cada vez que a vida do dragão passa por uma centena, decrescendo, ele dispara um ataque e todas as direções
 	 * Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
-	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa, no caso do dragão, ele procura alvos em uma distância de 4 casas para cada lado.
+	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, o que pode dar positivo ou negativo, no caso do dragão, ele procura alvos em uma distância de  até 5 casas para cada lado.
 	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
 	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
 	 * comparando ver-hor, que é a distância entre o ataque e o alvo quando está na linha do alvo, com hor que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.
@@ -37,8 +38,8 @@ public class Dragao extends Personagem{
 	 *  Caso o dragão não encontre alvos no seu raio específico de tiro direcionado, ele atira aleatoriamente em uma das 12 posições+direções possíveis */
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
+		//Se for a vez do personagem instanciar um projétil:
 		if (freqA==0) {
-			System.out.println("dispara");
 			
 			//DISPARO ESPECIAL
 			if(vida/100<especial) {
@@ -123,10 +124,10 @@ public class Dragao extends Personagem{
 			else {
 				//DISPARO DIRECIONADO:
 				
-				int hor,ver,encontrado=0, //distância horizontal e vertical do dragão ao personagem
+				int hor,ver,encontrado=0, //Distância horizontal e vertical do dragão ao personagem.
 					pX=100,pY=100; //posição
 				
-				//para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão
+				//Para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão.
 				for (int r=0;r<=4;r++) {
 					if(encontrado==1)
 						break;
@@ -166,7 +167,7 @@ public class Dragao extends Personagem{
 						}
 					}	
 				}
-				if (pX!=100) { //quer dizer que ele encontrou um personagem nesse alcance
+				if (pX!=100) { //Quer dizer que ele encontrou um personagem nesse alcance.
 					hor=pY-y;	
 					ver=pX-x;
 					int j;
@@ -355,6 +356,6 @@ public class Dragao extends Personagem{
 					}	
 				}	
 			}
-		}freqA = (freqA + 1)%frequencia;	
+		}freqA = (freqA + 1)%frequencia;	//Atualiza freqA, quando freqA fica igual a frequência de disparos, ela volta a ser 0, e então no próximo tempo é a vez do personagem disparar novamente.
 	}
 }

@@ -11,15 +11,15 @@ import mateodragao.interfaces.ITabuleiro;
 public abstract class Personagem extends PecaIcon implements IPersonagem {
 	private static final long serialVersionUID = 5890715371330885791L;
 	protected int x, y, 
-					vida, 
-					newX,
-					newY, 
-					frequencia, 
-					freqA,
-					movimento, 
-					freqM, 
-					passo, 
-					jaAgiu; ////Se for igual a 0, o projétil ainda não agiu naquele tempo, se for 1 já. 
+					vida,	//Quantidade de pontos que tem para resistir a danos de projéteis.
+					newX,	//Nova poosição x que foi calculada.
+					newY, 	//Nova posição y que foi calculada.
+					frequencia, //Quantos passos demora até disparar um novo projétil.
+					freqA,		//Valor que vai de 0 até a frequência, ciclicamente, quando for 0, o personagem dispara. O lanceiro é exceçõ, que dispara quando for 0 e 12.
+					movimento,	//É a quantidade de passos do jogo que demora até o personagem se mover de novo.
+					freqM, 		//Valor que vai de 0 até movimento, ciclicamente, quando for 0, o personagem se move.
+					passo, 		//Quantidade de passos que o personagem anda no campo por movimento.
+					jaAgiu; 	//Se for igual a 0, o projétil ainda não agiu naquele tempo, se for 1 já. 
 	
 	protected Random alea=new Random();
 	
@@ -49,12 +49,11 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				//Valor entre -1,0 e 1 a ser adicionado multiplicado pelo passo e/ou subtraido aleatoriamente em x e y.
 				int addX = alea.nextInt(3)-1;	
 				int addY = alea.nextInt(3)-1;
-				System.out.println("addx:"+addX+" addy:"+addY);
 				
 				//Se não for o dragão, testa se a nova posição é coerente para o soldado:
 				if (this instanceof Dragao==false) { 
-					newX += passo*addX;	System.out.println("newx:"+newX);
-					newY += passo*addY; System.out.println("newy:"+newY);
+					newX += passo*addX;	
+					newY += passo*addY; 
 					//Se a nova posição estiver fora do campo, reinicia e volta do inicio do while.
 					if(newX<0 || newX>19 || newY<0 || newY>19) {
 						newX = x;
@@ -76,9 +75,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					//O dragão só se move em x ou y a cada passo, então é escolhido aleatoriamente um dos dois para ser modificado.
 					int a=alea.nextInt(2);
 					if (a==0) {
-						newX += passo*addX;		System.out.println("newx:"+newX);
+						newX += passo*addX;		
 					}else {		
-						newY += passo*addY;		System.out.println("newy:"+newY);
+						newY += passo*addY;		
 					//Se a nova posição estiver fora do campo, reinicia e volta do início do while.
 					}if(newX<1 || newX>19 || newY<1 || newY>19) {
 						newX = x;

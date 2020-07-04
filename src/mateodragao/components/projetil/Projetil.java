@@ -66,7 +66,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 			
 			//Se a nova posição for fora do tabuleiro:
 			if (newX<0 || newX>19 || newY<0 || newY>19) {
-				tab.setProjetil(x, y, z, null);	System.out.println("saiu");
+				tab.setProjetil(x, y, z, null);	
 			//Se a nova posiçao estiver vazia o projetil se move para ela.
 			}else if (tab.getProjetil(newX, newY, z) == null) {	
 				jaAgiu=1; 
@@ -80,7 +80,6 @@ public class Projetil extends PecaIcon implements IProjetil{
 				 * efetuado sua ação ainda nesse tempo, o projetil não se move e é colocado em um vetor auxiliar para tratar 
 				 * os confitos entre projeteis, após o tabuleiro inteiro ser percorrido.*/
 				if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0) {
-					System.out.println("entrou em conflito");
 					this.xConflito=newX;
 					this.yConflito=newY;
 					((PainelTabuleiro) tab).removeElemento(x,y,(PecaIcon)this);

@@ -14,6 +14,9 @@ public class Princesa extends Personagem{
 		this.tab=tab;
 	}
 	
+	/*Método para mover a princesa, recebe uma direção de acordo com a tecla clicada pelo jogador.
+	 * Primeiro verifica se a nova posição não sai do campo, depois se não há outro personagem na mesma coordenada x, y, e então, 
+	 * se estiver tudo certo, ela é movida e tem suas posições atualizadas.*/
 	@Override
 	public void movePrincesa(String direcao) {
 		switch (direcao) {
@@ -24,7 +27,6 @@ public class Princesa extends Personagem{
 						tab.setPersonagem(x-1, y, 1, this);
 						tab.setPrincesaPosition(x-1,y);
 						x=x-1;
-						System.out.println(vida);
 					}
 				}break;
 		
@@ -35,7 +37,6 @@ public class Princesa extends Personagem{
 					tab.setPersonagem(x, y-1, 1, this);
 					tab.setPrincesaPosition(x,y-1);
 					y=y-1;
-					System.out.println("left");
 					}
 				}break;
 		
@@ -46,7 +47,6 @@ public class Princesa extends Personagem{
 						tab.setPersonagem(x, y+1, 1, this);
 						tab.setPrincesaPosition(x,y+1);
 						y=y+1;
-						System.out.println("right");
 					}
 				}break;
 		
@@ -57,7 +57,6 @@ public class Princesa extends Personagem{
 						tab.setPersonagem(x+1, y,1, this);
 						tab.setPrincesaPosition(x+1,y);
 						x=x+1;
-						System.out.println("down");
 					}
 				}break;
 		}

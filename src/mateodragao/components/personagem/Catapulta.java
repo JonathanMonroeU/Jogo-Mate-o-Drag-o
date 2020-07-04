@@ -19,7 +19,7 @@ public class Catapulta extends Personagem{
 	
 	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
 	/*Como funciona o disparo direcionado:  
-	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa.
+	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, o que pode dar positivo ou negativo.
 	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
 	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
 	 * comparando ver-hor, que é a distância entre o ataque e o alvo quando está na linha do alvo, com hor que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.
@@ -27,8 +27,9 @@ public class Catapulta extends Personagem{
 	 * comparando hor-ver, que é a distância entre o ataque e o alvo quando está na coluna do alvo, com ver que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.  */
 	@Override
 	public void disparaProjetil(ITabuleiro tab) {
+		//Se for a vez do personagem instanciar um projétil:
 		if (freqA==0) {
-			int hor,ver; //distância horizontal e vertical ao dragao
+			int hor,ver; //Distância horizontal e vertical ao dragão.
 		
 			ver=(tab.getDragonPosition()[0])-x;
 			hor=(tab.getDragonPosition()[1])-y;
@@ -76,6 +77,6 @@ public class Catapulta extends Personagem{
 					}
 				}
 			}tab.getProjetil(x,y,1).move(tab);
-		}freqA = (freqA + 1)%frequencia;
+		}freqA = (freqA + 1)%frequencia;//Atualiza freqA, quando freqA fica igual a frequência de disparos, ela volta a ser 0, e então no próximo tempo é a vez do personagem disparar novamente.
 	}	
 }

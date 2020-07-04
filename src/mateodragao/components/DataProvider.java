@@ -109,7 +109,7 @@ public class DataProvider implements IDataProvider{
 					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
 			default:
-				System.out.println("Comando Inválido!");
+				//System.out.println("Comando Inválido!");
 				break;
 		}
 	}
