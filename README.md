@@ -1,249 +1,196 @@
-# Jogo-Mate-o-Dragão
+# Projeto `Mate o Dragão`
 
-# Projeto do Jogo: Mate o Dragão
+# Descrição Resumida do Projeto/Jogo
+
+O jogo se chama Mate o Dragão, pois essa é a única maneira de o jogador vencer. Para isso, o jogador escolhe soldados para colocar nas posições que preferir no campo de batalha, e enquanto os personagens se movem de forma autônoma, 
+o jogador controla a princesa para não deixá-la ser atingida pelos projéteis. O jogador perde se a princesa ou todos os soldados morrerem.
 
 # Equipe
 * Áureo Henrique e Silva Marques - 213374
 * Lindon Jonathan Sanley dos Santos Pereira Monroe - 220407
 
-# Descrição Resumida do Projeto
-Este é o projeto do jogo Mate o Dragão, um jogo autônomo em que o jogador escolhe soldados para colocar no campo de batalha, com o único objetivo de matar o dragão.
+# Vídeos do Projeto
 
-# Vídeo do Projeto
+## Vídeo da Prévia
 [Link para o vídeo](https://drive.google.com/file/d/1WTYxDMbC_eBaEOWbAoLYA-gZTC5DdQ9w/view?usp=sharing)
 
-# Slides do projeto
+## Vídeo do Jogo
+> <Coloque um link para o vídeo em que é demonstrada a versão final do jogo. Esse vídeo deve ter em torno de 5 minutos. Este vídeo não apresenta slides, nem substitui a apresentação final do projeto, que será feita por conferência. Ele mostra apenas o jogo em funcionamento.>
+
+# Slides do Projeto
+
+## Slides da Prévia
 [Link para os slides](https://docs.google.com/presentation/d/1AsV5UUcxe-LLS95gD0u0uFggMae4aAfRPWseXTlmxlo/edit?usp=sharing)
 
-# Diagrama Geral de Componentes
+## Slides da Apresentação Final
+`<Coloque um link para os slides da apresentação final do projeto.>`
 
-![Diagrama componentes](componentes.png)
+## Relatório de Evolução
 
-# Componente `DataProvider`
+> <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
 
-![Componente](DataProviderComponent.png)
+# Destaques de Código
 
-## Interfaces
+> <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
+
+~~~java
+// Recorte do seu código
+public void algoInteressante(…) {
+   …
+   trechoInteressante = 100;
+}
+~~~
+
+# Destaques de Pattern
+`<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
+
+## Diagrama do Pattern
+`<Diagrama do pattern dentro do contexto da aplicação.>`
+
+## Código do Pattern
+~~~java
+// Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
+public void algoInteressante(…) {
+   …
+   trechoInteressante = 100;
+}
+~~~
+
+> <Explicação de como o pattern foi adotado e quais suas vantagens, referenciando o diagrama.>
+
+# Conclusões e Trabalhos Futuros
+
+> <Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.>
+
+# Documentação dos Componentes
+
+O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes:
+
+[![Projeto baseado em Componentes](http://img.youtube.com/vi/1LcSghlin6o/0.jpg)](https://youtu.be/1LcSghlin6o)
+
+# Diagramas
+
+## Diagrama Geral do Projeto
+
+> <Apresente um diagrama geral de organização da organização do seu sistema. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.>
+
+> <Faça uma breve descrição do diagrama.>
+
+## Diagrama Geral de Componentes
+
+### Exemplo 1
+
+Este é o diagrama compondo componentes para análise:
+
+![Diagrama Analise](diagrama-componentes-analise.png)
+
+### Exemplo 2
+
+Este é um diagrama inicial do projeto de jogos:
+
+![Diagrama Jogos](diagrama-componentes-jogos.png)
+
+### Exemplo 3
+
+Este é outro diagrama de um projeto de vendas:
+
+![Diagrama Vendas](diagrama-componentes-vendas.png)
+
+Para cada componente será apresentado um documento conforme o modelo a seguir:
+
+## Componente `<Nome do Componente>`
+
+> <Resumo do papel do componente e serviços que ele oferece.>
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Autores | `<nome dos membros que criaram o componente>`
+Interfaces | `<listagem das interfaces do componente>`
+
+### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](DataProvider.png)
+![Diagrama Interfaces](diagrama-interfaces.png)
 
-Campo | Valor
------ | -----
-Classe | `mateodragao.components.DataProvider`
-Autores | `Áureo e Lindon Jonathan`
-Objetivo | `Obter os dados inseridos pelo usuário e fornecê-los à classe Tabuleiro.`
-Interface | `IDataProvider`
-~~~
-public interface IGetData {
-  public void inserePersonagem();
-  public void removePersonagem();
-  public void setX(int x);
-  public void setY(int y);
-  public void setTipo(String tipo);
-  public String [] getData();
-}
-public interface IPontos {
-  public void removePontos(String tipo);
-  public void inserePontos(String tipo);
-}
-public interface IDataProvider extends IGetData, IPontos {
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IDataSet extends ITableProducer, IDataSetProperties {
 }
 ~~~
 
 ## Detalhamento das Interfaces
 
-### Interface `IGetData`
-`Gerencia a inserção e remoção de personagens e suas respectivas posições no vetor que contém esses dados.`
+### Interface `<nome da interface>`
+
+`<Resumo do papel da interface.>`
+
+~~~
+<Interface em Java.>
+~~~
 
 Método | Objetivo
 -------| --------
-`inserePersonagem` | `Coloca os dados para inserção do personagem no vetor pecaPosition.`
-`removePersonagem` | `Retira os dados de inserção do personagem no vetor pecaPosition.`
-`setX` | `Recebe e define a posição no eixo x do tabuleiro em que se posicionará a peça.`
-`setY` | `Recebe e define a posição no eixo y do tabuleiro em que se posicionará a peça.`
-`setTipo` | `Recebe e define o tipo do personagem que será inserido no tabuleiro.`
-`getData` | `Método para se acessar o vetor privado pecaPosition.`
+`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
 
+## Exemplo:
 
-### Interface `IPontos`
-`Aumenta e diminui a pontuação disponível para o jogador.`
+### Interface `ITableProducer`
+
+Interface provida por qualquer fonte de dados que os forneça na forma de uma tabela.
+
+~~~java
+public interface ITableProducer {
+  String[] requestAttributes();
+  String[][] requestInstances();
+}
+~~~
 
 Método | Objetivo
 -------| --------
-`removePontos` | `Diminui os pontos restantes de acordo com o tipo de personagem inserido no vetor pecaPosition.`
-`inserePontos` | `Aumenta os pontos restantes de acordo com o tipo de personagem removido do vetor pecaPosition.`
+`requestAttributes` | Retorna um vetor com o nome de todos os atributos (colunas) da tabela.
+`requestInstances` | Retorna uma matriz em que cada linha representa uma instância e cada coluna o valor do respectivo atributo (a ordem dos atributos é a mesma daquela fornecida por `requestAttributes`.
 
+### Interface `IDataSetProperties`
 
+Define o recurso (usualmente o caminho para um arquivo em disco) que é a fonte de dados.
 
-# Componente `Tabuleiro`
+~~~java
+public interface IDataSetProperties {
+  public String getDataSource();
+  public void setDataSource(String dataSource);
+}
+~~~
 
-![Componente](TabuleiroComponent.png)
+Método | Objetivo
+-------| --------
+`getDataSource` | Retorna o caminho da fonte de dados.
+`setDataSource` | Define o caminho da fonte de dados, informado através do parâmetro `dataSource`.
 
-## Interfaces
+# Plano de Exceções
 
-Interfaces associadas a esse componente:
+## Diagrama da hierarquia de exceções
+`<Elabore um diagrama com a hierarquia de exceções como detalhado abaixo>`
 
-<img src="Tabuleiro.png" alt="drawing" width="600"/>
+![Hierarquia Exceções](assets/documentacao/exception-hierarchy.png)
 
-Campo | Valor
+## Descrição das classes de exceção
+
+Classe | Descrição
 ----- | -----
-Classe | `mateodragao.components.Tabuleiro`
-Autores | `Áureo e Lindon Jonathan`
-Objetivo | `Inserir e organizar os personagens no jogo e promover as modificações necessárias na sua distribuição no passar dos tempos do jogo.`
-Interface | `ITabuleiro`
-~~~
-public interface ITabuleiro {
-  public void play();
-  public void modificaTabuleiro();
-  public IPeca getPeca(int x, int y);
-  public void putPeca(int x, int y, String tipo, Tabuleiro T);
-  public void removePeca (int x, int y);
-  public void receiveData(IDataProvider dataProvider;)
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `ITabuleiro`
-`Realiza as modificações que ocorrem na disposição das peças a cada tempo do jogo.`
-
-Método | Objetivo
--------| --------
-`play` | `Inicia o jogo, ou seja, realiza a chamada do método modificaTabuleiro até o dragão ou todos os soldados morrerem.`
-`modificaTabuleiro` | `Passa duas vezes por todas as posições da matriz de peças e faz elas se movimentarem e disparar ataques.`
-`getPeca` | `Retorna uma peça de uma posição da matriz.`
-`putPeca` | `Insere uma peça em uma posição da matriz.`
-`removePeca` | `Remove uma peça de uma posição da matriz.`
-`receiveData` | `Recebe uma instância de IDataProvider que contém os soldados a serem inseridos no tabuleiro e suas respectivas posições.`
-
-
-
-# Componente `Soldados`
-
-![Componente](SoldadosComponent.png)
-
-## Interfaces
-
-Interfaces associadas a esse componente:
-
-<img src="Soldados.png" alt="drawing" width="600"/>
-
-Campo | Valor
------ | -----
-Classe | `mateodragao.components.soldados.Soldados`
-Autores | `Áureo e Lindon Jonathan`
-Objetivo | `Os soldados são colocados em campo pelo jogador e se movimentam pelo campo e lançam ataques em direção ao dragão.`
-Interface | `IPersonagem`
-~~~
-public interface IPeca {
-  public void move();
-}
-public interface IPersonagem extends IPeca {
-  public void perdeVida();
-  public void disparaAtaque();
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `IPeca`
-`Contém o método que indica a movimentação de qualquer peça, sendo comum a todos os soldados, dragão e direções de ataques.`.
-
-Método | Objetivo
--------| --------
-`move` | `retorna a posição (x,y) para qual a peça deverá se movimentar`
-
-### Interface `IPersonagem`
-`Reúne os métodos de personagem como ações de perda de vida e de disparo de ataque.`.
-
-Método | Objetivo
--------| --------
-`perdeVida` | `Ao fazer-se uma varrredura pelo tabuleiro e verificar-se que o personagem está no mesmo espaço que um ataque num mesmo tempo, esse método é acionado para diminuir a vida do personagem.`
-`disparaAtaque` | `Ao fazer-se uma varredura pelo tabuleiro e verificar-se que a  frequência do personagem indica que deve lançar um ataque, esse método é acionado. Gera um ataque em direção à posição do dragão, caso seja um dos soldados, e em direção de um soldado num raio de 4 casas ou aleatória, caso seja o dragão.`
-
-
-
-
-# Componente `Dragao`
-
-![Componente](DragaoComponent.png)
-
-## Interfaces
-
-Interfaces associadas a esse componente:
-
-<img src="Dragao.png" alt="drawing" width="600"/>
-
-Campo | Valor
------ | -----
-Classe | `mateodragao.components.Dragao`
-Autores | `Áureo e Lindon Jonathan`
-Objetivo | `O dragão é o personagem que o jogador deve matar para vencer o jogo. Ele se movimenta pelo campo e lança ataques aleatórios e em direção aos outros personagens.`
-Interface | `IPersonagem`
-~~~
-public interface IPeca {
-  public void move();
-}
-public interface IPersonagem extends IPeca {
-  public void perdeVida();
-  public void disparaAtaque();
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `IPeca`
-`Contém o método que indica a movimentação de qualquer peça, sendo comum a todos os soldados, dragão e direções de ataques.`.
-
-Método | Objetivo
--------| --------
-`move` | `retorna a posição (x,y) para qual a peça deverá se movimentar`
-
-### Interface `IPersonagem`
-`Reúne os métodos de personagem como ações de perda de vida e de disparo de ataque.`.
-
-Método | Objetivo
--------| --------
-`perdeVida` | `Ao fazer-se uma varrredura pelo tabuleiro e verificar-se que o personagem está no mesmo espaço que um ataque num mesmo tempo, esse método é acionado para diminuir a vida do personagem.`
-`disparaAtaque` | `Ao fazer-se uma varredura pelo tabuleiro e verificar-se que a  frequência do personagem indica que deve lançar um ataque, esse método é acionado. Gera um ataque em direção à posição do dragão, caso seja um dos soldados, e em direção de um soldado num raio de 4 casas ou aleatória, caso seja o dragão.`
-
-# Componente `Ataque`
-
-![Componente](AtaqueComponent.png)
-
-## Interfaces
-
-Interfaces associadas a esse componente:
-
-<img src="Ataque.png" alt="drawing" width="600"/>
-
-Campo | Valor
------ | -----
-Classe | `mateodragao.components.ataques.Ataque`
-Autores | `Áureo e Lindon Jonathan`
-Objetivo | `Os ataques são lançados pelos soldados e pelo dragão e são os responsáveis por diminuir a vida e resistência dos personagens.`
-Interface | `IAtaque`
-~~~
-public interface IPeca {
-  public void move();
-}
-
-public interface IAtaque extends IPeca {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `IPeca`
-`Contém o método que indica a movimentação de qualquer peça, sendo comum a todos os soldados, dragão e direções de ataques.`
-
-Método | Objetivo
--------| --------
-`move` | `Retorna a posição (x,y) para qual a peça deverá se movimentar.`
-
-### Interface `IAtaque`
-`Reúne todos os tipos e direções de ataque sob a mesma interface.`
-
-
+SemPersonagem | Indica que não pode iniciar o jogo sem personagens no campo.
+AdicaoInvalida | Engloba todas as exceções de adições não aceitas.
+AdicaoLugarInexistente | Indica que o jogador tentou adicionar em uma posição que nem existe no campo.
+AdicaoLugarOcupado | Indica que já há um personagem na posição solicitada. 
+AdicaoLugarProibido | Indica que não pode inserir um personagem naquela posição.
+AdicaoPontosInsuficientes | Indica que não possui pontos suficientes para o atual personagem.
+RemocaoInvalida | Engloba todas as exceções de remoções não aceitas.
+RemocaoAntesDeAdicao | Indica a tentativa de remoção antes de inserir pelo menos um personagem.
+RemocaoLugarDragao | Indica que não pode remover o dragão.
+RemoçãoLugarInexistente | Indica que o jogador tentou remover de uma posição que nem existe no campo.
+RemocaoSemPersonagem | Indica que não há personagem no local de remoção.
