@@ -7,12 +7,8 @@ public class Arqueiro extends Personagem{
 	private static final long serialVersionUID = -7136572584786964361L;
 	public static String DIRETORIO =
 		      Arqueiro.class.getResource(".").getPath();
-	public static int custo = 5;
-	/*{custo=5;
-	frequencia = 1;
-	movimento = 1;
-	passo = 2;
-	}*/
+	public static int custo = 5;	//Pontos necessários para inserir o personagem em campo.
+	
 	public Arqueiro(int x, int y) {
 		super(DIRETORIO+"arqueiro.png",x,y);
 		vida = 100;
@@ -22,7 +18,7 @@ public class Arqueiro extends Personagem{
 	}
 
 	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
-	/*Como funciona o disparo direcionado: se a frequência de ataque for 0, é a vez do personagem atacar. 
+	/*Como funciona o disparo direcionado:  
 	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode ser positiva ou negativa.
 	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
 	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 

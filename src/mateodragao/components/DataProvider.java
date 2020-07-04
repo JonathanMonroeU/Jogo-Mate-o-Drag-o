@@ -14,12 +14,14 @@ import mateodragao.exceptions.RemocaoLugarInexistente;
 import mateodragao.exceptions.RemocaoSemPersonagem;
 
 public class DataProvider implements IDataProvider{
-	private int pontos;				//quantidade de pontos disponível para serem gastos na inserção de personagens
-	private int pecaPosition[]; 	//vetor que guarda a posição das peças que já foram colocadas em campo
-	private int pecaPositionAtual[];//guarda a solicitação atual de inserção de peça em campo
-	private int atual; //posiçao atual de pecaPosition
+	private int pontos;				//Quantidade de pontos disponível para serem gastos na inserção de personagens.
+	private int pecaPosition[]; 	//Vetor que guarda a posição das peças que já foram colocadas em campo na forma {tipo, x, y, tipo, x, y...}.
+	private int pecaPositionAtual[];//Guarda a solicitação atual de inserção ou remoção da peça em campo na forma {tipo,x,y}.
+	private int atual; 				//Posiçao atual de pecaPosition.
 	
-	//inicia o objeto com a quantidade de pontos máxima determinada e dois vetores auxiliares, o tamanho de pecaPosition considera a quantidade máxima de personagens a serem inseridos, para não haver problemas
+	/*Inicia o objeto com a quantidade de pontos máxima determinada para se inserir personagens no campo
+	 * e dois vetores auxiliares, o tamanho de pecaPosition considera a 
+	 * quantidade máxima de personagens a serem inseridos, para não haver problemas.*/
 	public DataProvider(int pontos) {
 		this.pontos = pontos;	
 		pecaPosition = new int[66];
@@ -30,44 +32,29 @@ public class DataProvider implements IDataProvider{
 		atual = 0;
 	}
 	
-	@Override
-	public boolean insertData() {
-		
-		int comando = 3; //está tres, mas depois vai colocar a classe de entrada de dados
-		
-		/*dependendo do comando realiza um dos metodos abaixo
-		 *retorna false caso deseja parar a inserção de dados*/
-		switch(comando) {
-			case 1:
-				//inserePersonagem();
-				return true;
-			case 2:
-				//removePersonagem();
-				return true;
-			case 3:
-				return false;
-			default:
-				System.out.println("Comando Inválido!");
-				return insertData();
-		}
-	}
-	
+	/*Recebe o tipo de personagem que deve ser inserido e as coordenadas da posição, 
+	 * dependendo da posição pode causar um dos erros.*/
 	@Override
 	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida{
-		//texto com opçoes de personagem
+		//Se a posição for fora do campo:
 		if (x<0 || x>19 || y<0 || y>19)
 			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
+		//Se a posição for dentro de um certo raio do dragão, de 5 casas para cada direção:
 		if ((x>=0 && x<=10) && (y>=4 && y<=15))
-			throw new AdicaoLugarProibido("Voce nao pode adicionar nesse lugar!");
+			throw new AdicaoLugarProibido("Você nao pode adicionar nesse lugar!");
+		//Se a posição for a posição inicial da princesa:
 		if (x==18 && y==10)
-			throw new AdicaoLugarOcupado("Já há um personagem nessa posicao!");
-		//dependendo do comando realiza um dos metodos abaixo
+			throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
+		/*Se passar pelos outros erros, o vetor que guarda os personagens já inseridos e 
+		 * suas posições é varrido de modo a ver se já tem um personagem nessa posição.*/
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
-				throw new AdicaoLugarOcupado("Já há um personagem nessa posicao!");
+				throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
 			}
 		}
 		
+		/*Dependendo do tipo de personagem solicitado, ele é colocado no vetor que guarda todos os personagens já inseridos.
+		 * E a quantidade de pontos de custo para inserir é reduzida do total disponível.*/
 		switch(comando) {
 			case 1:
 				if (Arqueiro.custo <= pontos) {
@@ -78,7 +65,6 @@ public class DataProvider implements IDataProvider{
 					while (pecaPosition[atual] != 0) {
 						atual += 3;
 					}
-					//removePontos(Arqueiro.custo);
 				}
 				else
 					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
@@ -128,19 +114,21 @@ public class DataProvider implements IDataProvider{
 		}
 	}
 	
-	//passa por pecaPosition e vê se existe uma peca nessa posicao, se houver, ela é removida do vetor que guarda as peças já inseridas e os pontos são devolvidos 
+	/*Dependendo do tipo de personagem solicitado, ele é colocado no vetor que guarda todos os personagens já inseridos.
+	 * E a quantidade de pontos de custo para inserir é reduzida do total disponível.*/
 	@Override
 	public void removePersonagem(int x, int y) throws RemocaoInvalida{
-		//texto pedindo para inserir x e y
+		//Se a posição for fora do campo:
 		if (x<0 || x>19 || y<0 || y>19)
 			throw new RemocaoLugarInexistente("Nao existe essa posicao!");
 		if (pontos == 100)
 			throw new RemocaoAntesDeAdicao("Voce deve adicionar pelo menos um personagem para poder fazer uma remocao!");
-		if ((x==0 && y==9)||(x==0 && y==10)||(x==1 && y==9)||(x==1 && y==10))
+		if ((x==4 && y==9)||(x==4 && y==10)||(x==5 && y==9)||(x==5 && y==10))
 			throw new RemocaoLugarDragao("Voce nao pode remover o dragao!");
 		
 		
-		//passar por pecaPosition e ver se tem peca nessa posicao
+		/*Passa por pecaPosition e vê se existe uma peca nessa posicao, se houver,
+		 *ela é removida do vetor que guarda as peças já inseridas e os pontos são devolvidos.*/ 
 		for(int i=1; i<pecaPosition.length; i+=3) {
 			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
 				pecaPositionAtual[0] = 0;
@@ -161,6 +149,7 @@ public class DataProvider implements IDataProvider{
 						inserePontos(Catapulta.custo);
 						break;
 				}
+				//Remove do vetor de personagen inseridos, colocando o tipo e as posições guardadas nele como 0.
 				pecaPosition[i-1] = 0;
 				pecaPosition[i] = 0;
 				pecaPosition[i+1] = 0;
@@ -171,38 +160,40 @@ public class DataProvider implements IDataProvider{
 		throw new RemocaoSemPersonagem("Nao há personagem removível nesse lugar!");
 	}
 	
-	//devolve o custo aos pontos após a remoção de uma peça
+	//Devolve o custo ao total de pontos após a remoção de um personagem.
 	@Override
 	public void inserePontos(int valor) {
 		pontos += valor;
 	}
 	
-	//subtrai o custo dos pontos após a inserção de uma peça
+	//Subtrai o custo do total de pontos após a inserção de um personagem.
 	@Override
 	public void removePontos(int valor) {
 		pontos -= valor;
 	}
 	
-	//abaixo tem-se alguns métodos para retornar e modificar os atributos privados do DataProvider
-	
+	//Coloca tanto em pecaPosiotion quanto pecaPositionAtual o atributo x.
 	@Override
 	public void setX(int x) {
 		pecaPositionAtual[1] = x;
 		pecaPosition[atual+1] = x;
 	}
 	
+	//Coloca tanto em pecaPosiotion quanto pecaPositionAtual o atributo y.
 	@Override
 	public void setY(int y) {
 		pecaPositionAtual[2] = y;
 		pecaPosition[atual+2] = y;
 	}
 	
+	//Coloca tanto em pecaPosiotion quanto pecaPositionAtual o atributo tipo.
 	@Override
 	public void setTipo(int tipo) {
 		pecaPositionAtual[0] = tipo;
 		pecaPosition[atual] = tipo;
 	}
 	
+	//Abaixo tem-se somente métodos para retornar e modificar os atributos privados do DataProvider.
 	@Override
 	public int[] getData() {
 		return pecaPositionAtual;

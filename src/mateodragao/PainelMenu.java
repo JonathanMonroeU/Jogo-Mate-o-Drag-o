@@ -39,7 +39,6 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 	public PainelMenu(ITabuleiro tab, IDataProvider data) {
 		this.tab = tab;
 		this.data = data;
-		System.out.println(data.getPontos());
 		setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 		setPreferredSize(new Dimension(360,1000));
 		JLabel titulo = new JLabel("Mate o Dragão");
@@ -456,7 +455,6 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 				try {
 					data.inserePersonagem(comando, x-1, y); //fazer try/catch
 					tab.receiveData(data);
-					//System.out.println(data.getPontos());
 					pontos.setText(Integer.toString(data.getPontos()));
 				} catch (AdicaoInvalida erro) {
 					aviso.setText("<html>"+"<center>"+erro.getMessage()+"</center>"+"</html>");

@@ -20,8 +20,8 @@ public class Princesa extends Personagem{
 			case"up":
 				if(x-1>=0) {
 					if (tab.getPeca(x-1,y, 0)==null) {
-						tab.setPeca(x, y, 1, null);
-						tab.setPeca(x-1, y, 1, this);
+						tab.setPersonagem(x, y, 1, null);
+						tab.setPersonagem(x-1, y, 1, this);
 						tab.setPrincesaPosition(x-1,y);
 						x=x-1;
 						System.out.println(vida);
@@ -31,8 +31,8 @@ public class Princesa extends Personagem{
 			case "left":
 				if(y-1>=0) {
 					if (tab.getPeca(x, y-1, 0)==null) {
-					tab.setPeca(x, y, 1, null);
-					tab.setPeca(x, y-1, 1, this);
+					tab.setPersonagem(x, y, 1, null);
+					tab.setPersonagem(x, y-1, 1, this);
 					tab.setPrincesaPosition(x,y-1);
 					y=y-1;
 					System.out.println("left");
@@ -42,8 +42,8 @@ public class Princesa extends Personagem{
 			case "right":
 				if(y+1<=19) {
 					if (tab.getPeca(x,y+1, 0)==null) {
-						tab.setPeca(x, y, 1, null);
-						tab.setPeca(x, y+1, 1, this);
+						tab.setPersonagem(x, y, 1, null);
+						tab.setPersonagem(x, y+1, 1, this);
 						tab.setPrincesaPosition(x,y+1);
 						y=y+1;
 						System.out.println("right");
@@ -53,8 +53,8 @@ public class Princesa extends Personagem{
 			case "down":
 				if(x+1<=19) {
 					if (tab.getPeca(x+1,y, 0)==null) {
-						tab.setPeca(x, y,1, null);
-						tab.setPeca(x+1, y,1, this);
+						tab.setPersonagem(x, y,1, null);
+						tab.setPersonagem(x+1, y,1, this);
 						tab.setPrincesaPosition(x+1,y);
 						x=x+1;
 						System.out.println("down");
