@@ -683,18 +683,19 @@ Futuramente, pretendemos evoluir a ideia do jogo. Algumas ideias propostas foram
 ## Diagrama Geral do Projeto
 
 > <Apresente um diagrama geral de organização da organização do seu sistema. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.>
+![DiagramaGeral](assets/documentacao/DiagramaGeral.png)
 
 > <Faça uma breve descrição do diagrama.>
 
 ## Diagrama Geral de Componentes
 
-![Diagrama geral de componentes](assets/documentacao/diagrama-componentes-geral.png)
+![Diagrama geral de componentes](assets/documentacao/DiagramaComponentes.png)
 
 ## Componente `DataProvider`
 
 Componente responsável pela passagem dos dados inseridos pelo usuário para o Tabuleiro e por gerenciar a adição e a remoção de personagens do jogo em relação a quantidade de pontos; Ele provê a interface IDataProvider para o Tabuleiro poder receber essas informações.
 
-![Componente](assets/documentacao/componente-dataprovider.png)
+![Componente](assets/documentacao/ComponenteDataProvider.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -766,7 +767,7 @@ Método | Objetivo
 
 Componente representante do tabuleiro do jogo, o qual armazena e relaciona todos os personagens e projéteis em campo; Provê a interface ITabuleiro para os personagens, os projéteis, o Menu e a JanelaJogo, para que eles possam ter acesso aos dados guardados nos vetores de peças e para estes poderem inserirem novas peças no Tabuleiro também.
 
-![Componente](assets/documentacao/componente-tabuleiro.png)
+![Componente](assets/documentacao/ComponenteTabuleiro.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -867,7 +868,7 @@ Método | Objetivo
 
 Componente representante do personagem “arqueiro”. Provê a interface IPersonagem e é responsavel por instanciar Flecha no Tabuleiro.
 
-![Componente](assets/documentacao/componente-arqueiro.png)
+![Componente](assets/documentacao/ComponenteArqueiro.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -938,7 +939,7 @@ Método | Objetivo
 
 Componente representante do personagem “lanceiro”. Provê a interface IPersonagem e é responsavel por instanciar Lanca no Tabuleiro.
 
-![Componente](assets/documentacao/componente-lanceiro.png)
+![Componente](assets/documentacao/ComponenteLanceiro.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -960,7 +961,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do personagem “mago”. Provê a interface IPersonagem e é responsavel por instanciar BolaDeEnergia no Tabuleiro.
 
-![Componente](assets/documentacao/componente-mago.png)
+![Componente](assets/documentacao/ComponenteMago.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -981,7 +982,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do personagem “catapulta”. Provê a interface IPersonagem e é responsavel por instanciar Pedra no Tabuleiro.
 
-![Componente](assets/documentacao/componente-catapulta.png)
+![Componente](assets/documentacao/ComponenteCatapulta.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1002,7 +1003,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do personagem “princesa”. Provê a interface IPersonagem e é movimentado pelo usuário durante o jogo.
 
-![Componente](assets/documentacao/componente-princesa.png)
+![Componente](assets/documentacao/ComponentePrincesa.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1023,7 +1024,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do personagem “dragão”. Provê a interface IPersonagem e é responsavel por instanciar BoldaDeFogo no Tabuleiro.
 
-![Componente](assets/documentacao/componente-dragao.png)
+![Componente](assets/documentacao/ComponenteDragao.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1044,7 +1045,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do projétil “flecha”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](assets/documentacao/componente-flecha.png)
+![Componente](assets/documentacao/ComponenteFlecha.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1123,7 +1124,7 @@ Método | Objetivo
 
 Componente representante do projétil “lança”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](assets/documentacao/componente-lanca.png)
+![Componente](assets/documentacao/ComponenteLanca.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1144,7 +1145,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do projétil “bola de energia”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](assets/documentacao/componente-boladeenergia.png)
+![Componente](assets/documentacao/ComponenteBolaDeEnergia.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1165,7 +1166,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do projétil “pedra”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](assets/documentacao/componente-pedra.png)
+![Componente](assets/documentacao/ComponentePedra.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1186,7 +1187,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente representante do projétil “bola de fogo”. Provê a interface IProjetil e é responsável por diminuir a vida de qualquer personagem.
 
-![Componente](assets/documentacao/componente-boladefogo.png)
+![Componente](assets/documentacao/ComponenteBolaDeFogo.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1207,7 +1208,7 @@ As interfaces associadas a esse componente são as mesmas associadas ao componen
 
 Componente responsável por projetar na tela o menu do jogo, que é composto por textos explicativos, por botões e por caixas de texto. Com isso, também administra a entrada de dados e as ações do usuário.
 
-![Componente](assets/documentacao/componente-painelmenu.png)
+![Componente](assets/documentacao/ComponentePainelMenu.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1264,7 +1265,7 @@ Método | Objetivo
 
 Componente responsável por projetar na tela a interface gráfica completa do jogo, contendo o tabuleiro e o menu.
 
-![Componente](assets/documentacao/componente-janelajogo.png)
+![Componente](assets/documentacao/ComponenteJanelaJogo.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1305,7 +1306,7 @@ Método | Objetivo
 
 Administra as ações recebidas pelo teclado e modifica o Tabuleiro com base nisso.
 
-![Componente](diagrama-componente.png)
+![Componente](assets/documentacao/ComponenteMeuKeyListener.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1318,7 +1319,7 @@ Interfaces | `KeyListener`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-MeuKeyListener.png)
 
 Interface agregadora do componente em Java:
 
@@ -1350,7 +1351,7 @@ Método | Objetivo
 
 Notifica um evento a cada intervalo de tempo para o Tabuleiro
 
-![Componente](diagrama-componente.png)
+![Componente](assets/documentacao/ComponenteMetronomo.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1363,7 +1364,7 @@ Interfaces | `ActionListener`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-metronomo.png)
 
 Interface agregadora do componente em Java:
 
@@ -1371,8 +1372,6 @@ Interface agregadora do componente em Java:
 public interface IDataSet extends ITableProducer, IDataSetProperties {
 }
 ~~~
-
-## Detalhamento das Interfaces
 
 ## Detalhamento das Interfaces
 
