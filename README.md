@@ -240,7 +240,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				tab.setPersonagem(newX-1, newY-1, 0, this);
 			}
 			tab.setPersonagem(newX, newY, 0, this);
-			this.jaAgiu=1;
+			this.jaAgiu=true;
 			
 			//Os atributos x e y do objeto são atualizados.
 			x = newX;
@@ -250,8 +250,12 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	}
 }
 ~~~
+- Destaque para o método que movimenta um projétil
+- Destaque para o método que dispara um projétil de um soldado
 ~~~java
-//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
+public class Arqueiro extends Personagem{
+	...
+	//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
 	/*Como funciona o disparo direcionado:  
 	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode dar positivo ou negativo.
 	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
@@ -291,191 +295,152 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			}
 			
 			else {		//atira na horizontal
-				if (hor<0) {	//atira para esquerda
-					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"es","flecha-es.png"));
-					else {
-						if (ver<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies","flecha-cies.png"));
-						if (ver>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes","flecha-bxes.png"));
-					}
-				}if (hor>0) {	//atira para direita
-					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
-						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"di","flecha-di.png"));
-					else {
-						if (ver<0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi","flecha-cidi.png"));
-						if (ver>0)
-							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi","flecha-bxdi.png"));
-					}
-				}
-			}tab.getProjetil(x,y,0).move(tab);
-		}freqA = (freqA + 1)%frequencia;//Atualiza freqA, quando freqA fica igual a frequência de disparos, ela volta a ser 0, e então no próximo tempo é a vez do personagem disparar novamente.
+				... // O raciocínio é semelhante ao de atirar na vertical
+			}
+			tab.getProjetil(x,y,0).move(tab);
+		}
+		...
 	}
+	...
+}
 ~~~
+- Destaque para a parte do código que faz o disparo direcionado da BolaDeFogo do dragão:
 ~~~java
-//DISPARO DIRECIONADO DO DRAGÃO:
+public class Dragao extends Personagem{
+	...
+	@Override
+	public void disparaProjetil(ITabuleiro tab) {
+		...
+		//DISPARO DIRECIONADO DO DRAGÃO:
 				
-				int hor,ver,encontrado=0, //Distância horizontal e vertical do dragão ao personagem.
-					pX=100,pY=100; //posição
+		int hor,ver,encontrado=0, //Distância horizontal e vertical do dragão ao personagem.
+			pX=100,pY=100; //posição
 				
-				//Para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão.
-				for (int r=0;r<=4;r++) {
-					if(encontrado==1)
-						break;
-					else {
-						for (int i=-6+r;i<=5-r;i++) {
-							if (x+i>=0 && x+i<=19 && y-6+r>=0){
-								if (tab.getPeca(x+i,y-6+r, 0)!=null || tab.getPeca(x+i,y-6+r, 1)!=null){
-									pX=x+i;
-									pY=-y-6+r;
-									encontrado=1;
-									break;
-								}
-							}
-							if (x+i>=0 && x+i<=19 && y+5-r<=19){
-								if (tab.getPeca(x+i,y+5-r, 0)!=null || tab.getPeca(x+i,y+5-r, 1)!=null) {
-									pX=x+i;
-									pY=y+5-r;
-									encontrado=1;
-									break;
-								}
-							}	
-							if (x-6+r>=0 && y+i>=0 && y+i<=19){
-								if (tab.getPeca(x-6+r,y+i, 0)!=null || tab.getPeca(x-6+r,y+i, 1)!=null) {
-									pX=x-6+r;
-									pY=y+i;
-									encontrado=1;
-									break;
-								}
-							}if (x+5-r<=19 && y+i>=0 && y+i<=19){
-								if (tab.getPeca(x+5-r,y+i, 0)!=null || tab.getPeca(x+5-r,y+i, 1)!=null) {
-									pX=x+5-r;
-									pY=y+i;
-									encontrado=1;
-									break;
-								}
-							}
+		//Para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão.
+		for (int r=0;r<=4;r++) {
+			if(encontrado==1)
+				break;
+			else {
+				for (int i=-6+r;i<=5-r;i++) {
+					if (x+i>=0 && x+i<=19 && y-6+r>=0){
+						if (tab.getPeca(x+i,y-6+r, 0)!=null || tab.getPeca(x+i,y-6+r, 1)!=null){
+							pX=x+i;
+							pY=-y-6+r;
+							encontrado=1;
+							break;
+						}
+					}
+					if (x+i>=0 && x+i<=19 && y+5-r<=19){
+						if (tab.getPeca(x+i,y+5-r, 0)!=null || tab.getPeca(x+i,y+5-r, 1)!=null) {
+							pX=x+i;
+							pY=y+5-r;
+							encontrado=1;
+							break;
 						}
 					}	
+					if (x-6+r>=0 && y+i>=0 && y+i<=19){
+						if (tab.getPeca(x-6+r,y+i, 0)!=null || tab.getPeca(x-6+r,y+i, 1)!=null) {
+							pX=x-6+r;
+							pY=y+i;
+							encontrado=1;
+							break;
+						}
+					}if (x+5-r<=19 && y+i>=0 && y+i<=19){
+						if (tab.getPeca(x+5-r,y+i, 0)!=null || tab.getPeca(x+5-r,y+i, 1)!=null) {
+							pX=x+5-r;
+							pY=y+i;
+							encontrado=1;
+							break;
+						}
+					}
 				}
-				if (pX!=100) { //Quer dizer que ele encontrou um personagem nesse alcance.
-					hor=pY-y;	
-					ver=pX-x;
-					int j;
+			}	
+		}
+		if (pX!=100) { //Quer dizer que ele encontrou um personagem nesse alcance.
+			hor=pY-y;	
+			ver=pX-x;
+			int j;
 					
-					if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
-						if (ver<0) {	//atira para cima
-							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
-								j=alea.nextInt(2);
-								if(tab.getProjetil(x-1, y-j,0)==null) {
-									tab.putProjetil(x-1, y-j, 0, new BolaDeFogo(x-1, y-j, 0,"ci", "boladefogo-ci.png"));
-									tab.getProjetil(x-1, y-j,0).move(tab);
-								}
-							}else {
-								if (hor<0) {
-									if(tab.getProjetil(x-1,y-1,0)==null) {
-										tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
-										tab.getProjetil(x-1,y-1,0).move(tab);
-									}
-								}if (hor>0) {
-									if(tab.getProjetil(x,y,0)==null) {
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}
+			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
+				if (ver<0) {	//atira para cima
+					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+						j=alea.nextInt(2);
+						if(tab.getProjetil(x-1, y-j,0)==null) {
+							tab.putProjetil(x-1, y-j, 0, new BolaDeFogo(x-1, y-j, 0,"ci", "boladefogo-ci.png"));
+							tab.getProjetil(x-1, y-j,0).move(tab);
+						}
+					}else {
+						if (hor<0) {
+							if(tab.getProjetil(x-1,y-1,0)==null) {
+								tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
+								tab.getProjetil(x-1,y-1,0).move(tab);
 							}
-						}if (ver>0) {	//atira para baixo
-							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
-								j=alea.nextInt(2);
-								if(tab.getProjetil(x,y-j,0)==null) { 
-									tab.putProjetil(x, y-j, 0, new BolaDeFogo(x, y-j, 0,"bx", "boladefogo-bx.png"));
-									tab.getProjetil(x,y-j,0).move(tab);
-								}
-							}else {
-								if (hor<0) {
-									if(tab.getProjetil(x,y,0)==null) { 
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes","boladefogo-bxes.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}if (hor>0) {
-									if(tab.getProjetil(x,y,0)==null) {
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxdi","boladefogo-bxdi.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}
+						}if (hor>0) {
+							if(tab.getProjetil(x,y,0)==null) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
+								tab.getProjetil(x,y,0).move(tab);
 							}
 						}
 					}
-					
-					else {		//atira na horizontal
-						if (hor<0) {	//atira para esquerda
-							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
-								j=alea.nextInt(2);
-								if(tab.getProjetil(x-j, y-1, 0)==null) {
-									tab.putProjetil(x-j, y-1, 0, new BolaDeFogo(x-j, y-1, 0,"es", "boladefogo-es.png"));
-									tab.getProjetil(x-j, y-1, 0).move(tab);
-								}
-							}else {
-								if (ver<0) {
-									if(tab.getProjetil(x-1, y-1, 0)==null) {
-											tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies", "boladefogo-cies.png"));
-											tab.getProjetil(x-1, y-1, 0).move(tab);
-									}
-								}if (ver>0) {
-									if(tab.getProjetil(x,y,0)==null) {
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes", "boladefogo-bxes.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}
+				}if (ver>0) {	//atira para baixo
+					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+						j=alea.nextInt(2);
+						if(tab.getProjetil(x,y-j,0)==null) { 
+							tab.putProjetil(x, y-j, 0, new BolaDeFogo(x, y-j, 0,"bx", "boladefogo-bx.png"));
+							tab.getProjetil(x,y-j,0).move(tab);
+						}
+					}else {
+						if (hor<0) {
+							if(tab.getProjetil(x,y,0)==null) { 
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes","boladefogo-bxes.png"));
+								tab.getProjetil(x,y,0).move(tab);
 							}
-						}if (hor>0) {	//atira para direita
-							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
-								j=alea.nextInt(2);
-								if(tab.getProjetil(x-j,y,0)==null) {
-									tab.putProjetil(x-j, y, 0, new BolaDeFogo(x-j, y, 0,"di", "boladefogo-di.png"));
-									tab.getProjetil(x-j,y,0).move(tab);
-								}
-							}else {
-								if (ver<0) {
-									if(tab.getProjetil(x,y,0)==null) {
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}if (ver>0) {
-									if(tab.getProjetil(x,y,0)==null) {
-										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
-										tab.getProjetil(x,y,0).move(tab);
-									}
-								}
+						}if (hor>0) {
+							if(tab.getProjetil(x,y,0)==null) {
+								tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxdi","boladefogo-bxdi.png"));
+								tab.getProjetil(x,y,0).move(tab);
 							}
 						}
 					}
 				}
+			}
+			
+			else {		//atira na horizontal
+				... //O raciocinio é o mesmo que o disparo na vertical
+			}
+		}
+		...
+	}
+}
 ~~~
+- Destaque para o metodo de perder vida do personagem:
 ~~~java
-//Pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. No caso da princesa, ela pode levar dano de qualquer projétil. 
+public abstract class Personagem extends PecaIcon implements IPersonagem {
+	//Pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. No caso da princesa, ela pode levar dano de qualquer projétil. 
 	@Override
-	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
-		if ( (this instanceof Dragao || this instanceof Princesa) && projetil instanceof BolaDeFogo==false) {
+	public void perdeVida(IProjetil projetil) {
+		if ( (this instanceof Dragao || this instanceof Princesa) && !(projetil instanceof BolaDeFogo)) {
 			vida -= projetil.getDano();
-		}else if (this instanceof Dragao==false && projetil instanceof BolaDeFogo)
+		}else if (!(this instanceof Dragao) && projetil instanceof BolaDeFogo)
 			vida -= projetil.getDano();
 	}
+}
 ~~~
+- Destaque para o método que resolve os conflitos de projétil:
 ~~~java
-//Resolve o conflito da posição atual do vetor de conflitos de projéteis.
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
+	...
+	//Resolve o conflito da posição atual do vetor de conflitos de projéteis.
 	public void resolveConflito (IProjetil projetil) {
 		//Se a posição para o qual o projetil quer se mover ainda estiver ocupada:
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
 			//Se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro.
 			if  (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
-				projetil.setEmConflito(0);	//Seu conflito foi resolvido.	
-				projetil.setJaAgiu(1);	
+				projetil.setEmConflito(false);	//Seu conflito foi resolvido.	
+				projetil.setJaAgiu(true);	
 				
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null); //Retira o outro projétil da posição para onde ele quer ir.
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);	
+				setProjetil(projetil.getx(), projetil.gety(), 0, null);	
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				projetil.setX(projetil.getxConflito());
 				projetil.setY(projetil.getyConflito());
@@ -485,8 +450,8 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				setProjetil(projetil.getX(), projetil.getY(), 0, null);
 		//Caso a posição para o qual ele quer se mover já esteja vazia, ele se move.
 		}else {
-			projetil.setEmConflito(0);
-			projetil.setJaAgiu(1);		
+			projetil.setEmConflito(false);
+			projetil.setJaAgiu(true);		
 			
 			setProjetil(projetil.getX(), projetil.getY(), 0, null);
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
@@ -494,6 +459,8 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			projetil.setY(projetil.getyConflito());
 			}
 	}
+	...
+}
 ~~~
 ~~~java
 //A cada passo do metrônomo que gera o evento, se nem todos os soldados tiverem morrido, nem o dragão, nem a princesa, então o jogo continua.
