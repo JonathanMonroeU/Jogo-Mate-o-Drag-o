@@ -250,8 +250,64 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	}
 }
 ~~~
-- Destaque para o método que movimenta um projétil
-- Destaque para o método que dispara um projétil de um soldado
+- Destaque para o método que movimenta um projétil:
+~~~java
+public class Projetil extends PecaIcon implements IProjetil{
+	...
+	/*Dependendo do atributo de direção do projétil, o método move ele em uma das 8 direções possíveis, 
+	 * se for sua vez se mover, indicada quando freqM=0. */
+	@Override
+	public void move(ITabuleiro tab) {
+		if(freqM==0) {	
+			int newX=x;
+			int newY=y;
+		
+			switch(direcao) {
+			case "ci":
+				newX-=velocidade;
+				break;
+			case "bx":
+				newX+=velocidade;
+				break;
+			... //Analisa qual direção vai o projétil	
+			}	
+			
+			//Se a nova posição for fora do tabuleiro:
+			if (newX<0 || newX>19 || newY<0 || newY>19) {
+				tab.setProjetil(x, y, z, null);	
+			//Se a nova posiçao estiver vazia o projetil se move para ela.
+			}else if (tab.getProjetil(newX, newY, z) == null) {	
+				jaAgiu=true; 
+				tab.setProjetil(x, y, z, null);
+				tab.setProjetil(newX, newY, z, this);
+				x = newX;
+				y = newY;
+			
+			}else{
+				/*Se a nova posiçao não estiver vazia e contiver um projetil que não seja uma pedra, e esse projetil não tiver 
+				 * efetuado sua ação ainda nesse tempo, o projetil não se move e é colocado em um vetor auxiliar para tratar 
+				 * os confitos entre projeteis, após o tabuleiro inteiro ser percorrido.*/
+				if (z==0 && !(tab.getProjetil(newX, newY, 0).getEmConflito())) {
+					this.xConflito=newX;
+					this.yConflito=newY;
+					((PainelTabuleiro) tab).removeElemento(x,y,(PecaIcon)this);
+					tab.adicionaConflito(this);
+				//Se não estiver vazia, mas os outros requisitos acima não forem preenchidos, o projetil pode ir para a nova posição normalmente.
+				}else {
+					jaAgiu=true;	
+					tab.setProjetil(x, y, z, null);
+					tab.setProjetil(newX, newY, z, this);
+					x = newX;
+					y = newY;
+				}
+			}
+		}
+		...
+	}
+	...
+}
+~~~
+- Destaque para o método que dispara um projétil de um soldado:
 ~~~java
 public class Arqueiro extends Personagem{
 	...
@@ -453,7 +509,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			projetil.setEmConflito(false);
 			projetil.setJaAgiu(true);		
 			
-			setProjetil(projetil.getX(), projetil.getY(), 0, null);
+			setProjetil(projetil.getx(), projetil.gety(), 0, null);
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 			projetil.setX(projetil.getxConflito());
 			projetil.setY(projetil.getyConflito());
@@ -462,21 +518,11 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	...
 }
 ~~~
+- Destaque do método que faz a análide de fim de jogo:
 ~~~java
-//A cada passo do metrônomo que gera o evento, se nem todos os soldados tiverem morrido, nem o dragão, nem a princesa, então o jogo continua.
-	public void actionPerformed(ActionEvent e) {
-		if (numeroSoldados != 0 && vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida()>0 && vPersonagem[princesaPosition[0]][princesaPosition[1]][1].getVida()>0) {
-			modificaTabuleiro();
-		}
-		else {
-			finish();
-			metro.stop();
-			again.setVisible(true);
-		}
-	}
-
-...
-//Se alguma das condições para o jogo terminar for cumprida, esse método é chamado para exibir a mensagem final e a vida do dragão ou princesa como 0 se tiverem morrido.
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
+	...
+	//Se alguma das condições para o jogo terminar for cumprida, esse método é chamado para exibir a mensagem final e a vida do dragão ou princesa como 0 se tiverem morrido.
 	public void finish() {
 		if (vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida() <= 0) {
 			finish.setForeground(Color.GREEN);
@@ -509,7 +555,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				princesaPosition[0]=-1;
 			}
 		}
+		again.setVisible(true);
 	}
+	...
+}
 ~~~
 # Destaques de Pattern
 
@@ -547,7 +596,6 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		else {
 			finish();
 			metro.stop();
-			...
 		}
 	}
 }
@@ -569,8 +617,21 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		super();
 		...
 		keys=new MeuKeyListener(this);  //Implementa KeyListener, e contém métodos para receber as teclas do teclado e ativar a movientação da princesa.
+		...
+    	}
+	...
+	
+	public void play() throws SemPersonagem{
+		if (numeroSoldados == 0)
+			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
+		metro.start();
+		
+		this.addKeyListener(keys); 
+		this.setFocusable(true);
+        	this.requestFocusInWindow();
+	}
     ...
-  }
+}
 //--------------------------------------------------------------------------
   public class MeuKeyListener implements KeyListener {
 	ITabuleiro tab;
@@ -578,32 +639,26 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	MeuKeyListener(ITabuleiro tab){
 		this.tab=tab;
 	}
+	
 	@Override
 	public void keyPressed(KeyEvent event) {
 		if (tab.getPrincesaPosition()[0]!=-1) {  //-1 indica que a princesa está morta.
-            if (event.getKeyCode()== KeyEvent.VK_UP) {
-            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("up");
-        	}
-            if (event.getKeyCode()== KeyEvent.VK_LEFT) {
-            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("left");
-            }
-            if (event.getKeyCode()== KeyEvent.VK_RIGHT) {
-            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("right");
-            }
-            if (event.getKeyCode()== KeyEvent.VK_DOWN) {
-            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("down");
-            }
+            		if (event.getKeyCode()== KeyEvent.VK_UP) {
+            			tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("up");
+        		}
+           		if (event.getKeyCode()== KeyEvent.VK_LEFT) {
+            			tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("left");
+            		}
+            		if (event.getKeyCode()== KeyEvent.VK_RIGHT) {
+            			tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("right");
+            		}
+            		if (event.getKeyCode()== KeyEvent.VK_DOWN) {
+            			tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("down");
+            		}
 		}
-   
-//---------------------------------------------------------------
-	public void play() throws SemPersonagem{
-		if (numeroSoldados == 0)
-			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
-		metro.start();
-		this.addKeyListener(keys); 
-		this.setFocusable(true);
-        this.requestFocusInWindow();
 	}
+	...
+}
 ~~~
 
 > Após iniciar o jogo, o jogador deve utilizar os direcionais do teclado para controlar a princesa pelo campo, para isso, a melhor maneira encontrada foi usar o Observer. O tabuleiro instancia o objeto "keys" da classe MeuKeyListener, que implementa a interface KeyListener. Ao utilizar o método addKeyListener, quando um dos direcionais é pressionado, meu keyListener ativa o método de movimentação da princesa, passando a direção como atributo.
