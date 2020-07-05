@@ -85,13 +85,477 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 > <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
 
 ~~~java
-// Recorte do seu código
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
-}
+/*Recebe o tipo de personagem que deve ser inserido e as coordenadas da posição, 
+	 * dependendo da posição pode causar um dos erros.*/
+	@Override
+	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida{
+		//Se a posição for fora do campo:
+		if (x<0 || x>19 || y<0 || y>19)
+			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
+		//Se a posição for dentro de um certo raio do dragão, de 5 casas para cada direção:
+		if ((x>=0 && x<=10) && (y>=4 && y<=15))
+			throw new AdicaoLugarProibido("Você nao pode adicionar nesse lugar!");
+		//Se a posição for a posição inicial da princesa:
+		if (x==18 && y==10)
+			throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
+		/*Se passar pelos outros erros, o vetor que guarda os personagens já inseridos e 
+		 * suas posições é varrido de modo a ver se já tem um personagem nessa posição.*/
+		for(int i=1; i<pecaPosition.length; i+=3) {
+			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
+				throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
+			}
+		}
+		
+		/*Dependendo do tipo de personagem solicitado, ele é colocado no vetor que guarda todos os personagens já inseridos.
+		 * E a quantidade de pontos de custo para inserir é reduzida do total disponível.*/
+		switch(comando) {
+			case 1:
+				if (Arqueiro.custo <= pontos) {
+					removePontos(Arqueiro.custo);
+					setX(x);
+					setY(y);
+					setTipo(1);
+					while (pecaPosition[atual] != 0) {
+						atual += 3;
+					}
+				}
+				else
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
+				break;
+			case 2:
+				if (Lanceiro.custo <= pontos) {
+					removePontos(Lanceiro.custo);
+					setX(x);
+					setY(y);
+					setTipo(2);
+					while (pecaPosition[atual] != 0) {
+						atual += 3;
+					}
+				}
+				else
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
+				break;
+			case 3:
+				if (Mago.custo <= pontos) {
+					removePontos(Mago.custo);
+					setX(x);
+					setY(y);
+					setTipo(3);
+					while (pecaPosition[atual] != 0) {
+						atual += 3;
+					}
+				}
+				else
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
+				break;
+			case 4:
+				if (Catapulta.custo <= pontos) {
+					removePontos(Catapulta.custo);
+					setX(x);
+					setY(y);
+					setTipo(4);
+					while (pecaPosition[atual] != 0) {
+						atual += 3;
+					}
+				}
+				else
+					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
+				break;
+			default:
+				//System.out.println("Comando Inválido!");
+				break;
+		}
+	}
 ~~~
+~~~java
+//Encontra a nova posição para o personagem e o move para ela.
+	@Override
+	public void move(ITabuleiro tab) {	
+		
+		int tentativas=0;	//Número de tentativas de se mover começa zerado, se passar de 30 provavelmente é porque está encurralado, então deixa para tentar se mover no próximo passo do jogo.
+		if (freqM == 0) {	//Quando está zero, é a vez do personagem se mover.
+			newX = x;
+			newY = y;
+			
+			while ( (tab.getPeca(newX, newY,0) != null || tab.getPeca(newX, newY, 1) != null) && tentativas<=30) {	//Fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas.
+				tentativas+=1;
+				newX = x;
+				newY = y;
+				
+				//Valor entre -1,0 e 1 a ser adicionado multiplicado pelo passo e/ou subtraido aleatoriamente em x e y.
+				int addX = alea.nextInt(3)-1;	
+				int addY = alea.nextInt(3)-1;
+				
+				//Se não for o dragão, testa se a nova posição é coerente para o soldado:
+				if (this instanceof Dragao==false) { 
+					newX += passo*addX;	
+					newY += passo*addY; 
+					//Se a nova posição estiver fora do campo, reinicia e volta do inicio do while.
+					if(newX<0 || newX>19 || newY<0 || newY>19) {
+						newX = x;
+						newY = y;
+						continue;
+					//Se a nova posição estiver a uma distância maior ou igual a mínima em relação ao dragão, que é até 4 casas, volta para o início do while, que testa se ela está vazia.
+					}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
+					||newY-tab.getDragonPosition()[1]<=-5||newY-tab.getDragonPosition()[1]>=4) {	
+						continue;
+					//Se não estiver a uma distância segura do dragão de mais de 3 casas, reinicia e volta para o início do while.
+					}else {
+						newX = x;
+						newY = y;
+						continue;
+					}
+				}	
+				//Se for o dragão, testa se a nova posição é coerente para o dragão:
+				if (this instanceof Dragao) { 
+					//O dragão só se move em x ou y a cada passo, então é escolhido aleatoriamente um dos dois para ser modificado.
+					int a=alea.nextInt(2);
+					if (a==0) {
+						newX += passo*addX;		
+					}else {		
+						newY += passo*addY;		
+					//Se a nova posição estiver fora do campo, reinicia e volta do início do while.
+					}if(newX<1 || newX>19 || newY<1 || newY>19) {
+						newX = x;
+						newY = y;
+						continue;
+					//Se a nova posição estiver vazia ou for parte do prṕrio dragão, para as 4 posições que o compõe, a nova posição é válida e sai do while imediatamente.
+					}if ( ( (tab.getPeca(newX, newY, 0)==null && (tab.getPeca(newX, newY, 1)==null) )|| tab.getPeca(newX, newY, 0)==this) &&
+						(  (tab.getPeca(newX-1, newY,0)==null && (tab.getPeca(newX-1, newY,1)==null) )|| tab.getPeca(newX-1, newY, 0)==this) &&
+					 ( (tab.getPeca(newX, newY-1, 0)==null &&  (tab.getPeca(newX, newY-1, 1)==null) )|| tab.getPeca(newX, newY-1, 0)==this )&&
+					 ( (tab.getPeca(newX-1, newY-1, 0)==null && (tab.getPeca(newX-1, newY-1, 1)==null) )|| tab.getPeca(newX-1, newY-1, 0)==this) ) {
+						break;
+					//Se não, reinicia e volta do início do while.	
+					}else {
+						newX = x;
+						newY = y;
+						continue;
+						
+					}
+				}
+			}
+			/*Se achar a nova posição tiver sido tentado menos de 30 vezes, ou seja, passado por dentro do while 
+			 * e sido aprovada, a posição atual vira null e o personagem é colocado na nova posição*/
+			if (tentativas<=30) {
+				tab.setPersonagem(x, y, 0, null);
+					
+				//Se for o dragão, as outras 3 posições que o compõem tem que ser ajustadas também.
+				if (this instanceof Dragao) {
+					tab.setDragonPosition(newX,newY);
+					tab.setPersonagem(x-1, y, 0, null);	
+					tab.setPersonagem(x, y-1, 0, null);
+					tab.setPersonagem(x-1, y-1,0, null);
+					
+					tab.setPersonagem(newX-1, newY, 0, this);
+					tab.setPersonagem(newX, newY-1, 0, this);	
+					tab.setPersonagem(newX-1, newY-1, 0, this);
+				}
+				tab.setPersonagem(newX, newY, 0, this);
+				this.jaAgiu=1;
+				
+				//Os atributos x e y do objeto são atualizados.
+				x = newX;
+				y = newY;
+			}
+		}//A frequência de movimento é atualizada se mover o personagem tiver sido um sucesso, para ele se mover novamente quando seu valor voltar a 0.
+		if (tentativas<=30) 
+			freqM = (freqM + 1)%movimento;
+	}
+~~~
+~~~java
+//Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
+	/*Como funciona o disparo direcionado:  
+	 * É calculada a distância horizontal(hor) e vertical(ver) subtraindo a posição do alvo da posição do personagem que vai disparar, pode dar positivo ou negativo.
+	 * Se o módulo da distância horizontal for menor (ou igual, para não ficarem casos sem ser abrangidos)que o da vertical, ele tem que atirar verticalmente, senão, horizontalmente.
+	 * Se for verticalmente: Se ver for negativo, atira para cima, se for positivo, atira para baixo, depois o método testa se tem que atirar diretamente para cima/baixo ou em alguma das diagonais, 
+	 * comparando ver-hor, que é a distância entre o ataque e o alvo quando está na linha do alvo, com hor que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.
+	 * Se for horizontalmente: Se hor for negativo, atira para esquerda, se for positivo, atira para direita, depois o método testa se tem que atirar diretamente para esquerda/direita ou em alguma das diagonais, 
+	 * comparando hor-ver, que é a distância entre o ataque e o alvo quando está na coluna do alvo, com ver que é a distância que o ataque ficará do alvo atirando diretamente para cima/baixo.  */
+	@Override
+	public void disparaProjetil(ITabuleiro tab) {
+		//Se for a vez do personagem instanciar um projétil:
+		if (freqA==0) {
+			int hor,ver; //distância horizontal e vertical ao dragao
+			
+			ver=(tab.getDragonPosition()[0])-x;
+			hor=(tab.getDragonPosition()[1])-y;
+			
+			if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
+				if (ver<0) {	//atira para cima
+					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor)))  //ver-hor é a distância entre o ataque e o dragão quando estiver na linha do dragão
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"ci","flecha-ci.png"));
+					else {
+						if (hor<0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies","flecha-cies.png"));
+						if (hor>0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi","flecha-cidi.png"));
+					}
+				}if (ver>0) {	//atira para baixo
+					if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) 
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bx","flecha-bx.png"));
+					else {
+						if (hor<0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes","flecha-bxes.png"));
+						if (hor>0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi","flecha-bxdi.png"));
+					}
+				}
+			}
+			
+			else {		//atira na horizontal
+				if (hor<0) {	//atira para esquerda
+					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"es","flecha-es.png"));
+					else {
+						if (ver<0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cies","flecha-cies.png"));
+						if (ver>0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxes","flecha-bxes.png"));
+					}
+				}if (hor>0) {	//atira para direita
+					if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) 
+						tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"di","flecha-di.png"));
+					else {
+						if (ver<0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"cidi","flecha-cidi.png"));
+						if (ver>0)
+							tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"bxdi","flecha-bxdi.png"));
+					}
+				}
+			}tab.getProjetil(x,y,0).move(tab);
+		}freqA = (freqA + 1)%frequencia;//Atualiza freqA, quando freqA fica igual a frequência de disparos, ela volta a ser 0, e então no próximo tempo é a vez do personagem disparar novamente.
+	}
+~~~
+~~~java
+//DISPARO DIRECIONADO DO DRAGÃO:
+				
+				int hor,ver,encontrado=0, //Distância horizontal e vertical do dragão ao personagem.
+					pX=100,pY=100; //posição
+				
+				//Para raios de distancia -6 a 5, nos eixos x e y, em relação ao dragão.
+				for (int r=0;r<=4;r++) {
+					if(encontrado==1)
+						break;
+					else {
+						for (int i=-6+r;i<=5-r;i++) {
+							if (x+i>=0 && x+i<=19 && y-6+r>=0){
+								if (tab.getPeca(x+i,y-6+r, 0)!=null || tab.getPeca(x+i,y-6+r, 1)!=null){
+									pX=x+i;
+									pY=-y-6+r;
+									encontrado=1;
+									break;
+								}
+							}
+							if (x+i>=0 && x+i<=19 && y+5-r<=19){
+								if (tab.getPeca(x+i,y+5-r, 0)!=null || tab.getPeca(x+i,y+5-r, 1)!=null) {
+									pX=x+i;
+									pY=y+5-r;
+									encontrado=1;
+									break;
+								}
+							}	
+							if (x-6+r>=0 && y+i>=0 && y+i<=19){
+								if (tab.getPeca(x-6+r,y+i, 0)!=null || tab.getPeca(x-6+r,y+i, 1)!=null) {
+									pX=x-6+r;
+									pY=y+i;
+									encontrado=1;
+									break;
+								}
+							}if (x+5-r<=19 && y+i>=0 && y+i<=19){
+								if (tab.getPeca(x+5-r,y+i, 0)!=null || tab.getPeca(x+5-r,y+i, 1)!=null) {
+									pX=x+5-r;
+									pY=y+i;
+									encontrado=1;
+									break;
+								}
+							}
+						}
+					}	
+				}
+				if (pX!=100) { //Quer dizer que ele encontrou um personagem nesse alcance.
+					hor=pY-y;	
+					ver=pX-x;
+					int j;
+					
+					if (Math.abs(hor)<=Math.abs(ver)){		//atira na vertical
+						if (ver<0) {	//atira para cima
+							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-1, y-j,0)==null) {
+									tab.putProjetil(x-1, y-j, 0, new BolaDeFogo(x-1, y-j, 0,"ci", "boladefogo-ci.png"));
+									tab.getProjetil(x-1, y-j,0).move(tab);
+								}
+							}else {
+								if (hor<0) {
+									if(tab.getProjetil(x-1,y-1,0)==null) {
+										tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies","boladefogo-cies.png"));
+										tab.getProjetil(x-1,y-1,0).move(tab);
+									}
+								}if (hor>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}if (ver>0) {	//atira para baixo
+							if (Math.abs(hor)<=(Math.abs(ver)-Math.abs(hor))) {
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x,y-j,0)==null) { 
+									tab.putProjetil(x, y-j, 0, new BolaDeFogo(x, y-j, 0,"bx", "boladefogo-bx.png"));
+									tab.getProjetil(x,y-j,0).move(tab);
+								}
+							}else {
+								if (hor<0) {
+									if(tab.getProjetil(x,y,0)==null) { 
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes","boladefogo-bxes.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}if (hor>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxdi","boladefogo-bxdi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}
+					}
+					
+					else {		//atira na horizontal
+						if (hor<0) {	//atira para esquerda
+							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) {
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-j, y-1, 0)==null) {
+									tab.putProjetil(x-j, y-1, 0, new BolaDeFogo(x-j, y-1, 0,"es", "boladefogo-es.png"));
+									tab.getProjetil(x-j, y-1, 0).move(tab);
+								}
+							}else {
+								if (ver<0) {
+									if(tab.getProjetil(x-1, y-1, 0)==null) {
+											tab.putProjetil(x-1, y-1, 0, new BolaDeFogo(x-1, y-1, 0, "cies", "boladefogo-cies.png"));
+											tab.getProjetil(x-1, y-1, 0).move(tab);
+									}
+								}if (ver>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0, "bxes", "boladefogo-bxes.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}if (hor>0) {	//atira para direita
+							if (Math.abs(ver)<=(Math.abs(hor)-Math.abs(ver))) { 
+								j=alea.nextInt(2);
+								if(tab.getProjetil(x-j,y,0)==null) {
+									tab.putProjetil(x-j, y, 0, new BolaDeFogo(x-j, y, 0,"di", "boladefogo-di.png"));
+									tab.getProjetil(x-j,y,0).move(tab);
+								}
+							}else {
+								if (ver<0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"cidi", "boladefogo-cidi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}if (ver>0) {
+									if(tab.getProjetil(x,y,0)==null) {
+										tab.putProjetil(x, y, 0, new BolaDeFogo(x, y, 0,"bxdi", "boladefogo-bxdi.png"));
+										tab.getProjetil(x,y,0).move(tab);
+									}
+								}
+							}
+						}
+					}
+				}
+~~~
+~~~java
+//Pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. No caso da princesa, ela pode levar dano de qualquer projétil. 
+	@Override
+	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
+		if ( (this instanceof Dragao || this instanceof Princesa) && projetil instanceof BolaDeFogo==false) {
+			vida -= projetil.getDano();
+		}else if (this instanceof Dragao==false && projetil instanceof BolaDeFogo)
+			vida -= projetil.getDano();
+	}
+~~~
+~~~java
+//Resolve o conflito da posição atual do vetor de conflitos de projéteis.
+	public void resolveConflito (IProjetil projetil) {
+		//Se a posição para o qual o projetil quer se mover ainda estiver ocupada:
+		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
+			//Se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro.
+			if  (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
+				projetil.setEmConflito(0);	//Seu conflito foi resolvido.	
+				projetil.setJaAgiu(1);	
+				
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null); //Retira o outro projétil da posição para onde ele quer ir.
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);	
+				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+				projetil.setX(projetil.getxConflito());
+				projetil.setY(projetil.getyConflito());
+			}
+			//Caso o dano do projétil seja menor ou igual do que o que está na posição para o qual ele se moveria, ele some.
+			else
+				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+		//Caso a posição para o qual ele quer se mover já esteja vazia, ele se move.
+		}else {
+			projetil.setEmConflito(0);
+			projetil.setJaAgiu(1);		
+			
+			setProjetil(projetil.getX(), projetil.getY(), 0, null);
+			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
+			projetil.setX(projetil.getxConflito());
+			projetil.setY(projetil.getyConflito());
+			}
+	}
+~~~
+~~~java
+//A cada passo do metrônomo que gera o evento, se nem todos os soldados tiverem morrido, nem o dragão, nem a princesa, então o jogo continua.
+	public void actionPerformed(ActionEvent e) {
+		if (numeroSoldados != 0 && vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida()>0 && vPersonagem[princesaPosition[0]][princesaPosition[1]][1].getVida()>0) {
+			modificaTabuleiro();
+		}
+		else {
+			finish();
+			metro.stop();
+			again.setVisible(true);
+		}
+	}
 
+...
+//Se alguma das condições para o jogo terminar for cumprida, esse método é chamado para exibir a mensagem final e a vida do dragão ou princesa como 0 se tiverem morrido.
+	public void finish() {
+		if (vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida() <= 0) {
+			finish.setForeground(Color.GREEN);
+			finish.setText("<html>"+"<center>"
+				+"<b>VOCÊ GANHOU!</b>"+"<br/>"
+				+"	Você conseguiu matar o dragão,"+"<br/>"
+				+ "salvando a princesa "+"<br/>"
+				+"e todo o reino!!!"+"<center>"+"</html>");
+			vidaDragao.setText("0");
+			princesaPosition[0]=-1;
+		}
+		else {
+			if (vPersonagem[princesaPosition[0]][princesaPosition[1]][1].getVida()<=0) {
+				removePeca(princesaPosition[0], princesaPosition[1], 1);
+				vidaPrincesa.setText("0");
+				finish.setForeground(Color.lightGray);
+				finish.setText("<html>"+"<center>"
+						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
+						+"A princesa morreu e levou"+"<br/>"
+						+"consigo a alegria do reino."+"<br/>"
+						+"O rei infartou ao saber."+"<center>"+"</html>");
+				princesaPosition[0]=-1;	
+			}else {
+				finish.setForeground(Color.lightGray);
+				finish.setText("<html>"+"<center>"
+						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
+						+"Todos os soldados morreram e o"+"<br/>"
+						+ "dragão pôde avançar pelo reino,"+"<br/>"
+						+"causando caos e morte."+"<center>"+"</html>");
+				princesaPosition[0]=-1;
+			}
+		}
+	}
+~~~
 # Destaques de Pattern
 `<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
 
@@ -101,13 +565,94 @@ public void algoInteressante(…) {
 ## Código do Pattern
 ~~~java
 // Recorte do código do pattern seguindo as mesmas diretrizes de outros destaques
-public void algoInteressante(…) {
-   …
-   trechoInteressante = 100;
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
+	...							
+	private Metronomo metro = new Metronomo(20);	//Metrônomo definindo o tempo para ativação de cada modificação do campo.
+	...
+	public Tabuleiro() {
+		super();
+		...
+		metro.addActionListener(this);
+	}
+	
+	/*O método é ativado quando é pressionado o botão "Iniciar Jogo", que inicia o metrônomo que cadencia os passos do jogo
+	 * e também ativa o tabuleiro como KeyListener, para receber os cliques do direcional que ativam o método de movimento da princesa.*/
+	@Override
+	public void play() throws SemPersonagem{
+		if (numeroSoldados == 0)
+			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
+		metro.start();
+  ...
+  }
+
+  //A cada passo do metrônomo que gera o evento, se nem todos os soldados tiverem morrido, nem o dragão, nem a princesa, então o jogo continua.
+	public void actionPerformed(ActionEvent e) {
+		if (numeroSoldados != 0 && vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida()>0 && vPersonagem[princesaPosition[0]][princesaPosition[1]][1].getVida()>0) {
+			modificaTabuleiro();
+		}
+		else {
+			finish();
+			metro.stop();
+			...
+		}
+	}
 }
 ~~~
 
-> <Explicação de como o pattern foi adotado e quais suas vantagens, referenciando o diagrama.>
+> O pattern Observer foi utilizado aqui da seguinte maneira: Como o jogo se dá em grande parte de forma autônoma, foi escolhido o metrônomo para ditar o intervalo entre cada modificação da posição dos personagens e projeteis no tabuleiro em que o jogo ocorre. O tabuleiro implementa a interface ActionListener e intancia uma variável da classe metrônomo. Em seu construtor, ele é adiocionado como Action Listener desse metrônomo. Ao se clicar o botão de iniciar o jogo, o método play do tabuleiro é ativado e inicia o metrônomo, fazendo os personagens começarem a se movimentar, e, a cada "clock", enquanto as condições de fim de jogo não forem cumpridas, o tabuleiro continua sendo modificado. Quando o jogo tiver que terminar, o metrônomo é parado.
+
+
+## Diagrama do Pattern
+`<Diagrama do pattern dentro do contexto da aplicação.>`
+
+## Código do Pattern
+~~~java
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
+	...
+	private MeuKeyListener keys;
+	...
+	public Tabuleiro() {
+		super();
+		...
+		keys=new MeuKeyListener(this);  //Implementa KeyListener, e contém métodos para receber as teclas do teclado e ativar a movientação da princesa.
+    ...
+  }
+//--------------------------------------------------------------------------
+  public class MeuKeyListener implements KeyListener {
+	ITabuleiro tab;
+	
+	MeuKeyListener(ITabuleiro tab){
+		this.tab=tab;
+	}
+	@Override
+	public void keyPressed(KeyEvent event) {
+		if (tab.getPrincesaPosition()[0]!=-1) {  //-1 indica que a princesa está morta.
+            if (event.getKeyCode()== KeyEvent.VK_UP) {
+            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("up");
+        	}
+            if (event.getKeyCode()== KeyEvent.VK_LEFT) {
+            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("left");
+            }
+            if (event.getKeyCode()== KeyEvent.VK_RIGHT) {
+            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("right");
+            }
+            if (event.getKeyCode()== KeyEvent.VK_DOWN) {
+            	tab.getPeca(tab.getPrincesaPosition()[0],tab.getPrincesaPosition()[1],1).movePrincesa("down");
+            }
+		}
+   
+//---------------------------------------------------------------
+	public void play() throws SemPersonagem{
+		if (numeroSoldados == 0)
+			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
+		metro.start();
+		this.addKeyListener(keys); 
+		this.setFocusable(true);
+        this.requestFocusInWindow();
+	}
+~~~
+
+> Após iniciar o jogo, o jogador deve utilizar os direcionais do teclado para controlar a princesa pelo campo, para isso, a melhor maneira encontrada foi usar o Observer. O tabuleiro instancia o objeto "keys" da classe MeuKeyListener, que implementa a interface KeyListener. Ao utilizar o método addKeyListener, quando um dos direcionais é pressionado, meu keyListener ativa o método de movimentação da princesa, passando a direção como atributo.
 
 # Conclusões e Trabalhos Futuros
 
@@ -116,10 +661,6 @@ Futuramente, pretendemos evoluir a ideia do jogo. Algumas ideias propostas foram
 > <Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.>
 
 # Documentação dos Componentes
-
-O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes:
-
-[![Projeto baseado em Componentes](http://img.youtube.com/vi/1LcSghlin6o/0.jpg)](https://youtu.be/1LcSghlin6o)
 
 # Diagramas
 
@@ -131,36 +672,18 @@ O vídeo a seguir apresenta um detalhamento de um projeto baseado em componentes
 
 ## Diagrama Geral de Componentes
 
-### Exemplo 1
-
-Este é o diagrama compondo componentes para análise:
-
-![Diagrama Analise](diagrama-componentes-analise.png)
-
-### Exemplo 2
-
-Este é um diagrama inicial do projeto de jogos:
-
-![Diagrama Jogos](diagrama-componentes-jogos.png)
-
-### Exemplo 3
-
-Este é outro diagrama de um projeto de vendas:
-
-![Diagrama Vendas](diagrama-componentes-vendas.png)
-
-Para cada componente será apresentado um documento conforme o modelo a seguir:
+![Diagrama geral de componentes](diagrama-componentes-geral.png)
 
 ## Componente `DataProvider`
 
 Componente responsável pela passagem dos dados inseridos pelo usuário para o Tabuleiro e por gerenciar a adição e a remoção de personagens do jogo em relação a quantidade de pontos; Ele provê a interface IDataProvider para o Tabuleiro poder receber essas informações.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-dataprovider.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
+Classe | `src.dataprovider` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IGetData, IPontos, IDataProvider`
 
@@ -168,12 +691,13 @@ Interfaces | `IGetData, IPontos, IDataProvider`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-dataprovider.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
+public interface IDataProvider extends IGetData, IPontos {
+
 }
 ~~~
 
@@ -184,61 +708,67 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 `Gerencia a inserção e remoção de personagens e suas respectivas posições no vetor que contém esses dados.`
 
 ~~~
-<Interface em Java.>
+public interface IGetData {
+	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida;
+	public void removePersonagem(int x, int y) throws RemocaoInvalida;
+	public void setX(int x);
+	public void setY(int y);
+	public void setTipo(int tipo);
+	public int[] getData();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`inserePersonagem` | `Coloca os dados para inserção do personagem no vetor pecaPositionAtual e atualiza o histórico de adições no vetor pecaPosition. Recebe como parâmetro o inteiro “comando”, o qual representa o personagem a ser inserido, e os inteiros “x” e “y”, que são as posições de inserção.`
+`removePersonagem` | `Coloca os dados para remoção do personagem no vetor pecaPositionAtual e atualiza o histórico de adições no vetor pecaPosition. Recebe como parâmetro os inteiros “x” e “y”, que são as posições de remoção.`
+`setX` | `Recebe e define a posição no eixo x do tabuleiro em que se posicionará a peça, atualizando os vetores pecaPosition e pecaPositionAtual.`
+`setY` | `Recebe e define a posição no eixo y do tabuleiro em que se posicionará a peça, atualizando os vetores pecaPosition e pecaPositionAtual.`
+`setTipo` | `Recebe e define o tipo do personagem que será inserido no tabuleiro, atualizando os vetores pecaPosition e pecaPositionAtual.`
+`getData` | `Método para se acessar o vetor privado pecaPositionAtual.`
 
 ### Interface `IPontos`
 
 `Aumenta e diminui a pontuação disponível para o jogador.`
 
 ~~~
-<Interface em Java.>
+public interface IPontos {
+	public void removePontos(int valor);
+	public void inserePontos(int valor);
+	public int getPontos();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`removePontos` | `Diminui o número de pontos de acordo com o inteiro “valor” inserido.`
+`inserePontos` | `Aumenta o número de pontos de acordo com o inteiro “valor” inserido.`
+`getPontos` | `Retorna a quantidade de pontos disponíveis.`
 
-### Interface `IDataProvider`
-
-`Reune os métodos de IGetData e IPontos.`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
 
 ## Componente `Tabuleiro`
 
 Componente representante do tabuleiro do jogo, o qual armazena e relaciona todos os personagens e projéteis em campo; Provê a interface ITabuleiro para os personagens, os projéteis, o Menu e a JanelaJogo, para que eles possam ter acesso aos dados guardados nos vetores de peças e para estes poderem inserirem novas peças no Tabuleiro também.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-tabuleiro.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
+Classe | `src.tabuleiro` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `ITabuleiro, ActionListener`
 
 ### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-tabuleiro.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
+
 ~~~
 
 ## Detalhamento das Interfaces
@@ -248,37 +778,84 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 `Realiza as modificações que ocorrem na disposição das peças a cada tempo do jogo.`
 
 ~~~
-<Interface em Java.>
+public interface ITabuleiro {
+	public void play() throws SemPersonagem;
+	public void finish();
+	public void modificaTabuleiro();
+	public IMovimento getPeca(int x, int y, int z);
+	
+	public void setPersonagem(int x, int y, int z, IPersonagem peca);
+	public void putPersonagem(int x, int y, int tipo);
+	
+	public void putProjetil(int x, int y, int z, IProjetil Projetil);
+	public void removePeca (int x, int y, int z);
+	public void receiveData(IDataProvider dataProvider);
+	public void setProjetil(int x, int y, int z, IProjetil Projetil);
+	public IProjetil getProjetil(int x, int y, int z);
+	public void adicionaConflito(IProjetil projetil);
+	public void resolveConflito(IProjetil projetil);
+	
+	public int[] getDragonPosition();
+	public void setDragonPosition(int x, int y);
+	public int[] getPrincesaPosition();
+	public void setPrincesaPosition(int x, int y);
+	
+	public PainelTabuleiro getPanel();
+	public JLabel getVidaDragaoLabel();
+	public JLabel getVidaPrincesaLabel();
+	public JLabel getFinishLabel();
+	public JButton getAgainButton();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`play` | `Inicia o jogo, dando start( ) no Metronomo e adicionando um KeyListener ao Tabuleiro para realizar a movimentação do componente Princesa.`
+`finish` | `Finaliza o jogo, analisando se o jogador venceu ou perdeu e informando na tela um texto explicativo.`
+`modificaTabuleiro` | `Passa duas vezes por todas as posições das matrizes de peças “vPersonagem” e “vProjetil” e pelo vetor de conflitos “vConflitos” e faz elas se movimentarem e disparar ataques`
+`getPeca` | `Retorna um personagem de uma posição da matriz vPersonagem, dada pelos parâmetros inteiros “x”, “y” e “z”`
+`setPersonagem` | `Adiciona um personagem já existente, representado pelo parâmetro “peca”, ou “null” em uma posição da matriz vPersonagem, dada pelos parâmetros inteiros “x”, “y” e “z”.`
+`putPersonagem` | `Insere um novo personagem ao jogo indicado por “tipo” em uma posição da matriz vPersonagem, dada pelos parâmetros inteiros “x”, “y”.`
+`putProjetil` | `Insere um novo projétil ao campo representado pelo parâmetro “projetil” em uma posição da matriz vProjetil, dada pelos parâmetros inteiros “x”, “y” e “z”.`
+`removePeca` | `Remove um personagem que morreu de uma posição da matriz, dada pelos parâmetros inteiros “x”, “y” e “z.`
+`receiveData` | `Recebe uma instância de IDataProvider que contém os soldados a serem inseridos ou removidos do tabuleiro e suas respectivas posições.`
+`setProjetil` | `Adiciona um projétil já existente, representado pelo parâmetro “projetil”, ou “null” em uma posição da matriz vProjetil, dada pelos parâmetros inteiros “x”, “y” e “z”.`
+`getProjetil` | `Retorna um projetil em uma posição da matriz vProjetil, dada pelos parâmetros inteiros “x”, “y” e “z”.`
+`adicionaConflito` | `Adiciona um projetil, representado pelo parâmetro “projetil”, que sofreu conflito com outro projétil em campo, ao vetor vConflito.`
+`resolveConflito` | `Passa pelo vetor vConflito, analisando se os projeteis podem ir ou não para suas posições de destino e adicionando ou removendo eles do tabuleiro.`
+`getDragonPosition` | `Retorna o vetor dragonPosition.`
+`setDragonPosition` | `Adiciona novas posições “x” e “y” ao vetor dragonPosition.`
+`getPrincesaPosition` | `Retorna o vetor princesaPosition.`
+`setPrincesaPosition` | `Adiciona novas posições “x” e “y” ao vetor princesaPosition.`
+`getPanel` | `Retorna o painel gráfico do tabuleiro.`
+`getVidaDragaoLabel` | `Retorna o campo gráfico que mostra a vida do dragão.`
+`getVidaPrincesaLabel` | `Retorna o campo gráfico que mostra a vida da princesa.`
+`getFinishLabel` | `Retorna o campo gráfico que mostra a mensagem de fim de jogo.`
+`getAgainButton` | `Retorna o botão de “Jogar Novamente”.`
 
 ## Componente `Arqueiro`
 
 Componente representante do personagem “arqueiro”. Provê a interface IPersonagem e é responsavel por instanciar Flecha no Tabuleiro.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-arqueiro.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
+Classe | `src.personagem` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
 
 ### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-arqueiro.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
+
 ~~~
 
 ## Detalhamento das Interfaces
@@ -288,449 +865,220 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 `Apresenta os métodos de movimento de personagens e de projéteis.`
 
 ~~~
-<Interface em Java.>
+public interface IMovimento {
+	public void move(ITabuleiro tab);
+	public void movePrincesa(String direcao);
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`move` | `Realiza a movimentação de um Personagem ou um Projetil pelo tabuleiro. Recebe “tab” como parâmetro para poder analisar as posições em volta.`
+`movePrincesa` | `Realiza o movimento exclusivo do componente Princesa, o qual ocorre de acordo com o parâmetro “direcao”.`
+
 
 ### Interface `IPersonagem`
 
 `Reúne os métodos de personagem como ações de perda de vida e de disparo de ataque.`
 
 ~~~
-<Interface em Java.>
+public interface IPersonagem extends IMovimento{
+	public void perdeVida(IProjetil Projetil, ITabuleiro tab);
+	public void disparaProjetil(ITabuleiro tab);
+	public int getVida();
+	public boolean getJaAgiu();
+	public void setJaAgiu(boolean j);
+	public int getMovimento();
+	public PecaIcon getPecaIcon();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`perdeVida` | `Diminui a vida de um personagem de acordo com o dano do parâmetro “projetil”, o qual representa um projétil situado na mesma posição que o personagem no tabuleiro.`
+`disparaProjetil` | `Instancia um projetil no Tabuleiro em direção à posição do dragão, caso seja um dos soldados, e em direção de um soldado num raio de 5 casas ou aleatória, caso seja o dragão. Recebe o tabuleiro através do parâmetro “tab”.`
+`getVida` | `Retorna a vida do personagem.`
+`getJaAgiu` | `Retorna o atributo “jaAgiu”.`
+`setJaAgiu` | `Define um valor para o atributo “jaAgiu”, através do parametro “j”.`
+`getMovimento` | `Retorna o atributo Movimento.`
+`` | ``
+
 
 ## Componente `Lanceiro`
 
 Componente representante do personagem “lanceiro”. Provê a interface IPersonagem e é responsavel por instanciar Lanca no Tabuleiro.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-lanceiro.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
 
 ## Componente `Mago`
 
 Componente representante do personagem “mago”. Provê a interface IPersonagem e é responsavel por instanciar BolaDeEnergia no Tabuleiro.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-mago.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
 ## Componente `Catapulta`
 
 Componente representante do personagem “catapulta”. Provê a interface IPersonagem e é responsavel por instanciar Pedra no Tabuleiro.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-catapulta.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
 ## Componente `Princesa`
 
 Componente representante do personagem “princesa”. Provê a interface IPersonagem e é movimentado pelo usuário durante o jogo.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-princesa.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
 ## Componente `Dragao`
 
 Componente representante do personagem “dragão”. Provê a interface IPersonagem e é responsavel por instanciar BoldaDeFogo no Tabuleiro.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-dragao.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
 ## Componente `Flecha`
 
 Componente representante do projétil “flecha”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-flecha.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
+Classe | `src.projetil` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
 
 ### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-flecha.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
+
 ~~~
 
 ## Detalhamento das Interfaces
+
+### Interface `IMovimento`
+
+`Apresenta os métodos de movimento de personagens e de projéteis.`
+
+~~~
+public interface IMovimento {
+	public void move(ITabuleiro tab);
+	public void movePrincesa(String direcao);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`move` | `Realiza a movimentação de um Personagem ou um Projetil pelo tabuleiro. Recebe “tab” como parâmetro para poder analisar as posições em volta.`
+`movePrincesa` | `Realiza o movimento exclusivo do componente Princesa, o qual ocorre de acordo com o parâmetro “direcao”.`
 
 ### Interface `IProjetil`
 
 `Reúne os métodos de projétil como ações de dano e gestão de dados de posição e de conflito.`
 
 ~~~
-<Interface em Java.>
+public interface IProjetil extends IMovimento{
+	public int getDano();
+	public int getxConflito();
+	public int getyConflito();
+	public int getx();
+	public int gety();
+	public void setX(int x);
+	public void setY(int y);
+	public boolean getEmConflito();
+	public void setEmConflito(boolean j);
+	public boolean getJaAgiu();
+	public void setJaAgiu(boolean j);
+	public PecaIcon getPecaIcon();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`getDano` | `Retorna o atributo “dano”.`
+`getxConflito` | ` Retorna o atributo “xConflito”, que representa a posição x de conflito no tabuleiro.`
+`getyConflito` | `Retorna o atributo “yConflito”, que representa a posição y de conflito no tabuleiro.`
+`getX` | `Retorna a posição “x” no tabuleiro.`
+`getY` | `Retorna a posição “y” no tabuleiro.`
+`setX` | `Define a posição “x” no tabuleiro, de acordo com o parâmetro recebido`
+`setY` | `Define a posição “y” no tabuleiro, de acordo com o parâmetro recebido`
+`getEmConflito` | `Retorna o atributo EmConflito, que indica se o projetil está em conflito.`
+`setEmConflito` | `Define o atributo EmConflito, de acordo com o parâmetro recebido.`
+`getJaAgiu` | `Retorna o atributo “jaAgiu”.`
+`setJaAgiu` | `Define um valor para o atributo “jaAgiu”, através do parametro “j”.`
+`getPecaIcon` | `Retorna o componente gráfico que representa o projetil.`
 
 ## Componente `Lanca`
 
 Componente representante do projétil “lança”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-lanca.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
 ## Componente `BolaDeEnergia`
 
 Componente representante do projétil “bola de energia”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-boladeenergia.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
 ## Componente `Pedra`
 
 Componente representante do projétil “pedra”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-pedra.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
 ## Componente `BolaDeFogo`
 
 Componente representante do projétil “bola de fogo”. Provê a interface IProjetil e é responsável por diminuir a vida de qualquer personagem.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-boladefogo.png)
 
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
 ## Componente `PainelMenu`
 
 Componente responsável por projetar na tela o menu do jogo, que é composto por textos explicativos, por botões e por caixas de texto. Com isso, também administra a entrada de dados e as ações do usuário.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-painelmenu.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
+Classe | `src.painelmmenu` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMenu, ActionListener`
 
 ### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-painelmenu.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
+
 ~~~
 
 ## Detalhamento das Interfaces
@@ -740,37 +1088,38 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 `Apresenta o método de retornar o componente gráfico de algum menu.`
 
 ~~~
-<Interface em Java.>
+public interface IMenu {
+	public PainelMenu getPanel();
+}
 ~~~
 
 Método | Objetivo
 -------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+`getPanel` | `Retorna o painel gráfico do menu.`
 
 ## Componente `JanelaJogo`
 
 Componente responsável por projetar na tela a interface gráfica completa do jogo, contendo o tabuleiro e o menu.
 
-![Componente](diagrama-componente.png)
+![Componente](componente-janelajogo.png)
 
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
+Classe | `src.janelajogo` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `ActionListener`
 
 ### Interfaces
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](interfaces-janelajogo.png)
 
 Interface agregadora do componente em Java:
 
 ~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
+
 ~~~
 
 ## Detalhamento das Interfaces
@@ -786,6 +1135,8 @@ public interface IDataSet extends ITableProducer, IDataSetProperties {
 Método | Objetivo
 -------| --------
 `<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
+
+
 
 ## Componente `<Nome do Componente>`
 
@@ -868,7 +1219,7 @@ Método | Objetivo
 ## Diagrama da hierarquia de exceções
 `<Elabore um diagrama com a hierarquia de exceções como detalhado abaixo>`
 
-![Hierarquia Exceções](assets/documentacao/exception-hierarchy.png)
+![Hierarquia Exceções](assets/documentacao/hierarquia-excecoes.png)
 
 ## Descrição das classes de exceção
 

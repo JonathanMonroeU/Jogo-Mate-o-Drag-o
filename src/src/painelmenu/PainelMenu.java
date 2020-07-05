@@ -216,14 +216,14 @@ public class PainelMenu extends JPanel implements IMenu, ActionListener{
 		painelSoldado.setLayout(new FlowLayout());
 		painelSoldado.setAlignmentX(CENTER_ALIGNMENT);
 		painelSoldado.setPreferredSize(new Dimension(300,300));
-		painelSoldado.add(arqueiroInfo);
 		painelSoldado.add(arqueiro);
-		painelSoldado.add(lanceiroInfo);
 		painelSoldado.add(lanceiro);
-		painelSoldado.add(magoInfo);
 		painelSoldado.add(mago);
-		painelSoldado.add(catapultaInfo);
 		painelSoldado.add(catapulta);
+		painelSoldado.add(arqueiroInfo);
+		painelSoldado.add(lanceiroInfo);
+		painelSoldado.add(magoInfo);
+		painelSoldado.add(catapultaInfo);
 		painelSoldado.setBackground(new java.awt.Color(150, 0, 0));
 		
 		//Adicionando e customizando o painel de pontos
