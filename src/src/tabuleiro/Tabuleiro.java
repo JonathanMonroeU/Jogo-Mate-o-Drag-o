@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -33,7 +34,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int numeroSoldados;					//Quantidade de soldados inseridos pelo jogador no momento.
 	private int atual;							
 	private Metronomo metro = new Metronomo(20);	//Metrônomo definindo o tempo para ativação de cada modificação do campo.
-	private MeuKeyListener keys;				//Implementa KeyListener, e contém métodos para receber as teclas do teclado e ativar a movientação da princesa.
+	private KeyListener keys;				//Implementa KeyListener, e contém métodos para receber as teclas do teclado e ativar a movientação da princesa.
 	private PecaIcon compl1,compl2,compl3;		//3 PecaIcon para completar a imagem do dragão.
 	
 	public Tabuleiro() {

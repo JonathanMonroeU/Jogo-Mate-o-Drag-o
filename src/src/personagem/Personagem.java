@@ -43,8 +43,6 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 			
 			while ( (tab.getPeca(newX, newY,0) != null || tab.getPeca(newX, newY, 1) != null) && tentativas<=30) {	//Fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas.
 				tentativas+=1;
-				newX = x;
-				newY = y;
 				
 				//Valor entre -1,0 e 1 a ser adicionado multiplicado pelo passo e/ou subtraido aleatoriamente em x e y.
 				int addX = alea.nextInt(3)-1;	
