@@ -88,6 +88,13 @@ No entanto, percebemos que alguns projéteis ainda ficavam parados após serem d
 
 Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo projétil a cada passo de jogo. Vamos dar o exemplo da pedra da catapulta: a Pedra andava 4 casas a cada passo de jogo, deixando sua permanência em campo muito curta e seu percurso pouco visível. A solução que encontramos foi fazer cada projétil andar de 1 em 1 casa pelo tabuleiro, mas com velocidades diferentes e, para isso, ajustamos o tempo do timer para poucos milissegundos e alteramos a frequência de movimento das peças para deixar algumas mais rápidas e outras mais lentas, deixando a dinâmica do jogo mais fluida.
 
+### Progresso da Interface Gráfica
+
+- Começo do projeto:
+![Tela Inicial Antes](assets/documentacao/TelaInicialAntiga.jpg)
+
+- Fim do projeto:
+![Tela Inicial Depois](assets/documentacao/TelaInicial.png)
 
 > <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
 
