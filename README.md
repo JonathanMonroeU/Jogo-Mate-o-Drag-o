@@ -557,7 +557,6 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 	}
 ~~~
 # Destaques de Pattern
-`<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
 
 ## Diagrama do Pattern
 ![Diagrama Pattern](assets/documentacao/pattern-metronomo.png)
@@ -683,7 +682,7 @@ Componente responsável pela passagem dos dados inseridos pelo usuário para o T
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.dataprovider` <br> 
+Classe | `src.dataprovider.DataProvider` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IGetData, IPontos, IDataProvider`
 
@@ -755,7 +754,7 @@ Componente representante do tabuleiro do jogo, o qual armazena e relaciona todos
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.tabuleiro` <br> 
+Classe | `src.tabuleiro.Tabuleiro` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `ITabuleiro, ActionListener`
 
@@ -833,6 +832,20 @@ Método | Objetivo
 `getFinishLabel` | `Retorna o campo gráfico que mostra a mensagem de fim de jogo.`
 `getAgainButton` | `Retorna o botão de “Jogar Novamente”.`
 
+### Interface `actionListener`
+
+`Interface para receber eventos de ação.`
+
+~~~
+interface ActionListener{
+	public void actionPerfoormed(ActionEvent e);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`actionPerformed` | `Invocado quando uma ação ocorre.`
+
 ## Componente `Arqueiro`
 
 Componente representante do personagem “arqueiro”. Provê a interface IPersonagem e é responsavel por instanciar Flecha no Tabuleiro.
@@ -842,7 +855,7 @@ Componente representante do personagem “arqueiro”. Provê a interface IPerso
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.personagem` <br> 
+Classe | `src.personagem.Arqueiro` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
 
@@ -910,7 +923,14 @@ Componente representante do personagem “lanceiro”. Provê a interface IPerso
 
 ![Componente](assets/documentacao/componente-lanceiro.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.personagem.Lanceiro` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IPersonagem`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 
 ## Componente `Mago`
@@ -919,7 +939,14 @@ Componente representante do personagem “mago”. Provê a interface IPersonage
 
 ![Componente](assets/documentacao/componente-mago.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.personagem.Mago` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IPersonagem`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Catapulta`
 
@@ -927,7 +954,14 @@ Componente representante do personagem “catapulta”. Provê a interface IPers
 
 ![Componente](assets/documentacao/componente-catapulta.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.personagem.Catapulta` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IPersonagem`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Princesa`
 
@@ -935,7 +969,14 @@ Componente representante do personagem “princesa”. Provê a interface IPerso
 
 ![Componente](assets/documentacao/componente-princesa.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.personagem.Princesa` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IPersonagem`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Dragao`
 
@@ -943,7 +984,14 @@ Componente representante do personagem “dragão”. Provê a interface IPerson
 
 ![Componente](assets/documentacao/componente-dragao.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.personagem.Dragao` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IPersonagem`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Flecha`
 
@@ -954,7 +1002,7 @@ Componente representante do projétil “flecha”. Provê a interface IProjetil
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.projetil` <br> 
+Classe | `src.projetil.Flecha` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
 
@@ -1030,7 +1078,14 @@ Componente representante do projétil “lança”. Provê a interface IProjetil
 
 ![Componente](assets/documentacao/componente-lanca.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.projetil.Lanca` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IProjetil`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `BolaDeEnergia`
 
@@ -1038,7 +1093,14 @@ Componente representante do projétil “bola de energia”. Provê a interface 
 
 ![Componente](assets/documentacao/componente-boladeenergia.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.projetil.BolaDeEnergia` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IProjetil`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `Pedra`
 
@@ -1046,7 +1108,14 @@ Componente representante do projétil “pedra”. Provê a interface IProjetil 
 
 ![Componente](assets/documentacao/componente-pedra.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.projetil.Pedra` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IProjetil`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `BolaDeFogo`
 
@@ -1054,7 +1123,14 @@ Componente representante do projétil “bola de fogo”. Provê a interface IPr
 
 ![Componente](assets/documentacao/componente-boladefogo.png)
 
-Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.projetil.BolaDeFogo` <br> 
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `IMovimento, IProjetil`
+
+As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `PainelMenu`
 
@@ -1065,7 +1141,7 @@ Componente responsável por projetar na tela o menu do jogo, que é composto por
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.painelmmenu` <br> 
+Classe | `src.painelmmenu.PainelMenu` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMenu, ActionListener`
 
@@ -1097,6 +1173,22 @@ Método | Objetivo
 -------| --------
 `getPanel` | `Retorna o painel gráfico do menu.`
 
+### Interface `actionListener`
+
+`Interface para receber eventos de ação.`
+
+~~~
+interface ActionListener{
+	public void actionPerfoormed(ActionEvent e);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`actionPerformed` | `Invocado quando uma ação ocorre.`
+
+
+
 ## Componente `JanelaJogo`
 
 Componente responsável por projetar na tela a interface gráfica completa do jogo, contendo o tabuleiro e o menu.
@@ -1106,7 +1198,7 @@ Componente responsável por projetar na tela a interface gráfica completa do jo
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.janelajogo` <br> 
+Classe | `src.janelajogo.JanelaJogo` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `ActionListener`
 
@@ -1124,100 +1216,24 @@ Interface agregadora do componente em Java:
 
 ## Detalhamento das Interfaces
 
-### Interface `<nome da interface>`
+### Interface `actionListener`
 
-`<Resumo do papel da interface.>`
-
-~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
-
-
-
-## Componente `<Nome do Componente>`
-
-> <Resumo do papel do componente e serviços que ele oferece.>
-
-![Componente](assets/documentacao/diagrama-componente.png)
-
-**Ficha Técnica**
-item | detalhamento
------ | -----
-Classe | `<caminho completo da classe com pacotes>` <br> Exemplo: `pt.c08componentes.s20catalog.s10ds.DataSetComponent`
-Autores | `<nome dos membros que criaram o componente>`
-Interfaces | `<listagem das interfaces do componente>`
-
-### Interfaces
-
-Interfaces associadas a esse componente:
-
-![Diagrama Interfaces](assets/documentacao/diagrama-interfaces.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
-
-## Detalhamento das Interfaces
-
-### Interface `<nome da interface>`
-
-`<Resumo do papel da interface.>`
+`Interface para receber eventos de ação.`
 
 ~~~
-<Interface em Java.>
-~~~
-
-Método | Objetivo
--------| --------
-`<id do método em Java>` | `<objetivo do método e descrição dos parâmetros>`
-
-
-
-## Exemplo:
-
-### Interface `ITableProducer`
-
-Interface provida por qualquer fonte de dados que os forneça na forma de uma tabela.
-
-~~~java
-public interface ITableProducer {
-  String[] requestAttributes();
-  String[][] requestInstances();
+interface ActionListener{
+	public void actionPerfoormed(ActionEvent e);
 }
 ~~~
 
 Método | Objetivo
 -------| --------
-`requestAttributes` | Retorna um vetor com o nome de todos os atributos (colunas) da tabela.
-`requestInstances` | Retorna uma matriz em que cada linha representa uma instância e cada coluna o valor do respectivo atributo (a ordem dos atributos é a mesma daquela fornecida por `requestAttributes`.
+`actionPerformed` | `Invocado quando uma ação ocorre.`
 
-### Interface `IDataSetProperties`
-
-Define o recurso (usualmente o caminho para um arquivo em disco) que é a fonte de dados.
-
-~~~java
-public interface IDataSetProperties {
-  public String getDataSource();
-  public void setDataSource(String dataSource);
-}
-~~~
-
-Método | Objetivo
--------| --------
-`getDataSource` | Retorna o caminho da fonte de dados.
-`setDataSource` | Define o caminho da fonte de dados, informado através do parâmetro `dataSource`.
 
 # Plano de Exceções
 
 ## Diagrama da hierarquia de exceções
-`<Elabore um diagrama com a hierarquia de exceções como detalhado abaixo>`
 
 ![Hierarquia Exceções](assets/documentacao/hierarquia-excecoes.png)
 
