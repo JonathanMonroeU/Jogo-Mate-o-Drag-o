@@ -930,6 +930,12 @@ Classe | `src.personagem.Lanceiro` <br>
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-lanceiro.png)
+
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 
@@ -946,6 +952,12 @@ Classe | `src.personagem.Mago` <br>
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-mago.png)
+
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Catapulta`
@@ -960,6 +972,12 @@ item | detalhamento
 Classe | `src.personagem.Catapulta` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-catapulta.png)
 
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
@@ -976,6 +994,12 @@ Classe | `src.personagem.Princesa` <br>
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-princesa.png)
+
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
 ## Componente `Dragao`
@@ -990,6 +1014,12 @@ item | detalhamento
 Classe | `src.personagem.Dragao` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IPersonagem`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-dragao.png)
 
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Arqueiro".
 
@@ -1085,6 +1115,12 @@ Classe | `src.projetil.Lanca` <br>
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-lanca.png)
+
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `BolaDeEnergia`
@@ -1099,6 +1135,12 @@ item | detalhamento
 Classe | `src.projetil.BolaDeEnergia` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-boladenergia.png)
 
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
@@ -1115,6 +1157,12 @@ Classe | `src.projetil.Pedra` <br>
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
 
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-pedra.png)
+
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
 ## Componente `BolaDeFogo`
@@ -1129,6 +1177,12 @@ item | detalhamento
 Classe | `src.projetil.BolaDeFogo` <br> 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IMovimento, IProjetil`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](assets/documentacao/interfaces-boladefogo.png)
 
 As interfaces associadas a esse componente são as mesmas associadas ao componente "Flecha".
 
