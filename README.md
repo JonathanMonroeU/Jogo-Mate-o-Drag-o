@@ -33,7 +33,7 @@ Nosso projeto nasceu da ideia de fazer um jogo em que arqueiros lutariam para ma
 Na parte inicial do trabalho, tivemos que fazer a apresentação do jogo através dos slides, a qual ficou bem detalhada, e o diagrama de componentes junto com detalhamento das interfaces e dos métodos que seriam usados. Esse diagrama teve alguns defeitos, pois, no começo, ainda estávamos com algumas dúvidas em relação ao conceito de componentes, de interface provida e de interface requerida, mas com a ajuda do PED e com a arguição feita em aula, conseguimos elucidar melhor esses conceitos. 
 Nosso diagrama, inicialmente, possuía 5 componentes, como ilustrado abaixo:
 
-*imagem do diagrama*
+![Antigos componentes](assets/documentacao/componentes-antigo.png)
 
 Alguns problemas citados na arguição foram a falta de conexão entre Soldados e Ataque e o fato de a interface IPeca não ser requerida por ninguém. Refletimos sobre essas incoerências e concluímos o seguinte: sobre o primeiro problema, definimos que não havia interface entre Soldados e Ataque, pois o Ataque (o qual deve ser imaginado como um projétil, a exemplo de flecha, lança, entre outros) se movimenta no tabuleiro independentemente do personagem que o disparou, sendo a única ação do soldado ser instanciar o objeto Ataque no tabuleiro, e, para isso, não foi necessário o Soldado requerer nenhuma interface do Ataque; 
 
@@ -672,13 +672,13 @@ Futuramente, pretendemos evoluir a ideia do jogo. Algumas ideias propostas foram
 
 ## Diagrama Geral de Componentes
 
-![Diagrama geral de componentes](diagrama-componentes-geral.png)
+![Diagrama geral de componentes](assets/documentacao/diagrama-componentes-geral.png)
 
 ## Componente `DataProvider`
 
 Componente responsável pela passagem dos dados inseridos pelo usuário para o Tabuleiro e por gerenciar a adição e a remoção de personagens do jogo em relação a quantidade de pontos; Ele provê a interface IDataProvider para o Tabuleiro poder receber essas informações.
 
-![Componente](componente-dataprovider.png)
+![Componente](assets/documentacao/componente-dataprovider.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -691,7 +691,7 @@ Interfaces | `IGetData, IPontos, IDataProvider`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-dataprovider.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-dataprovider.png)
 
 Interface agregadora do componente em Java:
 
@@ -750,7 +750,7 @@ Método | Objetivo
 
 Componente representante do tabuleiro do jogo, o qual armazena e relaciona todos os personagens e projéteis em campo; Provê a interface ITabuleiro para os personagens, os projéteis, o Menu e a JanelaJogo, para que eles possam ter acesso aos dados guardados nos vetores de peças e para estes poderem inserirem novas peças no Tabuleiro também.
 
-![Componente](componente-tabuleiro.png)
+![Componente](assets/documentacao/componente-tabuleiro.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -763,7 +763,7 @@ Interfaces | `ITabuleiro, ActionListener`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-tabuleiro.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-tabuleiro.png)
 
 Interface agregadora do componente em Java:
 
@@ -837,7 +837,7 @@ Método | Objetivo
 
 Componente representante do personagem “arqueiro”. Provê a interface IPersonagem e é responsavel por instanciar Flecha no Tabuleiro.
 
-![Componente](componente-arqueiro.png)
+![Componente](assets/documentacao/componente-arqueiro.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -850,7 +850,7 @@ Interfaces | `IMovimento, IPersonagem`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-arqueiro.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-arqueiro.png)
 
 Interface agregadora do componente em Java:
 
@@ -908,7 +908,7 @@ Método | Objetivo
 
 Componente representante do personagem “lanceiro”. Provê a interface IPersonagem e é responsavel por instanciar Lanca no Tabuleiro.
 
-![Componente](componente-lanceiro.png)
+![Componente](assets/documentacao/componente-lanceiro.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
@@ -917,7 +917,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do personagem “mago”. Provê a interface IPersonagem e é responsavel por instanciar BolaDeEnergia no Tabuleiro.
 
-![Componente](componente-mago.png)
+![Componente](assets/documentacao/componente-mago.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
@@ -925,7 +925,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do personagem “catapulta”. Provê a interface IPersonagem e é responsavel por instanciar Pedra no Tabuleiro.
 
-![Componente](componente-catapulta.png)
+![Componente](assets/documentacao/componente-catapulta.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
@@ -933,7 +933,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do personagem “princesa”. Provê a interface IPersonagem e é movimentado pelo usuário durante o jogo.
 
-![Componente](componente-princesa.png)
+![Componente](assets/documentacao/componente-princesa.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
@@ -941,7 +941,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do personagem “dragão”. Provê a interface IPersonagem e é responsavel por instanciar BoldaDeFogo no Tabuleiro.
 
-![Componente](componente-dragao.png)
+![Componente](assets/documentacao/componente-dragao.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas do componente "Arqueiro".
 
@@ -949,7 +949,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do projétil “flecha”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](componente-flecha.png)
+![Componente](assets/documentacao/componente-flecha.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -962,7 +962,7 @@ Interfaces | `IMovimento, IProjetil`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-flecha.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-flecha.png)
 
 Interface agregadora do componente em Java:
 
@@ -1028,7 +1028,7 @@ Método | Objetivo
 
 Componente representante do projétil “lança”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](componente-lanca.png)
+![Componente](assets/documentacao/componente-lanca.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
@@ -1036,7 +1036,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do projétil “bola de energia”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](componente-boladeenergia.png)
+![Componente](assets/documentacao/componente-boladeenergia.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
@@ -1044,7 +1044,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do projétil “pedra”. Provê a interface IProjetil e é responsável por diminuir a vida de Dragao e de Princesa.
 
-![Componente](componente-pedra.png)
+![Componente](assets/documentacao/componente-pedra.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
@@ -1052,7 +1052,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente representante do projétil “bola de fogo”. Provê a interface IProjetil e é responsável por diminuir a vida de qualquer personagem.
 
-![Componente](componente-boladefogo.png)
+![Componente](assets/documentacao/componente-boladefogo.png)
 
 Tanto a ficha técnica quanto as interfaces associadas a esse componente são as mesmas associadas do componente "Flecha".
 
@@ -1060,7 +1060,7 @@ Tanto a ficha técnica quanto as interfaces associadas a esse componente são as
 
 Componente responsável por projetar na tela o menu do jogo, que é composto por textos explicativos, por botões e por caixas de texto. Com isso, também administra a entrada de dados e as ações do usuário.
 
-![Componente](componente-painelmenu.png)
+![Componente](assets/documentacao/componente-painelmenu.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1073,7 +1073,7 @@ Interfaces | `IMenu, ActionListener`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-painelmenu.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-painelmenu.png)
 
 Interface agregadora do componente em Java:
 
@@ -1101,7 +1101,7 @@ Método | Objetivo
 
 Componente responsável por projetar na tela a interface gráfica completa do jogo, contendo o tabuleiro e o menu.
 
-![Componente](componente-janelajogo.png)
+![Componente](assets/documentacao/componente-janelajogo.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1114,7 +1114,7 @@ Interfaces | `ActionListener`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](interfaces-janelajogo.png)
+![Diagrama Interfaces](assets/documentacao/interfaces-janelajogo.png)
 
 Interface agregadora do componente em Java:
 
@@ -1142,7 +1142,7 @@ Método | Objetivo
 
 > <Resumo do papel do componente e serviços que ele oferece.>
 
-![Componente](diagrama-componente.png)
+![Componente](assets/documentacao/diagrama-componente.png)
 
 **Ficha Técnica**
 item | detalhamento
@@ -1155,7 +1155,7 @@ Interfaces | `<listagem das interfaces do componente>`
 
 Interfaces associadas a esse componente:
 
-![Diagrama Interfaces](diagrama-interfaces.png)
+![Diagrama Interfaces](assets/documentacao/diagrama-interfaces.png)
 
 Interface agregadora do componente em Java:
 
