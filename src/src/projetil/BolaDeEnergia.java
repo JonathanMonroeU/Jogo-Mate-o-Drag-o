@@ -10,7 +10,7 @@ public class BolaDeEnergia extends Projetil{
 		dano= 50;
 		freqMov=6;
 		velocidade= 1;
-		jaAgiu=0;
+		jaAgiu=false;
 	}
 	
 }

@@ -2,7 +2,6 @@ package src.personagem;
 
 import java.util.Random;
 
-import src.PecaIcon;
 import src.projetil.BolaDeFogo;
 import src.personagem.IPersonagem;
 import src.projetil.IProjetil;
@@ -18,8 +17,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					freqA,		//Valor que vai de 0 até a frequência, ciclicamente, quando for 0, o personagem dispara. O lanceiro é exceçõ, que dispara quando for 0 e 12.
 					movimento,	//É a quantidade de passos do jogo que demora até o personagem se mover de novo.
 					freqM, 		//Valor que vai de 0 até movimento, ciclicamente, quando for 0, o personagem se move.
-					passo, 		//Quantidade de passos que o personagem anda no campo por movimento.
-					jaAgiu; 	//Se for igual a 0, o projétil ainda não agiu naquele tempo, se for 1 já. 
+					passo; 		//Quantidade de passos que o personagem anda no campo por movimento.
+					
+	protected boolean jaAgiu; 	//Se for igual a false, o projétil ainda não agiu naquele tempo, se for true já. 
 	
 	protected Random alea=new Random();
 	
@@ -29,7 +29,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 		this.y = y;
 		freqM = 0;	
 		freqA = 0;
-		jaAgiu=0;
+		jaAgiu=false;
 	}
 	
 	//Encontra a nova posição para o personagem e o move para ela.
@@ -51,7 +51,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 				int addY = alea.nextInt(3)-1;
 				
 				//Se não for o dragão, testa se a nova posição é coerente para o soldado:
-				if (this instanceof Dragao==false) { 
+				if (!(this instanceof Dragao)) { 
 					newX += passo*addX;	
 					newY += passo*addY; 
 					//Se a nova posição estiver fora do campo, reinicia e volta do inicio do while.
@@ -115,7 +115,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 					tab.setPersonagem(newX-1, newY-1, 0, this);
 				}
 				tab.setPersonagem(newX, newY, 0, this);
-				this.jaAgiu=1;
+				this.jaAgiu=true;
 				
 				//Os atributos x e y do objeto são atualizados.
 				x = newX;
@@ -129,9 +129,9 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	//Pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. No caso da princesa, ela pode levar dano de qualquer projétil. 
 	@Override
 	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
-		if ( (this instanceof Dragao || this instanceof Princesa) && projetil instanceof BolaDeFogo==false) {
+		if ( (this instanceof Dragao || this instanceof Princesa) && !(projetil instanceof BolaDeFogo)) {
 			vida -= projetil.getDano();
-		}else if (this instanceof Dragao==false && projetil instanceof BolaDeFogo)
+		}else if (!(this instanceof Dragao) && projetil instanceof BolaDeFogo)
 			vida -= projetil.getDano();
 	}
 
@@ -143,12 +143,12 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	//Abaixo tem-se alguns métodos para retornar e modificar os atributos privados do Personagem.
 	
 	@Override
-	public int getJaAgiu(){
+	public boolean getJaAgiu(){
 		return jaAgiu;
 	}
 	
 	@Override
-	public void setJaAgiu(int j) {
+	public void setJaAgiu(boolean j) {
 		jaAgiu=j;
 	}
 	

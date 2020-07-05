@@ -5,8 +5,7 @@ import src.tabuleiro.ITabuleiro;
 
 public class Catapulta extends Personagem{
 	private static final long serialVersionUID = 4060029049567589732L;
-	public static String DIRETORIO =
-		      Catapulta.class.getResource(".").getPath();
+	public static String DIRETORIO = Catapulta.class.getResource(".").getPath();
 	public static int custo = 30;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Catapulta(int x, int y) {

@@ -7,16 +7,13 @@ import java.lang.Math;
 
 public class Dragao extends Personagem{
 	private static final long serialVersionUID = 1529623392218092957L;
-	public static String DIRETORIO =
-		      Dragao.class.getResource(".").getPath();
-	/*{frequencia = 1;
-	movimento = 1;
-	passo = 1;}*/
+	public static String DIRETORIO = Dragao.class.getResource(".").getPath();
+	
 	int especial;
 	public Dragao(int x, int y) {
 		super(DIRETORIO+"dragao.png",x,y);
 		vida = 1000;
-		frequencia = 12;	//estávamos pensando em 1
+		frequencia = 12;	
 		movimento = 12;
 		passo = 1;
 		especial=9;

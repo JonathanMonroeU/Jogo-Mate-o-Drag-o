@@ -5,8 +5,7 @@ import src.tabuleiro.ITabuleiro;
 
 public class Arqueiro extends Personagem{
 	private static final long serialVersionUID = -7136572584786964361L;
-	public static String DIRETORIO =
-		      Arqueiro.class.getResource(".").getPath();
+	public static String DIRETORIO = Arqueiro.class.getResource(".").getPath();
 	public static int custo = 5;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Arqueiro(int x, int y) {

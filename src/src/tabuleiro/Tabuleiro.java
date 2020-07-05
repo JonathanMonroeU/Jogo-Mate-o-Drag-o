@@ -5,27 +5,22 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 
-import src.tabuleiro.Metronomo;
-import src.tabuleiro.PainelTabuleiro;
-import src.PecaIcon;
+import src.dataprovider.IDataProvider;
+import src.exceptions.SemPersonagem;
 import src.personagem.Arqueiro;
 import src.personagem.Catapulta;
 import src.personagem.Dragao;
+import src.personagem.IPersonagem;
 import src.personagem.Lanceiro;
 import src.personagem.Mago;
+import src.personagem.PecaIcon;
 import src.personagem.Princesa;
-import src.exceptions.SemPersonagem;
-import src.dataprovider.IDataProvider;
-import src.personagem.IPersonagem;
 import src.projetil.IProjetil;
-import src.tabuleiro.ITabuleiro;
 
 public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
 	private static final long serialVersionUID = -4923736996545875913L;
@@ -110,6 +105,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		if (numeroSoldados == 0)
 			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
 		metro.start();
+		
 		this.addKeyListener(keys); 
 		this.setFocusable(true);
         this.requestFocusInWindow();
@@ -123,7 +119,6 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		else {
 			finish();
 			metro.stop();
-			again.setVisible(true);
 		}
 	}
 
@@ -143,10 +138,10 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 			for (int j=0; j<20; j++) {
 				if (vPersonagem[i][j][0] != null) {
 					//Se o personagem não for o dragão e não tiver agido ainda nesse tempo do jogo:
-					if (vPersonagem[i][j][0] instanceof Dragao==false && vPersonagem[i][j][0].getJaAgiu()==0) {	
-						vPersonagem[i][j][0].setJaAgiu(1);
+					if (!(vPersonagem[i][j][0] instanceof Dragao) && !(vPersonagem[i][j][0].getJaAgiu())) {	
+						vPersonagem[i][j][0].setJaAgiu(true);
 						//Se a posição onde o personagem está estiver vazia na sua respectiva posição no vetor de ataques:
-						if(vProjetil[i][j][0]==null && vPersonagem[i][j][0] instanceof Catapulta==false || vProjetil[i][j][1]==null && vPersonagem[i][j][0] instanceof Catapulta)
+						if(vProjetil[i][j][0]==null && !(vPersonagem[i][j][0] instanceof Catapulta) || vProjetil[i][j][1]==null && vPersonagem[i][j][0] instanceof Catapulta)
 							vPersonagem[i][j][0].disparaProjetil(this);
 						if(vPersonagem[i][j][0].getMovimento()!=0)
 							vPersonagem[i][j][0].move(this);
@@ -155,11 +150,11 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				
 				//Se houver um projétil na posição atual e ele não tiver agido ainda nesse tempo, ele é movido.
 				if (vProjetil[i][j][0] != null) {
-					if (vProjetil[i][j][0].getJaAgiu()==0)
+					if (!(vProjetil[i][j][0].getJaAgiu()))
 						vProjetil[i][j][0].move(this);
 				//Se houver um projétil na posição atual e ele não tiver agido ainda nesse tempo, ele é movido.	
 				}if (vProjetil[i][j][1] != null) {
-					if (vProjetil[i][j][1].getJaAgiu()==0)
+					if (!(vProjetil[i][j][1].getJaAgiu()))
 						vProjetil[i][j][1].move(this); 
 				}
 			}
@@ -196,18 +191,18 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				}
 				//Se houver um personagem na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo.
 				if (vPersonagem[i][j][0] != null) {
-					vPersonagem[i][j][0].setJaAgiu(0);
+					vPersonagem[i][j][0].setJaAgiu(false);
 					//Se a vida for menor ou igual a 0, o personagem morreu e é removido de campo.
 					if (vPersonagem[i][j][0].getVida()<=0) 
 						removePeca(i,j,0); 	//morte
 				}
-				//Se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo.
+				//Se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar false no pŕoximo tempo do jogo.
 				if (vProjetil[i][j][0] != null) 
-					vProjetil[i][j][0].setJaAgiu(0);
+					vProjetil[i][j][0].setJaAgiu(false);
 						
-				//Se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo.
+				//Se houver um projetil na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar false no pŕoximo tempo do jogo.
 				if (vProjetil[i][j][1] != null) 
-					vProjetil[i][j][1].setJaAgiu(0);
+					vProjetil[i][j][1].setJaAgiu(false);
 				
 			}
 		}
@@ -231,7 +226,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	public void adicionaConflito(IProjetil projetil) {
 		atual+=1;
 		vConflito[atual]=projetil;
-		projetil.setEmConflito(1);
+		projetil.setEmConflito(true);
 	}
 	
 	//Resolve o conflito da posição atual do vetor de conflitos de projéteis.
@@ -240,24 +235,24 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		if(vProjetil[projetil.getxConflito()][projetil.getyConflito()][0]!=null) {
 			//Se o dano do projetil for maior do que o que está na posição para o qual ele quer se mover, ele se move ocupando o lugar do outro.
 			if  (projetil.getDano()>vProjetil[projetil.getxConflito()][projetil.getyConflito()][0].getDano()) {
-				projetil.setEmConflito(0);	//Seu conflito foi resolvido.	
-				projetil.setJaAgiu(1);	
+				projetil.setEmConflito(false);	//Seu conflito foi resolvido.	
+				projetil.setJaAgiu(true);	
 				
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, null); //Retira o outro projétil da posição para onde ele quer ir.
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);	
+				setProjetil(projetil.getx(), projetil.gety(), 0, null);	
 				setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 				projetil.setX(projetil.getxConflito());
 				projetil.setY(projetil.getyConflito());
 			}
 			//Caso o dano do projétil seja menor ou igual do que o que está na posição para o qual ele se moveria, ele some.
 			else
-				setProjetil(projetil.getX(), projetil.getY(), 0, null);
+				setProjetil(projetil.getx(), projetil.gety(), 0, null);
 		//Caso a posição para o qual ele quer se mover já esteja vazia, ele se move.
 		}else {
-			projetil.setEmConflito(0);
-			projetil.setJaAgiu(1);		
+			projetil.setEmConflito(false);
+			projetil.setJaAgiu(true);		
 			
-			setProjetil(projetil.getX(), projetil.getY(), 0, null);
+			setProjetil(projetil.getx(), projetil.gety(), 0, null);
 			setProjetil(projetil.getxConflito(), projetil.getyConflito(), 0, projetil);
 			projetil.setX(projetil.getxConflito());
 			projetil.setY(projetil.getyConflito());
@@ -344,6 +339,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 				princesaPosition[0]=-1;
 			}
 		}
+		again.setVisible(true);
 	}
 	
 	//Abaixo tem-se alguns métodos para retornar e modificar os atributos privados do Tabuleiro.

@@ -1,7 +1,7 @@
 package src.projetil;
 
 import src.tabuleiro.PainelTabuleiro;
-import src.PecaIcon;
+import src.personagem.PecaIcon;
 import src.tabuleiro.ITabuleiro;
 
 public class Projetil extends PecaIcon implements IProjetil{
@@ -10,10 +10,11 @@ public class Projetil extends PecaIcon implements IProjetil{
 					dano, 		//Dano efetuado no inimigo pelo projétil.
 					velocidade, //Número de casas que o projetil se move por tempo do jogo.	
 					xConflito, yConflito, //Posição ocupada por outro projétil, para o qual esse projetil quer se movimentar.
-					emConflito, //Se o projetil estiver guardado no vetor emConflito para ainda ser resolvido, é igual 1, se não, é igual a 0.
-					jaAgiu, //Se for igual a 0, o projétil ainda não agiu naquele tempo, se for 1 já. 
 					freqMov,//Frequência com que o projétil se move, ou seja, quantos passos entre um movimento e o próximo.
-					freqM;	//Se for 0, é a vez do projétil se movimentar, se não, freqM vai aumentar de tempo em tempo até ficar igual a freqMov e ser resetado para 0 novamente.
+					freqM; //Se for 0, é a vez do projétil se movimentar, se não, freqM vai aumentar de tempo em tempo até ficar igual a freqMov e ser resetado para 0 novamente.
+	
+	protected boolean emConflito, //Se o projetil estiver guardado no vetor emConflito para ainda ser resolvido, é true, se não, é false.
+					  jaAgiu; //Se for igual false, o projétil ainda não agiu naquele tempo, se for true já. 
 	protected String direcao; //Direcao em que o projetil se move.
 	
 	//Inicia o projétil com o caminho para sua respectiva imagem e sua posição x, y e z.
@@ -69,7 +70,7 @@ public class Projetil extends PecaIcon implements IProjetil{
 				tab.setProjetil(x, y, z, null);	
 			//Se a nova posiçao estiver vazia o projetil se move para ela.
 			}else if (tab.getProjetil(newX, newY, z) == null) {	
-				jaAgiu=1; 
+				jaAgiu=true; 
 				tab.setProjetil(x, y, z, null);
 				tab.setProjetil(newX, newY, z, this);
 				x = newX;
@@ -79,14 +80,14 @@ public class Projetil extends PecaIcon implements IProjetil{
 				/*Se a nova posiçao não estiver vazia e contiver um projetil que não seja uma pedra, e esse projetil não tiver 
 				 * efetuado sua ação ainda nesse tempo, o projetil não se move e é colocado em um vetor auxiliar para tratar 
 				 * os confitos entre projeteis, após o tabuleiro inteiro ser percorrido.*/
-				if (z==0 && tab.getProjetil(newX, newY, 0).getEmConflito()==0) {
+				if (z==0 && !(tab.getProjetil(newX, newY, 0).getEmConflito())) {
 					this.xConflito=newX;
 					this.yConflito=newY;
 					((PainelTabuleiro) tab).removeElemento(x,y,(PecaIcon)this);
 					tab.adicionaConflito(this);
 				//Se não estiver vazia, mas os outros requisitos acima não forem preenchidos, o projetil pode ir para a nova posição normalmente.
 				}else {
-					jaAgiu=1;	
+					jaAgiu=true;	
 					tab.setProjetil(x, y, z, null);
 					tab.setProjetil(newX, newY, z, this);
 					x = newX;
@@ -105,12 +106,12 @@ public class Projetil extends PecaIcon implements IProjetil{
 	}
 	
 	@Override
-	public int getJaAgiu() {
+	public boolean getJaAgiu() {
 		return jaAgiu;
 	}
 	
 	@Override
-	public void setJaAgiu(int j) {
+	public void setJaAgiu(boolean j) {
 		jaAgiu=j;
 	}
 	
@@ -125,22 +126,22 @@ public class Projetil extends PecaIcon implements IProjetil{
 	}
 	
 	@Override
-	public int getX() {
+	public int getx() {
 		return x;
 	}
 	
 	@Override
-	public int getY() {
+	public int gety() {
 		return y;
 	}
 	
 	@Override
-	public int getEmConflito() {
+	public boolean getEmConflito() {
 		return emConflito;
 	}
 	
 	@Override
-	public void setEmConflito(int e) {
+	public void setEmConflito(boolean e) {
 		emConflito=e;
 	}
 	
@@ -160,7 +161,6 @@ public class Projetil extends PecaIcon implements IProjetil{
 	
 	@Override
 	public void movePrincesa(String direcao) {
-		// TODO Auto-generated method stub
 		
 	}
 	

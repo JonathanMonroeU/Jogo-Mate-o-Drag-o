@@ -1,6 +1,4 @@
-package src;
-
-import src.painelmenu.PainelMenu;
+package src.painelmenu;
 
 public interface IMenu {
 	public PainelMenu getPanel();

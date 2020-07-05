@@ -1,4 +1,4 @@
-package src;
+package src.personagem;
 
 import src.tabuleiro.ITabuleiro;
 

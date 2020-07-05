@@ -8,6 +8,7 @@ public class Application {
 		      
 	public static void main(String[] args) {
 		JanelaJogo janela = new JanelaJogo();
+		janela.setTitle("Jogo - Mate O Dragão");
 	}
 
 }

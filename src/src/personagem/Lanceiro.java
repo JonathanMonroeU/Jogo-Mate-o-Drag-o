@@ -5,8 +5,7 @@ import src.tabuleiro.ITabuleiro;
 
 public class Lanceiro extends Personagem{
 	private static final long serialVersionUID = 779693959494716701L;
-	public static String DIRETORIO =
-		      Lanceiro.class.getResource(".").getPath();
+	public static String DIRETORIO = Lanceiro.class.getResource(".").getPath();
 	public static int custo = 10;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Lanceiro(int x, int y) {

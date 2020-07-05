@@ -10,7 +10,7 @@ public class Flecha extends Projetil{
 		dano= 15;
 		freqMov=4;
 		velocidade= 1;
-		jaAgiu=0;
+		jaAgiu=false;
 	}
 	
 }

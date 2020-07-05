@@ -10,7 +10,7 @@ public class Pedra extends Projetil{
 		dano= 100;
 		freqMov=3;
 		velocidade= 1;
-		jaAgiu=2;  //nunca entra em conflito
+		jaAgiu=false;  //nunca entra em conflito
 	}
 	
 	

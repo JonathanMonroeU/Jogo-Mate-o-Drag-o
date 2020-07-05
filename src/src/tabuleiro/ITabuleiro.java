@@ -5,13 +5,14 @@ import javax.swing.JLabel;
 
 import src.projetil.IProjetil;
 import src.tabuleiro.PainelTabuleiro;
-import src.IMovimento;
 import src.dataprovider.IDataProvider;
 import src.exceptions.SemPersonagem;
+import src.personagem.IMovimento;
 import src.personagem.IPersonagem;
 
 public interface ITabuleiro {
 	public void play() throws SemPersonagem;
+	public void finish();
 	public void modificaTabuleiro();
 	public IMovimento getPeca(int x, int y, int z);
 	

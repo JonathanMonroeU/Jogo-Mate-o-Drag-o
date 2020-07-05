@@ -14,18 +14,21 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
-import src.PecaIcon;
+import src.personagem.PecaIcon;
 
 public class PainelTabuleiro extends JPanel{
 	private static final long serialVersionUID = 2294710292947110323L;
 	public static String DIRETORIO = PainelTabuleiro.class.getResource(".").getPath();
-	protected GramaPanel celulas[][] = new GramaPanel[20][20];
-	protected JLabel vidaDragao, vidaPrincesa, finish;
-	protected JButton again;
+	protected GramaPanel celulas[][] = new GramaPanel[20][20]; //Matriz que guarda os componentes gráficos
+	protected JLabel vidaDragao, //Campo que mostra a vida do dragão
+					 vidaPrincesa, //Campo que mostra a vida da princesa
+					 finish; //Campo que mostra a mensagem de fim de jogo
+	protected JButton again; //Botão de "Jogar novamente"
 	
+	//Customização inicial do painel do tabuleiro
 	public PainelTabuleiro() {
 		setLayout(new GridLayout(20,20));
-		this.setBackground(new java.awt.Color(150, 0, 0));
+		this.setBackground(new Color(150, 0, 0));
 		for (int i=0; i<20; i++) {
 	    	for (int j=0; j<20; j++) {
 	    		celulas[i][j] = new GramaPanel(); //new JPanel()
@@ -37,16 +40,19 @@ public class PainelTabuleiro extends JPanel{
 	    }
 	}
 	
+	//Esse método adiciona componentes gráficos ao vetor "celulas"
 	public void setElemento(int x, int y, PecaIcon p) {
-		/*celulas[x][y].add(p);*/	celulas[x][y].add(p,BorderLayout.CENTER);
+		celulas[x][y].add(p,BorderLayout.CENTER);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	
+	//Esse método remove componentes gráficos do vetor "células"
 	public void removeElemento(int x, int y, PecaIcon p) {
 		celulas[x][y].remove(p);
 		SwingUtilities.updateComponentTreeUI(this);
 	}
 	
+	//Essa classe privada realiza a inserção de uma imagem de grama como imagem de fundo de cada célula do grid
 	private class GramaPanel extends JPanel { 
 		private static final long serialVersionUID = -3569117592893744545L;
 

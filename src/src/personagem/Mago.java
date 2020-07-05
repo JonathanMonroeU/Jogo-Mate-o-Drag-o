@@ -5,8 +5,7 @@ import src.tabuleiro.ITabuleiro;
 
 public class Mago extends Personagem{
 	private static final long serialVersionUID = 3986495568011382602L;
-	public static String DIRETORIO =
-		      Mago.class.getResource(".").getPath();
+	public static String DIRETORIO = Mago.class.getResource(".").getPath();
 	public static int custo = 15;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Mago(int x, int y) {

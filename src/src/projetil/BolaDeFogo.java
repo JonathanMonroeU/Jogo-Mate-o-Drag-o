@@ -10,7 +10,7 @@ public class BolaDeFogo extends Projetil{
 		dano=100;
 		freqMov=6;
 		velocidade= 1; 
-		jaAgiu=0;
+		jaAgiu=false;
 		
 	}
 	

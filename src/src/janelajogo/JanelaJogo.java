@@ -17,9 +17,9 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import src.dataprovider.DataProvider;
+import src.painelmenu.IMenu;
 import src.painelmenu.PainelMenu;
 import src.tabuleiro.Tabuleiro;
-import src.IMenu;
 import src.tabuleiro.ITabuleiro;
 
 
@@ -28,25 +28,32 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	private IMenu painelMenu;
 	private ITabuleiro painelGrid;
 	
+	//Customização inicial da janela do jogo e criando primeiras instâncias de Tabuleiro, DataProvider e PainelMenu
 	public JanelaJogo() {
 		super();
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setExtendedState(JFrame.MAXIMIZED_BOTH);
 		setResizable(false);
+		
 		painelGrid = new Tabuleiro();
 		painelMenu = new PainelMenu(painelGrid, new DataProvider(100));
+		
+		//Adicionando ActionListener ao botão de "Jogar Novamente"
 		painelGrid.getAgainButton().addActionListener(this);
+		
 		visual();
 	}
 	
+	//Customização da janela do jogo e organização da disposição dos painéis
 	public void visual() {
 		Container contentPane = getContentPane();
 		contentPane.setLayout(new BorderLayout());
 		
+		//Adição dos painéis gráficos do tabuleiro e do menu
 		contentPane.add(painelGrid.getPanel(), BorderLayout.CENTER);
 	    contentPane.add(painelMenu.getPanel(), BorderLayout.EAST);
 	    
-	    	    
+	    //Adição das lestras de posição do tabuleiro
 	    JPanel letras = new JPanel();
 	    letras.setLayout(new BoxLayout(letras, BoxLayout.X_AXIS));
 	    JPanel vLetras = new JPanel();
@@ -65,6 +72,7 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    letras.add(Box.createRigidArea(new Dimension(360,0)));
 	    contentPane.add(letras, BorderLayout.SOUTH);
 	    
+	    //Adição dos numeros de posição do tabuleiro
 	    JPanel numeros = new JPanel();
 	    numeros.setLayout(new BoxLayout(numeros, BoxLayout.Y_AXIS));
 	    JPanel vNumeros = new JPanel();
@@ -82,9 +90,11 @@ public class JanelaJogo extends JFrame implements ActionListener{
 	    vNumeros.setBackground(new java.awt.Color(150, 0, 0));
 	    numeros.add(vNumeros);
 	    contentPane.add(numeros, BorderLayout.WEST);
+	    
 	    setVisible(true);
 	}
 	
+	//Caso receba uma notificação do botão de "Jogar Novamente", remove-se do jogo o Tabuleiro e Menu anteriores e instanciam-se novos componentes desses
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		Container contentPane = getContentPane();
@@ -97,19 +107,4 @@ public class JanelaJogo extends JFrame implements ActionListener{
 		painelGrid.getAgainButton().addActionListener(this);
 		visual();
 	}
-	/*public void adicionaElemento(PecaIcon obj) {
-		painelGrid.setElemento(obj.getX(),obj.getY(),obj);
-		SwingUtilities.updateComponentTreeUI(this);
-	}*/
-	
-	
-	/*private class NewContentPane extends JPanel{
-		private static final long serialVersionUID = -4416680110711209505L;
-
-		protected void paintComponent(final Graphics g) {
-                super.paintComponent(g);
-                Image img = imagemFundo.getImage();
-                g.drawImage(img, 0, 0, this);
-        }
-    }*/
 }

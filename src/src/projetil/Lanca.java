@@ -10,7 +10,7 @@ public class Lanca extends Projetil{
 		dano= 25;
 		freqMov=6;
 		velocidade= 1;
-		jaAgiu=0;
+		jaAgiu=false;
 	}
 	
 }
