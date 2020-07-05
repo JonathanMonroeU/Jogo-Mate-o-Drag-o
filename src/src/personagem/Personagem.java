@@ -128,7 +128,7 @@ public abstract class Personagem extends PecaIcon implements IPersonagem {
 	
 	//Pega o dano do projetil e subtrai na vida do personagem que está naquela posição, se o ataque for inimigo. No caso da princesa, ela pode levar dano de qualquer projétil. 
 	@Override
-	public void perdeVida(IProjetil projetil, ITabuleiro tab) {
+	public void perdeVida(IProjetil projetil) {
 		if ( (this instanceof Dragao || this instanceof Princesa) && !(projetil instanceof BolaDeFogo)) {
 			vida -= projetil.getDano();
 		}else if (!(this instanceof Dragao) && projetil instanceof BolaDeFogo)

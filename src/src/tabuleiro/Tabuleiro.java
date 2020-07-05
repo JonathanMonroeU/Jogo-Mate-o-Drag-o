@@ -174,19 +174,19 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		
 		//Se a princesa estiver na posição de um projétil, é ativado o método que faz ela perder vida.
 		if (vProjetil[princesaPosition[0]][princesaPosition[1]][0]!=null) {
-			vPersonagem[princesaPosition[0]][princesaPosition[1]][1].perdeVida(vProjetil[princesaPosition[0]][princesaPosition[1]][0],this);
+			vPersonagem[princesaPosition[0]][princesaPosition[1]][1].perdeVida(vProjetil[princesaPosition[0]][princesaPosition[1]][0]);
 			setProjetil(princesaPosition[0], princesaPosition[1], 0, null);
 		}
 		for (int i=0; i<20; i++) {
 			for (int j=0; j<20; j++) {
 				//Se houver um pesonagem e um projétil na mesma posição é ativado o método que checa se ele deve perder vida e a reduz se necessário.
 				if (vPersonagem[i][j][0] != null && vProjetil[i][j][0]!=null) { 
-					vPersonagem[i][j][0].perdeVida(vProjetil[i][j][0],this);
+					vPersonagem[i][j][0].perdeVida(vProjetil[i][j][0]);
 					setProjetil(i, j, 0, null);
 				}
 				//Se houver um pesonagem e um projétil na mesma posição é ativado o método que checa se ele deve perder vida e a reduz se necessário.
 				if (vPersonagem[i][j][0] != null && vProjetil[i][j][1]!=null) {
-					vPersonagem[i][j][0].perdeVida(vProjetil[i][j][1],this);
+					vPersonagem[i][j][0].perdeVida(vProjetil[i][j][1]);
 					setProjetil(i, j, 1, null);
 				}
 				//Se houver um personagem na posição, é reiniciado o atributo que diz que ele já agiu no tempo, para estar 0 no pŕoximo tempo do jogo.
