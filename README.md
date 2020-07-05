@@ -94,28 +94,15 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 # Destaques de Código
 
 > <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
-
+- Destaque para a parte do código que realiza a inserção de um novo personagem no componente DataProvider:
 ~~~java
-/*Recebe o tipo de personagem que deve ser inserido e as coordenadas da posição, 
+public class DataProvider implements IDataProvider{
+	...
+	/*Recebe o tipo de personagem que deve ser inserido e as coordenadas da posição, 
 	 * dependendo da posição pode causar um dos erros.*/
 	@Override
 	public void inserePersonagem(int comando, int x, int y) throws AdicaoInvalida{
-		//Se a posição for fora do campo:
-		if (x<0 || x>19 || y<0 || y>19)
-			throw new AdicaoLugarInexistente("Nao existe essa posicao!");
-		//Se a posição for dentro de um certo raio do dragão, de 5 casas para cada direção:
-		if ((x>=0 && x<=10) && (y>=4 && y<=15))
-			throw new AdicaoLugarProibido("Você nao pode adicionar nesse lugar!");
-		//Se a posição for a posição inicial da princesa:
-		if (x==18 && y==10)
-			throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
-		/*Se passar pelos outros erros, o vetor que guarda os personagens já inseridos e 
-		 * suas posições é varrido de modo a ver se já tem um personagem nessa posição.*/
-		for(int i=1; i<pecaPosition.length; i+=3) {
-			if (pecaPosition[i] == x && pecaPosition[i+1] == y) {
-				throw new AdicaoLugarOcupado("Ja ha um personagem nessa posicao!");
-			}
-		}
+		...
 		
 		/*Dependendo do tipo de personagem solicitado, ele é colocado no vetor que guarda todos os personagens já inseridos.
 		 * E a quantidade de pontos de custo para inserir é reduzida do total disponível.*/
@@ -126,7 +113,7 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 					setX(x);
 					setY(y);
 					setTipo(1);
-					while (pecaPosition[atual] != 0) {
+					while (pecaPosition[atual] != -1) {
 						atual += 3;
 					}
 				}
@@ -139,139 +126,129 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 					setX(x);
 					setY(y);
 					setTipo(2);
-					while (pecaPosition[atual] != 0) {
+					while (pecaPosition[atual] != -1) {
 						atual += 3;
 					}
 				}
 				else
 					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
 				break;
-			case 3:
-				if (Mago.custo <= pontos) {
-					removePontos(Mago.custo);
-					setX(x);
-					setY(y);
-					setTipo(3);
-					while (pecaPosition[atual] != 0) {
-						atual += 3;
-					}
-				}
-				else
-					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
-				break;
-			case 4:
-				if (Catapulta.custo <= pontos) {
-					removePontos(Catapulta.custo);
-					setX(x);
-					setY(y);
-					setTipo(4);
-					while (pecaPosition[atual] != 0) {
-						atual += 3;
-					}
-				}
-				else
-					throw new AdicaoPontosInsuficientes("Pontos Insuficientes!");
-				break;
-			default:
-				//System.out.println("Comando Inválido!");
-				break;
+			... 
+			//O raciocínio é mesmo para a inserção dos outros personagens
 		}
 	}
+	...
+}
 ~~~
+
+- Destaque para o método que realiza a recepção dos dados de DataProvider:
 ~~~java
-//Encontra a nova posição para o personagem e o move para ela.
+public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
+	...
+	
+	//Pega o vetor pecaPositionAtual do dataProvider para fazer a remoção ou inserção do personagem no campo, dependendo das informações contidas nele.//
+	@Override
+	public void receiveData(IDataProvider dataProvider) {
+		int position[] = dataProvider.getData();
+		if (position[0] == 0)  //Zero é remoção.
+			removePeca(position[1],position[2], 0);
+		else
+			putPersonagem(position[1],position[2],position[0]);
+	}
+	...
+}
+~~~
+
+- Destaque para o método que movimenta um personagem:
+~~~java
+public abstract class Personagem extends PecaIcon implements IPersonagem {
+	...
+	//Encontra a nova posição para o personagem e o move para ela.
 	@Override
 	public void move(ITabuleiro tab) {	
-		
-		int tentativas=0;	//Número de tentativas de se mover começa zerado, se passar de 30 provavelmente é porque está encurralado, então deixa para tentar se mover no próximo passo do jogo.
-		if (freqM == 0) {	//Quando está zero, é a vez do personagem se mover.
-			newX = x;
-			newY = y;
+		...
 			
-			while ( (tab.getPeca(newX, newY,0) != null || tab.getPeca(newX, newY, 1) != null) && tentativas<=30) {	//Fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas.
-				tentativas+=1;
-				newX = x;
-				newY = y;
+		while ( (tab.getPeca(newX, newY,0) != null || tab.getPeca(newX, newY, 1) != null) && tentativas<=30) {	//Fica no loop enquanto não acha uma nova posição vazia e ainda não passou do máximo de tentativas.
+			tentativas+=1;
 				
-				//Valor entre -1,0 e 1 a ser adicionado multiplicado pelo passo e/ou subtraido aleatoriamente em x e y.
-				int addX = alea.nextInt(3)-1;	
-				int addY = alea.nextInt(3)-1;
-				
-				//Se não for o dragão, testa se a nova posição é coerente para o soldado:
-				if (this instanceof Dragao==false) { 
-					newX += passo*addX;	
-					newY += passo*addY; 
-					//Se a nova posição estiver fora do campo, reinicia e volta do inicio do while.
-					if(newX<0 || newX>19 || newY<0 || newY>19) {
-						newX = x;
-						newY = y;
-						continue;
-					//Se a nova posição estiver a uma distância maior ou igual a mínima em relação ao dragão, que é até 4 casas, volta para o início do while, que testa se ela está vazia.
-					}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
-					||newY-tab.getDragonPosition()[1]<=-5||newY-tab.getDragonPosition()[1]>=4) {	
-						continue;
-					//Se não estiver a uma distância segura do dragão de mais de 3 casas, reinicia e volta para o início do while.
-					}else {
-						newX = x;
-						newY = y;
-						continue;
-					}
-				}	
-				//Se for o dragão, testa se a nova posição é coerente para o dragão:
-				if (this instanceof Dragao) { 
-					//O dragão só se move em x ou y a cada passo, então é escolhido aleatoriamente um dos dois para ser modificado.
-					int a=alea.nextInt(2);
-					if (a==0) {
-						newX += passo*addX;		
-					}else {		
-						newY += passo*addY;		
-					//Se a nova posição estiver fora do campo, reinicia e volta do início do while.
-					}if(newX<1 || newX>19 || newY<1 || newY>19) {
-						newX = x;
-						newY = y;
-						continue;
-					//Se a nova posição estiver vazia ou for parte do prṕrio dragão, para as 4 posições que o compõe, a nova posição é válida e sai do while imediatamente.
-					}if ( ( (tab.getPeca(newX, newY, 0)==null && (tab.getPeca(newX, newY, 1)==null) )|| tab.getPeca(newX, newY, 0)==this) &&
-						(  (tab.getPeca(newX-1, newY,0)==null && (tab.getPeca(newX-1, newY,1)==null) )|| tab.getPeca(newX-1, newY, 0)==this) &&
+			//Valor entre -1,0 e 1 a ser adicionado multiplicado pelo passo e/ou subtraido aleatoriamente em x e y.
+			int addX = alea.nextInt(3)-1;	
+			int addY = alea.nextInt(3)-1;
+			
+			//Se não for o dragão, testa se a nova posição é coerente para o soldado:
+			if (!(this instanceof Dragao)) { 
+				newX += passo*addX;	
+				newY += passo*addY; 
+				//Se a nova posição estiver fora do campo, reinicia e volta do inicio do while.
+				if(newX<0 || newX>19 || newY<0 || newY>19) {
+					newX = x;
+					newY = y;
+					continue;
+				//Se a nova posição estiver a uma distância maior ou igual a mínima em relação ao dragão, que é até 4 casas, volta para o início do while, que testa se ela está vazia.
+				}if (newX-tab.getDragonPosition()[0]<=-5||newX-tab.getDragonPosition()[0]>=4
+				||newY-tab.getDragonPosition()[1]<=-5||newY-tab.getDragonPosition()[1]>=4) {	
+					continue;
+				//Se não estiver a uma distância segura do dragão de mais de 3 casas, reinicia e volta para o início do while.
+				}else {
+					newX = x;
+					newY = y;
+					continue;
+				}
+			}	
+			//Se for o dragão, testa se a nova posição é coerente para o dragão:
+			if (this instanceof Dragao) { 
+				//O dragão só se move em x ou y a cada passo, então é escolhido aleatoriamente um dos dois para ser modificado.
+				int a=alea.nextInt(2);
+				if (a==0) {
+					newX += passo*addX;		
+				}else {		
+					newY += passo*addY;		
+				//Se a nova posição estiver fora do campo, reinicia e volta do início do while.
+				}if(newX<1 || newX>19 || newY<1 || newY>19) {
+					newX = x;
+					newY = y;
+					continue;
+				//Se a nova posição estiver vazia ou for parte do prṕrio dragão, para as 4 posições que o compõe, a nova posição é válida e sai do while imediatamente.
+				}if ( ( (tab.getPeca(newX, newY, 0)==null && (tab.getPeca(newX, newY, 1)==null) )|| tab.getPeca(newX, newY, 0)==this) &&
+					(  (tab.getPeca(newX-1, newY,0)==null && (tab.getPeca(newX-1, newY,1)==null) )|| tab.getPeca(newX-1, newY, 0)==this) &&
 					 ( (tab.getPeca(newX, newY-1, 0)==null &&  (tab.getPeca(newX, newY-1, 1)==null) )|| tab.getPeca(newX, newY-1, 0)==this )&&
 					 ( (tab.getPeca(newX-1, newY-1, 0)==null && (tab.getPeca(newX-1, newY-1, 1)==null) )|| tab.getPeca(newX-1, newY-1, 0)==this) ) {
-						break;
-					//Se não, reinicia e volta do início do while.	
-					}else {
-						newX = x;
-						newY = y;
-						continue;
-						
-					}
+					break;
+				//Se não, reinicia e volta do início do while.	
+				}else {
+					newX = x;
+					newY = y;
+					continue;
+					
 				}
 			}
-			/*Se achar a nova posição tiver sido tentado menos de 30 vezes, ou seja, passado por dentro do while 
-			 * e sido aprovada, a posição atual vira null e o personagem é colocado na nova posição*/
-			if (tentativas<=30) {
-				tab.setPersonagem(x, y, 0, null);
-					
-				//Se for o dragão, as outras 3 posições que o compõem tem que ser ajustadas também.
-				if (this instanceof Dragao) {
-					tab.setDragonPosition(newX,newY);
-					tab.setPersonagem(x-1, y, 0, null);	
-					tab.setPersonagem(x, y-1, 0, null);
-					tab.setPersonagem(x-1, y-1,0, null);
-					
-					tab.setPersonagem(newX-1, newY, 0, this);
-					tab.setPersonagem(newX, newY-1, 0, this);	
-					tab.setPersonagem(newX-1, newY-1, 0, this);
-				}
-				tab.setPersonagem(newX, newY, 0, this);
-				this.jaAgiu=1;
+		}
+		/*Se achar a nova posição tiver sido tentado menos de 30 vezes, ou seja, passado por dentro do while 
+		 * e sido aprovada, a posição atual vira null e o personagem é colocado na nova posição*/
+		if (tentativas<=30) {
+			tab.setPersonagem(x, y, 0, null);
 				
-				//Os atributos x e y do objeto são atualizados.
-				x = newX;
-				y = newY;
+			//Se for o dragão, as outras 3 posições que o compõem tem que ser ajustadas também.
+			if (this instanceof Dragao) {
+				tab.setDragonPosition(newX,newY);
+				tab.setPersonagem(x-1, y, 0, null);	
+				tab.setPersonagem(x, y-1, 0, null);
+				tab.setPersonagem(x-1, y-1,0, null);
+				
+				tab.setPersonagem(newX-1, newY, 0, this);
+				tab.setPersonagem(newX, newY-1, 0, this);	
+				tab.setPersonagem(newX-1, newY-1, 0, this);
 			}
-		}//A frequência de movimento é atualizada se mover o personagem tiver sido um sucesso, para ele se mover novamente quando seu valor voltar a 0.
-		if (tentativas<=30) 
-			freqM = (freqM + 1)%movimento;
+			tab.setPersonagem(newX, newY, 0, this);
+			this.jaAgiu=1;
+			
+			//Os atributos x e y do objeto são atualizados.
+			x = newX;
+			y = newY;
+		}
+	...
 	}
+}
 ~~~
 ~~~java
 //Instancia um projetil na posição do personagem e imediatamente ativa o método que move o projétil, depois atualizando a frequência de ataque, que diz que o personagem pode disparar quando for 0
