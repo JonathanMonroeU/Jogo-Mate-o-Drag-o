@@ -37,7 +37,18 @@ Nosso diagrama, inicialmente, possuía 5 componentes, como ilustrado abaixo:
 
 Alguns problemas citados na arguição foram a falta de conexão entre Soldados e Ataque e o fato de a interface IPeca não ser requerida por ninguém. Refletimos sobre essas incoerências e concluímos o seguinte: sobre o primeiro problema, definimos que não havia interface entre Soldados e Ataque, pois o Ataque (o qual deve ser imaginado como um projétil, a exemplo de flecha, lança, entre outros) se movimenta no tabuleiro independentemente do personagem que o disparou, sendo a única ação do soldado ser instanciar o objeto Ataque no tabuleiro, e, para isso, não foi necessário o Soldado requerer nenhuma interface do Ataque; 
 
-*colocar trecho de código para exemplificar*
+Segue abaixo, o exemplo do Arqueiro com a Flecha:
+~~~java
+public class Arqueiro extends Personagem {
+	...
+	public void disparaProjetil(ITabuleiro tab) {
+		...
+		tab.putProjetil(x, y, 0, new Flecha(x, y, 0,"ci","flecha-ci.png"));
+		...
+	}
+	...
+}	
+~~~
 
 Sobre o segundo problema, reparamos que, realmente, a interface IPeca deveria ter sido colocada como requerida pelo Tabuleiro, portanto, corrigimos isso.
 
