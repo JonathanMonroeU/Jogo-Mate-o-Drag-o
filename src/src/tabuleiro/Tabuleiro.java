@@ -38,6 +38,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	private int numeroSoldados;					//Quantidade de soldados inseridos pelo jogador no momento.
 	private int atual;							
 	private Metronomo metro = new Metronomo(20);	//Metrônomo definindo o tempo para ativação de cada modificação do campo.
+	private MeuKeyListener keys;				//Implementa KeyListener, e contém métodos para receber as teclas do teclado e ativar a movientação da princesa.
 	private PecaIcon compl1,compl2,compl3;		//3 PecaIcon para completar a imagem do dragão.
 	
 	public Tabuleiro() {
@@ -98,43 +99,18 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		again.setAlignmentX(CENTER_ALIGNMENT);
 		again.setVisible(false);
 		
+		keys=new MeuKeyListener(this);
 		metro.addActionListener(this);
 	}
 	
 	/*O método é ativado quando é pressionado o botão "Iniciar Jogo", que inicia o metrônomo que cadencia os passos do jogo
-	 * e também ativa o tabuleiro como KeyListener, para receber os cliques do direcional que ativam o método de movimento da princesa.*/
+	 * e também ativa o método para receber os cliques do direcional que ativam o método de movimento da princesa.*/
 	@Override
 	public void play() throws SemPersonagem{
 		if (numeroSoldados == 0)
 			throw new SemPersonagem("Voce nao pode comecar o jogo sem personagens!");
 		metro.start();
-		this.addKeyListener(new KeyListener() {
-			@Override
-			public void keyPressed(KeyEvent event) {
-				if (princesaPosition[0]!=-1) {  //-1 indica que a princesa está morta.
-	                if (event.getKeyCode()== KeyEvent.VK_UP) {
-	                	vPersonagem[princesaPosition[0]][princesaPosition[1]][1].movePrincesa("up");
-	            	}
-	                if (event.getKeyCode()== KeyEvent.VK_LEFT) {
-	                	vPersonagem[princesaPosition[0]][princesaPosition[1]][1].movePrincesa("left");
-	                }
-	                if (event.getKeyCode()== KeyEvent.VK_RIGHT) {
-	                	vPersonagem[princesaPosition[0]][princesaPosition[1]][1].movePrincesa("right");
-	                }
-	                if (event.getKeyCode()== KeyEvent.VK_DOWN) {
-	                	vPersonagem[princesaPosition[0]][princesaPosition[1]][1].movePrincesa("down");
-	                }
-				}
-            }
-            @Override
-            public void keyReleased(KeyEvent event) {
-                // 
-            }
-            @Override
-            public void keyTyped(KeyEvent event) {
-                // 
-            }
-        });
+		this.addKeyListener(keys); 
 		this.setFocusable(true);
         this.requestFocusInWindow();
 	}

@@ -122,7 +122,7 @@ public class Dragao extends Personagem{
 				}
 			}	
 			else {
-				//DISPARO DIRECIONADO:
+				//DISPARO DIRECIONADO DO DRAGÃO:
 				
 				int hor,ver,encontrado=0, //Distância horizontal e vertical do dragão ao personagem.
 					pX=100,pY=100; //posição
