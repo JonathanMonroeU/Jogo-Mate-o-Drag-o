@@ -560,7 +560,7 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 `<Destaque de patterns adotados pela equipe. Sugestão de estrutura:>`
 
 ## Diagrama do Pattern
-`<Diagrama do pattern dentro do contexto da aplicação.>`
+![Diagrama Pattern](assets/documentacao/pattern-metronomo.png)
 
 ## Código do Pattern
 ~~~java
@@ -603,7 +603,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 
 
 ## Diagrama do Pattern
-`<Diagrama do pattern dentro do contexto da aplicação.>`
+![Diagrama Pattern](assets/documentacao/pattern-meukeylistener.png)
 
 ## Código do Pattern
 ~~~java
