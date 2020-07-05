@@ -849,12 +849,12 @@ Método | Objetivo
 `getFinishLabel` | `Retorna o campo gráfico que mostra a mensagem de fim de jogo.`
 `getAgainButton` | `Retorna o botão de “Jogar Novamente”.`
 
-### Interface `actionListener`
+### Interface `ActionListener`
 
 `Interface para receber eventos de ação.`
 
 ~~~
-interface ActionListener{
+public interface ActionListener{
 	public void actionPerfoormed(ActionEvent e);
 }
 ~~~
@@ -1244,12 +1244,12 @@ Método | Objetivo
 -------| --------
 `getPanel` | `Retorna o painel gráfico do menu.`
 
-### Interface `actionListener`
+### Interface `ActionListener`
 
 `Interface para receber eventos de ação.`
 
 ~~~
-interface ActionListener{
+public interface ActionListener{
 	public void actionPerfoormed(ActionEvent e);
 }
 ~~~
@@ -1287,13 +1287,13 @@ Interface agregadora do componente em Java:
 
 ## Detalhamento das Interfaces
 
-### Interface `actionListener`
+### Interface `ActionListener`
 
 `Interface para receber eventos de ação.`
 
 ~~~
-interface ActionListener{
-	public void actionPerfoormed(ActionEvent e);
+public interface ActionListener{
+	public void actionPerformed(ActionEvent e);
 }
 ~~~
 
@@ -1301,6 +1301,94 @@ Método | Objetivo
 -------| --------
 `actionPerformed` | `Invocado quando uma ação ocorre.`
 
+## Componente `MeuKeyListener`
+
+Administra as ações recebidas pelo teclado e modifica o Tabuleiro com base nisso.
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.tabuleiro.MeuKeyListener`
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `KeyListener`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IDataSet extends ITableProducer, IDataSetProperties {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+### Interface `KeyListener`
+
+`Realiza determinadas ações de acordo com as informações de teclado recebidas`
+
+~~~
+public interface KeyListener {
+	public void keyPressed(KeyEvent event);
+	public void keyReleased(KeyEvent event);
+	public void keyTyped(KeyEvent event);
+~~~
+
+Método | Objetivo
+-------| --------
+`keyPressed(KeyEvent event)` | `Realiza ações de acordo com o botão do teclado pressionado`
+`keyReleased(KeyEvent event)` | `Realiza ações de acordo com o botão do teclado que foi solto`
+`keyTyped(KeyEvent event)` | `Realiza ações de acordo com um caracter adicionado`
+
+## Componente `Metronomo`
+
+Notifica um evento a cada intervalo de tempo para o Tabuleiro
+
+![Componente](diagrama-componente.png)
+
+**Ficha Técnica**
+item | detalhamento
+----- | -----
+Classe | `src.tabuleiro.Metronomo`
+Autores | `Áureo Henrique e Lindon Jonathan`
+Interfaces | `ActionListener`
+
+### Interfaces
+
+Interfaces associadas a esse componente:
+
+![Diagrama Interfaces](diagrama-interfaces.png)
+
+Interface agregadora do componente em Java:
+
+~~~java
+public interface IDataSet extends ITableProducer, IDataSetProperties {
+}
+~~~
+
+## Detalhamento das Interfaces
+
+## Detalhamento das Interfaces
+
+### Interface `ActionListener`
+
+`Interface para receber eventos de ação.`
+
+~~~
+public interface ActionListener{
+	public void actionPerformed(ActionEvent e);
+}
+~~~
+
+Método | Objetivo
+-------| --------
+`actionPerformed` | `Invocado quando uma ação ocorre.`
 
 # Plano de Exceções
 
