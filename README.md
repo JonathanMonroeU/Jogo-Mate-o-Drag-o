@@ -12,10 +12,10 @@ o jogador controla a princesa para não deixá-la ser atingida pelos projéteis.
 # Vídeos do Projeto
 
 ## Vídeo da Prévia
-[Link para o vídeo](https://drive.google.com/file/d/1WTYxDMbC_eBaEOWbAoLYA-gZTC5DdQ9w/view?usp=sharing)
+[Link para o vídeo da prévia](https://drive.google.com/file/d/1WTYxDMbC_eBaEOWbAoLYA-gZTC5DdQ9w/view?usp=sharing)
 
 ## Vídeo do Jogo
-> <Coloque um link para o vídeo em que é demonstrada a versão final do jogo. Esse vídeo deve ter em torno de 5 minutos. Este vídeo não apresenta slides, nem substitui a apresentação final do projeto, que será feita por conferência. Ele mostra apenas o jogo em funcionamento.>
+[Link para o vídeo do jogo](https://drive.google.com/file/d/1wUUSCiX_mvkXUU9mGDXd2DYhrIfTiNr8/view?usp=sharing)
 
 # Slides do Projeto
 
@@ -525,7 +525,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	...
 }
 ~~~
-- Destaque do método que faz a análide de fim de jogo:
+- Destaque do método que faz a análise de fim de jogo:
 ~~~java
 public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
 	...
@@ -855,7 +855,7 @@ Método | Objetivo
 
 ~~~
 public interface ActionListener{
-	public void actionPerfoormed(ActionEvent e);
+	public void actionPerformed(ActionEvent e);
 }
 ~~~
 
@@ -1250,7 +1250,7 @@ Método | Objetivo
 
 ~~~
 public interface ActionListener{
-	public void actionPerfoormed(ActionEvent e);
+	public void actionPerformed(ActionEvent e);
 }
 ~~~
 
