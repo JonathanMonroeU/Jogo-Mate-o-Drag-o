@@ -672,9 +672,13 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 
 # Conclusões e Trabalhos Futuros
 
+Ao fim do projeto, sentimos que aprendemos e praticamos bastante os conceitos de orientação a objetos. Entendemos como é o trabalho com uma grande quantidade de classes e como organizá-las e relacioná-las através de herança e de interfaces, além de ter um conhecimento mais concreto do que é um componente e como implementá-lo. O mais interessante é poder, ao final, ver como cada componente se conecta com o outro para construir um sistema único, o qual faz nosso jogo funcionar.
+
+Embora entendemos sobre os conceitos de design patterns e arquitetura de software, sentimos que poderíamos ter explorado mais eles no projeto. Talvez ter estudado mais os outros tipos de pattern e ver se eles se encaixavam na ideia do nosso sistema, já que utilizamos apenas o Observer. Como trabalhamos com componentes gráficos que se relacionavam, o Composite Pattern teria sido uma opção viável de ser trabalhada, por exemplo. Também poderíamos ter analisado melhor os conceitos da arquitetura Model-View-Controller, apresentados em aula, dentro do trabalho. No entanto, essas são questões que serão trabalhadas posteriormente.
+
 Futuramente, pretendemos evoluir a ideia do jogo. Algumas ideias propostas foram: criar outros tipos de dragão, com poderes especiais ou mais fortes; adicionar fases ao jogo, para que o jogador tenha diferentes níveis de dificuldade; criar outros tipos de personagens como o clérigo, apresentado nos slides de prévia; customizar melhor a interface gráfica; e adicionar sons característicos de personagem e de dano.
 
-> <Apresente aqui as conclusões do projeto e propostas de trabalho futuro. Esta é a oportunidade em que você pode indicar melhorias no projeto a partir de lições aprendidas e conhecimentos adquiridos durante a realização do projeto, mas que não puderam ser implementadas por questões de tempo. Por exemplo, há design patterns aprendidos no final do curso que provavelmente não puderam ser implementados no jogo -- este é o espaço onde você pode apresentar como aplicaria o pattern no futuro para melhorar o jogo.>
+Importante perceber que tais ideias podem exigir uma mudança razoável na arquitetura do projeto. Introduzir fases ao jogo, por exemplo, pode gerar um novo tipo de componente que lê um banco de dados e o interpreta de forma a gerar um tipo de tabuleiro específico, com um determinado tipo de dragão, o qual deve ser entregue ao Tabuleiro, para poder iniciar o jogo. O PainelMenu também estaria relacionado a esse novo componente, uma vez que o jogador utilizaria o menu para escolher sua fase. Ou seja, são inúmeras ideias que poderiam surgir.
 
 # Documentação dos Componentes
 
@@ -682,7 +686,6 @@ Futuramente, pretendemos evoluir a ideia do jogo. Algumas ideias propostas foram
 
 ## Diagrama Geral do Projeto
 
-> <Apresente um diagrama geral de organização da organização do seu sistema. O formato é livre. A escolha de um ou mais estilos arquiteturais será considerado um diferencial.>
 ![DiagramaGeral](assets/documentacao/DiagramaGeral.png)
 
 > <Faça uma breve descrição do diagrama.>
