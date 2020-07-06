@@ -522,48 +522,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 	...
 }
 ~~~
-- Destaque do método que faz a análise de fim de jogo:
-~~~java
-public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionListener{
-	...
-	//Se alguma das condições para o jogo terminar for cumprida, esse método é chamado para exibir a mensagem final e a vida do dragão ou princesa como 0 se tiverem morrido.
-	public void finish() {
-		if (vPersonagem[dragonPosition[0]][dragonPosition[1]][0].getVida() <= 0) {
-			finish.setForeground(Color.GREEN);
-			finish.setText("<html>"+"<center>"
-				+"<b>VOCÊ GANHOU!</b>"+"<br/>"
-				+"	Você conseguiu matar o dragão,"+"<br/>"
-				+ "salvando a princesa "+"<br/>"
-				+"e todo o reino!!!"+"<center>"+"</html>");
-			vidaDragao.setText("0");
-			princesaPosition[0]=-1;
-		}
-		else {
-			if (vPersonagem[princesaPosition[0]][princesaPosition[1]][1].getVida()<=0) {
-				removePeca(princesaPosition[0], princesaPosition[1], 1);
-				vidaPrincesa.setText("0");
-				finish.setForeground(Color.lightGray);
-				finish.setText("<html>"+"<center>"
-						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
-						+"A princesa morreu e levou"+"<br/>"
-						+"consigo a alegria do reino."+"<br/>"
-						+"O rei infartou ao saber."+"<center>"+"</html>");
-				princesaPosition[0]=-1;	
-			}else {
-				finish.setForeground(Color.lightGray);
-				finish.setText("<html>"+"<center>"
-						+"<b>VOCÊ PERDEU!</b>"+"<br/>"
-						+"Todos os soldados morreram e o"+"<br/>"
-						+ "dragão pôde avançar pelo reino,"+"<br/>"
-						+"causando caos e morte."+"<center>"+"</html>");
-				princesaPosition[0]=-1;
-			}
-		}
-		again.setVisible(true);
-	}
-	...
-}
-~~~
+
 # Destaques de Pattern
 
 ## Diagrama do Pattern
