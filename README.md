@@ -96,12 +96,9 @@ Um outro problema encontrado tratava-se da quantidade de casas percorridas pelo 
 - Fim do projeto:
 ![Tela Inicial Depois](assets/documentacao/TelaInicial.png)
 
-> <Relatório de evolução, descrevendo as evoluções do design do projeto, dificuldades enfrentadas, mudanças de rumo, melhorias e lições aprendidas. Referências aos diagramas e recortes de mudanças são bem-vindos.>
-
 # Destaques de Código
 
-> <Escolha trechos relevantes e/ou de destaque do seu código. Apresente um recorte (você pode usar reticências para remover partes menos importantes). Veja como foi usado o highlight de Java para o código.>
-- Destaque para a parte do código que realiza a inserção de um novo personagem no componente DataProvider:
+- Destaque para o método que realiza a inserção de um novo personagem no componente DataProvider:
 ~~~java
 public class DataProvider implements IDataProvider{
 	...
@@ -608,7 +605,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 }
 ~~~
 
-> O pattern Observer foi utilizado aqui da seguinte maneira: Como o jogo se dá em grande parte de forma autônoma, foi escolhido o metrônomo para ditar o intervalo entre cada modificação da posição dos personagens e projeteis no tabuleiro em que o jogo ocorre. O tabuleiro implementa a interface ActionListener e intancia uma variável da classe metrônomo. Em seu construtor, ele é adiocionado como Action Listener desse metrônomo. Ao se clicar o botão de iniciar o jogo, o método play do tabuleiro é ativado e inicia o metrônomo, fazendo os personagens começarem a se movimentar, e, a cada "clock", enquanto as condições de fim de jogo não forem cumpridas, o tabuleiro continua sendo modificado. Quando o jogo tiver que terminar, o metrônomo é parado.
+O pattern Observer foi utilizado aqui da seguinte maneira: Como o jogo se dá em grande parte de forma autônoma, foi escolhido o metrônomo para ditar o intervalo entre cada modificação da posição dos personagens e projeteis no tabuleiro em que o jogo ocorre. O tabuleiro implementa a interface ActionListener e intancia uma variável da classe metrônomo. Em seu construtor, ele é adiocionado como Action Listener desse metrônomo. Ao se clicar o botão de iniciar o jogo, o método play do tabuleiro é ativado e inicia o metrônomo, fazendo os personagens começarem a se movimentar, e, a cada "clock", enquanto as condições de fim de jogo não forem cumpridas, o tabuleiro continua sendo modificado. Quando o jogo tiver que terminar, o metrônomo é parado.
 
 
 ## Diagrama do Pattern
@@ -640,7 +637,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
     ...
 }
 //--------------------------------------------------------------------------
-  public class MeuKeyListener implements KeyListener {
+public class MeuKeyListener implements KeyListener {
 	ITabuleiro tab;
 	
 	MeuKeyListener(ITabuleiro tab){
@@ -668,7 +665,7 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 }
 ~~~
 
-> Após iniciar o jogo, o jogador deve utilizar os direcionais do teclado para controlar a princesa pelo campo, para isso, a melhor maneira encontrada foi usar o Observer. O tabuleiro instancia o objeto "keys" da classe MeuKeyListener, que implementa a interface KeyListener. Ao utilizar o método addKeyListener, quando um dos direcionais é pressionado, meu keyListener ativa o método de movimentação da princesa, passando a direção como atributo.
+Após iniciar o jogo, o jogador deve utilizar os direcionais do teclado para controlar a princesa pelo campo, para isso, a melhor maneira encontrada foi usar o Observer. O tabuleiro instancia o objeto "keys" da classe MeuKeyListener, que implementa a interface KeyListener. Ao utilizar o método addKeyListener, quando um dos direcionais é pressionado, meu keyListener ativa o método de movimentação da princesa, passando a direção como atributo.
 
 # Conclusões e Trabalhos Futuros
 
@@ -688,7 +685,7 @@ Importante perceber que tais ideias podem exigir uma mudança razoável na arqui
 
 ![DiagramaGeral](assets/documentacao/DiagramaGeral.png)
 
-> <Faça uma breve descrição do diagrama.>
+O diagrama acima demonstra o funcionamento geral de nosso projeto. Em resumo, o componente JanelaJogo projeta na tela o Tabuleiro e o Painel Menu. Este último gerencia Tabuleiro e DataProvider, na relação de um informar o outro sobre os personagens que estão sendo adicionados e removidos. O Tabuleiro é responsável por armazenar todos os personagens e os projéteis do jogo, sendo que cada um destes realiza modificações no espaço do tabuleiro ao se movimentar ou ao disparar ataques. Cada personagem instancia seu projétil característico no tabuleiro e pode ser atingido por outros projéteis. Além disso, o Tabuleiro recebe notificações do Metronomo, para poder dar os passos do jogo, e notifica o MeuKeyListener sobre os direcionais do teclado pressionados, para ele poder realizar suas modificações no jogo.
 
 ## Diagrama Geral de Componentes
 
@@ -703,7 +700,7 @@ Componente responsável pela passagem dos dados inseridos pelo usuário para o T
 **Ficha Técnica**
 item | detalhamento
 ----- | -----
-Classe | `src.dataprovider.DataProvider` <br> 
+Classe | `src.dataprovider.DataProvider` 
 Autores | `Áureo Henrique e Lindon Jonathan`
 Interfaces | `IGetData, IPontos, IDataProvider`
 
@@ -784,12 +781,6 @@ Interfaces | `ITabuleiro, ActionListener`
 Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-tabuleiro.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-
-~~~
 
 ## Detalhamento das Interfaces
 
@@ -886,12 +877,6 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-arqueiro.png)
 
-Interface agregadora do componente em Java:
-
-~~~java
-
-~~~
-
 ## Detalhamento das Interfaces
 
 ### Interface `IMovimento`
@@ -935,7 +920,7 @@ Método | Objetivo
 `getJaAgiu` | `Retorna o atributo “jaAgiu”.`
 `setJaAgiu` | `Define um valor para o atributo “jaAgiu”, através do parametro “j”.`
 `getMovimento` | `Retorna o atributo Movimento.`
-`` | ``
+`getPecaIcon` | `Retorna o componente gráfico que representa o personagem`
 
 
 ## Componente `Lanceiro`
@@ -1062,12 +1047,6 @@ Interfaces | `IMovimento, IProjetil`
 Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-flecha.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-
-~~~
 
 ## Detalhamento das Interfaces
 
@@ -1226,12 +1205,6 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-painelmenu.png)
 
-Interface agregadora do componente em Java:
-
-~~~java
-
-~~~
-
 ## Detalhamento das Interfaces
 
 ### Interface `IMenu`
@@ -1283,12 +1256,6 @@ Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-janelajogo.png)
 
-Interface agregadora do componente em Java:
-
-~~~java
-
-~~~
-
 ## Detalhamento das Interfaces
 
 ### Interface `ActionListener`
@@ -1323,13 +1290,6 @@ Interfaces | `KeyListener`
 Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-MeuKeyListener.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
 
 ## Detalhamento das Interfaces
 
@@ -1368,13 +1328,6 @@ Interfaces | `ActionListener`
 Interfaces associadas a esse componente:
 
 ![Diagrama Interfaces](assets/documentacao/interfaces-metronomo.png)
-
-Interface agregadora do componente em Java:
-
-~~~java
-public interface IDataSet extends ITableProducer, IDataSetProperties {
-}
-~~~
 
 ## Detalhamento das Interfaces
 
