@@ -77,8 +77,8 @@ public class Projetil extends PecaIcon implements IProjetil{
 				y = newY;
 			
 			}else{
-				/*Se a nova posiçao não estiver vazia e contiver um projetil que não seja uma pedra, e esse projetil não tiver 
-				 * efetuado sua ação ainda nesse tempo, o projetil não se move e é colocado em um vetor auxiliar para tratar 
+				/*Se a nova posiçao não estiver vazia e contiver um projetil que não seja uma pedra, e esse projetil não estiver já querendo ir para outra posição (dentro do vetor de conflitos), 
+				 * o projetil que queremos mover agora (this) não se move e é colocado em um vetor auxiliar para tratar 
 				 * os confitos entre projeteis, após o tabuleiro inteiro ser percorrido.*/
 				if (z==0 && !(tab.getProjetil(newX, newY, 0).getEmConflito())) {
 					this.xConflito=newX;
