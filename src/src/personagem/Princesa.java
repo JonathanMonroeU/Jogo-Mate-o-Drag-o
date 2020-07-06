@@ -8,7 +8,7 @@ public class Princesa extends Personagem{
 	private ITabuleiro tab;
 	
 	public Princesa(int x, int y, ITabuleiro tab) {
-		super(DIRETORIO+"princesa.png",x,y);
+		super(DIRETORIO+"assets/princesa.png",x,y);
 		vida = 300;
 		this.tab=tab;
 	}

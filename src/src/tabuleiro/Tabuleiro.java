@@ -52,9 +52,9 @@ public class Tabuleiro extends PainelTabuleiro implements ITabuleiro, ActionList
 		vPersonagem[4][10][0]=vPersonagem[5][10][0];
 		vPersonagem[4][9][0]=vPersonagem[5][10][0];
 		vPersonagem[5][9][0]=vPersonagem[5][10][0];
-		compl1 = new PecaIcon(DIRETORIO+"dragao1.png");
-		compl2 = new PecaIcon(DIRETORIO+"dragao2.png");
-		compl3 = new PecaIcon(DIRETORIO+"dragao3.png");
+		compl1 = new PecaIcon(DIRETORIO+"assets/dragao1.png");
+		compl2 = new PecaIcon(DIRETORIO+"assets/dragao2.png");
+		compl3 = new PecaIcon(DIRETORIO+"assets/dragao3.png");
 		setElemento(5,10,(PecaIcon) vPersonagem[5][10][0]);
 		setElemento(4,9,compl1);
 		setElemento(4,10,compl2);

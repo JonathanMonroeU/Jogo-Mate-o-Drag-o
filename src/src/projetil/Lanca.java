@@ -5,7 +5,7 @@ public class Lanca extends Projetil{
 	public static String DIRETORIO =
 		      Lanca.class.getResource(".").getPath();
 	public Lanca(int x, int y, int z, String direcaoA, String imagem) {
-		super(DIRETORIO+imagem, x, y, z);
+		super(DIRETORIO+"assets/"+imagem, x, y, z);
 		direcao=direcaoA;
 		dano= 25;
 		freqMov=6;

@@ -9,7 +9,7 @@ public class Mago extends Personagem{
 	public static int custo = 15;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Mago(int x, int y) {
-		super(DIRETORIO+"mago.png",x,y);
+		super(DIRETORIO+"assets/mago.png",x,y);
 		vida = 200;
 		frequencia = 24;
 		movimento = 12;

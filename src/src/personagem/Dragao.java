@@ -11,7 +11,7 @@ public class Dragao extends Personagem{
 	
 	int especial;
 	public Dragao(int x, int y) {
-		super(DIRETORIO+"dragao.png",x,y);
+		super(DIRETORIO+"assets/dragao.png",x,y);
 		vida = 1000;
 		frequencia = 12;	
 		movimento = 12;

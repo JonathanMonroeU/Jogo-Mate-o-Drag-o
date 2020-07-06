@@ -9,7 +9,7 @@ public class Lanceiro extends Personagem{
 	public static int custo = 10;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Lanceiro(int x, int y) {
-		super(DIRETORIO+"lanceiro.png",x,y);
+		super(DIRETORIO+"assets/lanceiro.png",x,y);
 		vida = 300;
 		frequencia = 36; //a verificar
 		movimento = 24;

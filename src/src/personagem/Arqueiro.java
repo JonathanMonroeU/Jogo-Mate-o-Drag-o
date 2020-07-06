@@ -9,7 +9,7 @@ public class Arqueiro extends Personagem{
 	public static int custo = 5;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Arqueiro(int x, int y) {
-		super(DIRETORIO+"arqueiro.png",x,y);
+		super(DIRETORIO+"assets/arqueiro.png",x,y);
 		vida = 100;
 		frequencia = 12;
 		movimento = 6;

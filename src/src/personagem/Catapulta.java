@@ -9,7 +9,7 @@ public class Catapulta extends Personagem{
 	public static int custo = 30;	//Pontos necessários para inserir o personagem em campo.
 	
 	public Catapulta(int x, int y) {
-		super(DIRETORIO+"catapulta.png",x,y);
+		super(DIRETORIO+"assets/catapulta.png",x,y);
 		vida = 100;
 		frequencia = 36;
 		movimento = 0;

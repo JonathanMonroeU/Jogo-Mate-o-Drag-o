@@ -59,7 +59,7 @@ public class PainelTabuleiro extends JPanel{
 		public void paintComponent(Graphics g) {
 			super.paintComponent(g);
 			
-			Image gramaImage = Toolkit.getDefaultToolkit().getImage(DIRETORIO+"grama200.png");
+			Image gramaImage = Toolkit.getDefaultToolkit().getImage(DIRETORIO+"assets/grama200.png");
 			Graphics2D graf = (Graphics2D) g;
 			graf.drawImage(gramaImage, 0, 0, this);
 
